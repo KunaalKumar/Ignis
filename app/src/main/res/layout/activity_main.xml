@@ -17,7 +17,7 @@
         android:autofillHints="Enter superhero name"
         android:ems="10"
         android:inputType="text"
-        android:text="Superhero Name"
+        android:hint="Enter superhero name"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"

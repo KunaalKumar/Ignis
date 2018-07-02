@@ -1,4 +1,4 @@
-package com.kunaalkumar.ignis.SuperheroData;
+package com.kunaalkumar.ignis.superhero_data;
 
 public class Work {
     private String occupation;

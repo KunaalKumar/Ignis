@@ -1,6 +1,4 @@
-package com.kunaalkumar.ignis.SuperheroData;
-
-import java.net.URI;
+package com.kunaalkumar.ignis.superhero_data;
 
 public class Image {
 

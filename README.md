@@ -9,8 +9,9 @@ Android app for information about ~~marvel characters~~ superheroes from all uni
 
 ## Credits
 
-* Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [FlatIcon](www.flaticon.com)
+* [Retrofit](http://square.github.io/retrofit/)
 * [Super Hero API](http://superheroapi.com/)
+* Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [FlatIcon](www.flaticon.com)
 
 ## Developer
 [My Website](https://www.kunaalkumar.com)

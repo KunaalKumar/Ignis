@@ -1,6 +1,6 @@
 package com.kunaalkumar.ignis.superhero_data;
 
-public class Superhero {
+public class Results {
     private Integer id;
     private String name;
     private Powerstats powerstats;

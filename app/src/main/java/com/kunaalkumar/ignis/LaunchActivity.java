@@ -1,3 +1,10 @@
+/*
+* This activity is responsible for on-boarding the app icon whilst the rest of the app loads.
+*
+* Author: Kunaal Kumar
+* */
+
+
 package com.kunaalkumar.ignis;
 
 import android.content.Intent;

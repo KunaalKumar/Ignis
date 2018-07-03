@@ -9,7 +9,7 @@ Android app for information about ~~marvel characters~~ superheroes from all uni
 
 ## Credits
 
-* [Super Hero API](http://superheroapi.com/)
+* [ComicVine](https://comicvine.gamespot.com/api/)
 * [Retrofit](http://square.github.io/retrofit/)
 * [ButterKnife](http://jakewharton.github.io/butterknife/)
 * Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [FlatIcon](www.flaticon.com)

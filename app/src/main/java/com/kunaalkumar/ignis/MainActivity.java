@@ -3,20 +3,16 @@ package com.kunaalkumar.ignis;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.kunaalkumar.ignis.certificate.BlindTrustManager;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -28,7 +24,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import javax.security.cert.X509Certificate;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,14 +36,19 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.superhero_information)
     TextView superheroInformation;
 
-    private static final String BASE_URL = "https://www.superheroapi.com/api/10205048573171973/search/Batman";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        selfSignCert();
 
+    }
+
+
+    // Self sign certificate to allow access to superheroapi
+    private void selfSignCert() {
         TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
             @Override
             public void checkClientTrusted(java.security.cert.X509Certificate[] x509Certificates, String s) throws CertificateException {
@@ -90,26 +90,5 @@ public class MainActivity extends AppCompatActivity {
 
         // Install the all-trusting host verifier
         HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-
-
-        final RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, BASE_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                superheroInformation.setText(response.toString());
-                Log.d("Ignis", "Success!");
-                requestQueue.stop();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Ignis", "Error!\n" + error.toString());
-                error.printStackTrace();
-                requestQueue.stop();
-            }
-        });
-
-        requestQueue.add(stringRequest);
     }
 }

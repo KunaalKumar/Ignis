@@ -18,6 +18,17 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="backgroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="foregroundImage">
                                         <value>
                                           <PersistentState>
@@ -34,8 +45,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffd611" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Desktop/Development Images/fire.png" />
+                                      <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/Desktop/Development Images/ignis.png" />
                                       <entry key="legacyIconShape" value="CIRCLE" />
                                       <entry key="previewDensity" value="MEDIUM" />
                                       <entry key="webIconShape" value="CIRCLE" />

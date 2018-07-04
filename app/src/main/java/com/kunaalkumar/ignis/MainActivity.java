@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.Character;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
@@ -46,17 +47,17 @@ public class MainActivity extends AppCompatActivity {
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
 
-        Call<Character> call = client.getCharacter();
-        call.enqueue(new Callback<Character>() {
+        Call<ApiResponse> call = client.getCharacter();
+        call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<Character> call, Response<Character> response) {
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 Log.d("Ignis", response.body().toString());
-                Character character = response.body();
-                superheroInformation.setText(character.getGender());
+                ApiResponse apiResopnse = response.body();
+                superheroInformation.setText(apiResopnse.getError());
             }
 
             @Override
-            public void onFailure(Call<Character> call, Throwable t) {
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
                 Log.d("Ignis", t.toString());
             }
         });

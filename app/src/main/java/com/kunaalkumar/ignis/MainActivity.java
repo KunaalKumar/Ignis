@@ -17,10 +17,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.stream.JsonReader;
 import com.kunaalkumar.ignis.comicvine_objects.Character;
+import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
-import com.kunaalkumar.ignis.network.ApiInterface;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     public void search(View view) {
         Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_LONG).show();
 
-        Retrofit retrofit = ApiClient.getClient();
-        ApiInterface client = retrofit.create(ApiInterface.class);
+        Retrofit retrofit = ClientInstance.getClient();
+        ApiClient client = retrofit.create(ApiClient.class);
 
         Call<Character> call = client.getCharacter();
         call.enqueue(new Callback<Character>() {

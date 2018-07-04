@@ -1,30 +1,15 @@
 package com.kunaalkumar.ignis.network;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.kunaalkumar.ignis.comicvine_objects.Character;
 
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Headers;
 
-public class ApiClient {
+public interface ApiClient {
 
-    private static Retrofit retrofit = null;
-    private static final String BASE_URL = "https://comicvine.gamespot.com/api/";
+    @Headers("user-agent: ignis-android")
 
-    public static Retrofit getClient() {
-
-
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        return retrofit;
-
-    }
+    @GET("characters/?api_key=9aa1dc67801a2cdc8460790837f94b73057ce351&filter=id:1699&format=json")
+    Call<Character> getCharacter();
 }

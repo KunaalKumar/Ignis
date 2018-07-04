@@ -10,6 +10,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,13 +47,14 @@ public class MainActivity extends AppCompatActivity {
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
 
-        Call<ApiResponse> call = client.getCharacter();
+        // TODO: Check for if name is null
+        Call<ApiResponse> call = client.searchCharacters(superheroSearch.getText().toString());
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 Log.d("Ignis", response.body().toString());
                 ApiResponse apiResopnse = response.body();
-                superheroInformation.setText(apiResopnse.getError());
+                superheroInformation.setText(Html.fromHtml(Html.fromHtml(apiResopnse.getResults()[0].getDescription()).toString()));
             }
 
             @Override

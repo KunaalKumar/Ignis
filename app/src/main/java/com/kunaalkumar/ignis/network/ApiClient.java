@@ -23,5 +23,5 @@ public interface ApiClient {
     @GET("character/")
     Call<ApiResponse> getCharacter(@Path("character_id") String characterId,
                                    @Query("api_key") String apiKey,
-                                   @Query("formay") String format);
+                                   @Query("format") String format);
 }

@@ -53,6 +53,148 @@ public class Character {
     @SerializedName("real_name")
     private List<String> realName;
 
+    public Character(String aliases, String birth, List<String> characterEnemies, List<String> characterFriends, List<String> countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, String gender, Integer id, Image image, Origin origin, Publisher publisher, List<String> realName) {
+        this.aliases = aliases;
+        this.birth = birth;
+        this.characterEnemies = characterEnemies;
+        this.characterFriends = characterFriends;
+        this.countOfIssueAppearances = countOfIssueAppearances;
+        this.dateLastUpdated = dateLastUpdated;
+        this.briefSummary = briefSummary;
+        this.description = description;
+        this.firstAppearedInIssue = firstAppearedInIssue;
+        this.gender = gender;
+        this.id = id;
+        this.image = image;
+        this.origin = origin;
+        this.publisher = publisher;
+        this.realName = realName;
+    }
+
+    public static String getFieldList() {
+        return FIELD_LIST;
+    }
+
+    public String getAliases() {
+        return aliases;
+    }
+
+    public void setAliases(String aliases) {
+        this.aliases = aliases;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+    public List<String> getCharacterEnemies() {
+        return characterEnemies;
+    }
+
+    public void setCharacterEnemies(List<String> characterEnemies) {
+        this.characterEnemies = characterEnemies;
+    }
+
+    public List<String> getCharacterFriends() {
+        return characterFriends;
+    }
+
+    public void setCharacterFriends(List<String> characterFriends) {
+        this.characterFriends = characterFriends;
+    }
+
+    public List<String> getCountOfIssueAppearances() {
+        return countOfIssueAppearances;
+    }
+
+    public void setCountOfIssueAppearances(List<String> countOfIssueAppearances) {
+        this.countOfIssueAppearances = countOfIssueAppearances;
+    }
+
+    public String getDateLastUpdated() {
+        return dateLastUpdated;
+    }
+
+    public void setDateLastUpdated(String dateLastUpdated) {
+        this.dateLastUpdated = dateLastUpdated;
+    }
+
+    public String getBriefSummary() {
+        return briefSummary;
+    }
+
+    public void setBriefSummary(String briefSummary) {
+        this.briefSummary = briefSummary;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public FirstAppearedInIssue getFirstAppearedInIssue() {
+        return firstAppearedInIssue;
+    }
+
+    public void setFirstAppearedInIssue(FirstAppearedInIssue firstAppearedInIssue) {
+        this.firstAppearedInIssue = firstAppearedInIssue;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public Origin getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Origin origin) {
+        this.origin = origin;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public List<String> getRealName() {
+        return realName;
+    }
+
+    public void setRealName(List<String> realName) {
+        this.realName = realName;
+    }
+
     // characters/first_appeared_in_issue
     private class FirstAppearedInIssue {
         @SerializedName("id")

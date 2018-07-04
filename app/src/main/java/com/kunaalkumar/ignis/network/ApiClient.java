@@ -12,13 +12,16 @@ public interface ApiClient {
 
     @Headers("user-agent: ignis-android")
 
-// characters/?api_key=9aa1dc67801a2cdc8460790837f94b73057ce351&filter=name:Batman&format=json
-
     // Searches for character via given name
     @GET("characters/")
-    Call<ApiResponse> searchCharacters(@Query("api_key") String apiKey, @Query("filter") String filter, @Query("format") String format);
+    Call<ApiResponse> searchCharacters(@Query("api_key") String apiKey,
+                                       @Query("filter") String filter,
+                                       @Query("format") String format);
 
+    // TODO: Test
     // Gets character via given character id
-    @GET("character/4005-{character_id}/?api_key=9aa1dc67801a2cdc8460790837f94b73057ce351&format=json")
-    Call<ApiResponse> getCharacter(@Path("character_id") String characterId);
+    @GET("character/")
+    Call<ApiResponse> getCharacter(@Path("character_id") String characterId,
+                                   @Query("api_key") String apiKey,
+                                   @Query("formay") String format);
 }

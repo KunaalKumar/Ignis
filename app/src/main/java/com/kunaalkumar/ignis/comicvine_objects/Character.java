@@ -21,7 +21,7 @@ public class Character {
     private List<String> characterFriends;
 
     @SerializedName("count_of_issue_appearances")
-    private List<String> countOfIssueAppearances;
+    private Integer countOfIssueAppearances;
 
     @SerializedName("date_last_updated")
     private String dateLastUpdated;
@@ -51,9 +51,9 @@ public class Character {
     private Publisher publisher;
 
     @SerializedName("real_name")
-    private List<String> realName;
+    private String realName;
 
-    public Character(String aliases, String birth, List<String> characterEnemies, List<String> characterFriends, List<String> countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, String gender, Integer id, Image image, Origin origin, Publisher publisher, List<String> realName) {
+    public Character(String aliases, String birth, List<String> characterEnemies, List<String> characterFriends, Integer countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, String gender, Integer id, Image image, Origin origin, Publisher publisher, String realName) {
         this.aliases = aliases;
         this.birth = birth;
         this.characterEnemies = characterEnemies;
@@ -107,11 +107,11 @@ public class Character {
         this.characterFriends = characterFriends;
     }
 
-    public List<String> getCountOfIssueAppearances() {
+    public Integer getCountOfIssueAppearances() {
         return countOfIssueAppearances;
     }
 
-    public void setCountOfIssueAppearances(List<String> countOfIssueAppearances) {
+    public void setCountOfIssueAppearances(Integer countOfIssueAppearances) {
         this.countOfIssueAppearances = countOfIssueAppearances;
     }
 
@@ -187,11 +187,11 @@ public class Character {
         this.publisher = publisher;
     }
 
-    public List<String> getRealName() {
+    public String getRealName() {
         return realName;
     }
 
-    public void setRealName(List<String> realName) {
+    public void setRealName(String realName) {
         this.realName = realName;
     }
 

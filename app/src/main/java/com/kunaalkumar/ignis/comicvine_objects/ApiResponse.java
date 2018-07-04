@@ -22,8 +22,8 @@ public class ApiResponse {
     @SerializedName("status_code")
     private Integer statusCode;
 
-//    @SerializedName("results")
-//    private Character[] results;
+    @SerializedName("results")
+    private Character[] results;
 
     @SerializedName("version")
     private String version;
@@ -35,7 +35,7 @@ public class ApiResponse {
         this.numberOfPageResults = numberOfPageResults;
         this.numberOfTotalResults = numberOfTotalResults;
         this.statusCode = statusCode;
-//        this.results = results;
+        this.results = results;
         this.version = version;
     }
 
@@ -87,13 +87,13 @@ public class ApiResponse {
         this.statusCode = statusCode;
     }
 
-//    public Character[] getResults() {
-//        return results;
-//    }
-//
-//    public void setResults(Character[] results) {
-//        this.results = results;
-//    }
+    public Character[] getResults() {
+        return results;
+    }
+
+    public void setResults(Character[] results) {
+        this.results = results;
+    }
 
     public String getVersion() {
         return version;

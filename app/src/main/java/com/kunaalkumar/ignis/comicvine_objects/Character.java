@@ -204,9 +204,9 @@ public class Character {
         private String name;
 
         @SerializedName("issue_number")
-        private Integer issueNumber;
+        private Double issueNumber;
 
-        public FirstAppearedInIssue(Integer id, String name, Integer issueNumber) {
+        public FirstAppearedInIssue(Integer id, String name, Double issueNumber) {
             this.id = id;
             this.name = name;
             this.issueNumber = issueNumber;
@@ -228,11 +228,11 @@ public class Character {
             this.name = name;
         }
 
-        public Integer getIssueNumber() {
+        public Double getIssueNumber() {
             return issueNumber;
         }
 
-        public void setIssueNumber(Integer issueNumber) {
+        public void setIssueNumber(Double issueNumber) {
             this.issueNumber = issueNumber;
         }
     }

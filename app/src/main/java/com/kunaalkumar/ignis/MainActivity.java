@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.superhero_information)
     TextView superheroInformation;
 
+    private static final String apiKey = "9aa1dc67801a2cdc8460790837f94b73057ce351";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.search_button)
     public void search(View view) {
-        Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "Getting results", Toast.LENGTH_SHORT).show();
 
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
 
         // TODO: Check for if name is null
-        Call<ApiResponse> call = client.searchCharacters(superheroSearch.getText().toString());
+        Call<ApiResponse> call = client.searchCharacters(apiKey, "name:" + superheroSearch.getText().toString(), "json");
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

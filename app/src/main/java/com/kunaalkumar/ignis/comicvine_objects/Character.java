@@ -6,15 +6,6 @@ import java.util.List;
 
 public class Character {
 
-
-    /*
-
-    TODO: Add:
-    1) Origin
-    2) Publisher
-    3) Real name
-    */
-
     private final static String FIELD_LIST = "aliases, birth, character_enemies";
 
     @SerializedName("aliases")
@@ -48,34 +39,42 @@ public class Character {
     private String gender;
 
     @SerializedName("id")
-    private int id;
+    private Integer id;
 
     @SerializedName("image")
     private Image image;
 
+    @SerializedName("origin")
+    private Origin origin;
+
+    @SerializedName("publisher")
+    private Publisher publisher;
+
+    @SerializedName("real_name")
+    private List<String> realName;
 
     // characters/first_appeared_in_issue
     private class FirstAppearedInIssue {
         @SerializedName("id")
-        private int id;
+        private Integer id;
 
         @SerializedName("name")
         private String name;
 
         @SerializedName("issue_number")
-        private int issueNumber;
+        private Integer issueNumber;
 
-        public FirstAppearedInIssue(int id, String name, int issueNumber) {
+        public FirstAppearedInIssue(Integer id, String name, Integer issueNumber) {
             this.id = id;
             this.name = name;
             this.issueNumber = issueNumber;
         }
 
-        public int getId() {
+        public Integer getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(Integer id) {
             this.id = id;
         }
 
@@ -87,11 +86,11 @@ public class Character {
             this.name = name;
         }
 
-        public int getIssueNumber() {
+        public Integer getIssueNumber() {
             return issueNumber;
         }
 
-        public void setIssueNumber(int issueNumber) {
+        public void setIssueNumber(Integer issueNumber) {
             this.issueNumber = issueNumber;
         }
     }
@@ -208,6 +207,64 @@ public class Character {
 
         public void setOriginalUrl(String originalUrl) {
             this.originalUrl = originalUrl;
+        }
+    }
+
+    private class Origin {
+        @SerializedName("id")
+        private Integer id;
+
+        @SerializedName("name")
+        private String name;
+
+        public Origin(Integer id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    private class Publisher {
+        @SerializedName("id")
+        private Integer id;
+
+        @SerializedName("name")
+        private String name;
+
+        public Publisher(Integer id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 

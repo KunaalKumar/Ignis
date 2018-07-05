@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
+import com.kunaalkumar.ignis.comicvine_objects.Character;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.superhero_information)
     TextView superheroInformation;
 
+    // Api key for ComicVine
     private static final String apiKey = "9aa1dc67801a2cdc8460790837f94b73057ce351";
 
     @Override
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
     }
+
 
     @OnClick(R.id.search_button)
     public void search(View view) {
@@ -56,7 +59,14 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 Log.d("Ignis", response.body().toString());
                 ApiResponse apiResopnse = response.body();
-                superheroInformation.setText(Html.fromHtml(Html.fromHtml(apiResopnse.getResults()[0].getDescription()).toString()));
+
+                superheroInformation.setText("");
+                for (Character character : apiResopnse.getResults()
+                        ) {
+                    if (!(character.getRealName() == null)) {
+                        superheroInformation.append(character.getName() + "\n");
+                    }
+                }
             }
 
             @Override

@@ -53,7 +53,18 @@ public class Character {
     @SerializedName("real_name")
     private String realName;
 
-    public Character(String aliases, String birth, List<String> characterEnemies, List<String> characterFriends, Integer countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, String gender, Integer id, Image image, Origin origin, Publisher publisher, String realName) {
+    @SerializedName("name")
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Character(String aliases, String birth, List<String> characterEnemies, List<String> characterFriends, Integer countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, String gender, Integer id, Image image, Origin origin, Publisher publisher, String realName, String name) {
         this.aliases = aliases;
         this.birth = birth;
         this.characterEnemies = characterEnemies;
@@ -69,6 +80,7 @@ public class Character {
         this.origin = origin;
         this.publisher = publisher;
         this.realName = realName;
+        this.name = name;
     }
 
     public static String getFieldList() {

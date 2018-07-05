@@ -187,7 +187,7 @@ public class CharacterResults {
     }
 
     // characters/first_appeared_in_issue
-    private class FirstAppearedInIssue {
+    public class FirstAppearedInIssue {
         @SerializedName("id")
         private Integer id;
 
@@ -229,7 +229,7 @@ public class CharacterResults {
     }
 
     // characters/image
-    private class Image {
+    public class Image {
 
         @SerializedName("icon_url")
         private String iconUrl;
@@ -343,7 +343,7 @@ public class CharacterResults {
         }
     }
 
-    private class Origin {
+    public class Origin {
         @SerializedName("id")
         private Integer id;
 
@@ -372,7 +372,7 @@ public class CharacterResults {
         }
     }
 
-    private class Publisher {
+    public class Publisher {
         @SerializedName("id")
         private Integer id;
 

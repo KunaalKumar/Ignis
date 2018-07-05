@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
-import com.kunaalkumar.ignis.comicvine_objects.Character;
 import com.kunaalkumar.ignis.comicvine_objects.CharacterResults;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;

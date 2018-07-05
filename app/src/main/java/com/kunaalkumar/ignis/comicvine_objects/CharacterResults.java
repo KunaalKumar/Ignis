@@ -2,8 +2,6 @@ package com.kunaalkumar.ignis.comicvine_objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 /*
 * Essentially /characters/
 *
@@ -18,12 +16,6 @@ public class CharacterResults {
 
     @SerializedName("birth")
     private String birth;
-
-    @SerializedName("character_enemies")
-    private List<String> characterEnemies;
-
-    @SerializedName("character_friends")
-    private List<String> characterFriends;
 
     @SerializedName("count_of_issue_appearances")
     private Integer countOfIssueAppearances;
@@ -41,7 +33,7 @@ public class CharacterResults {
     private FirstAppearedInIssue firstAppearedInIssue;
 
     @SerializedName("gender")
-    private String gender;
+    private int gender;
 
     @SerializedName("id")
     private Integer id;
@@ -69,11 +61,9 @@ public class CharacterResults {
         this.name = name;
     }
 
-    public CharacterResults(String aliases, String birth, List<String> characterEnemies, List<String> characterFriends, Integer countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, String gender, Integer id, Image image, Origin origin, Publisher publisher, String realName, String name) {
+    public CharacterResults(String aliases, String birth, Integer countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, int gender, Integer id, Image image, Origin origin, Publisher publisher, String realName, String name) {
         this.aliases = aliases;
         this.birth = birth;
-        this.characterEnemies = characterEnemies;
-        this.characterFriends = characterFriends;
         this.countOfIssueAppearances = countOfIssueAppearances;
         this.dateLastUpdated = dateLastUpdated;
         this.briefSummary = briefSummary;
@@ -106,22 +96,6 @@ public class CharacterResults {
 
     public void setBirth(String birth) {
         this.birth = birth;
-    }
-
-    public List<String> getCharacterEnemies() {
-        return characterEnemies;
-    }
-
-    public void setCharacterEnemies(List<String> characterEnemies) {
-        this.characterEnemies = characterEnemies;
-    }
-
-    public List<String> getCharacterFriends() {
-        return characterFriends;
-    }
-
-    public void setCharacterFriends(List<String> characterFriends) {
-        this.characterFriends = characterFriends;
     }
 
     public Integer getCountOfIssueAppearances() {
@@ -164,11 +138,11 @@ public class CharacterResults {
         this.firstAppearedInIssue = firstAppearedInIssue;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 

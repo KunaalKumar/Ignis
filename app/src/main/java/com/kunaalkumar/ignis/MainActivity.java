@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
+import com.kunaalkumar.ignis.comicvine_objects.Character;
 import com.kunaalkumar.ignis.comicvine_objects.CharacterResults;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
@@ -52,20 +53,22 @@ public class MainActivity extends AppCompatActivity {
         ApiClient client = retrofit.create(ApiClient.class);
 
         // TODO: Check for if name is null
-        Call<ApiResponse> call = client.searchCharacters(apiKey, "name:" + superheroSearch.getText().toString(), "json");
-        call.enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                Log.d("Ignis", response.body().toString());
-                ApiResponse apiResopnse = response.body();
+        Call<ApiResponse<CharacterResults>> call = client.searchCharacters(apiKey, "name:" + superheroSearch.getText().toString(), "json");
 
-                if (apiResopnse.getResults().length == 0) {
+        call.enqueue(new Callback<ApiResponse<CharacterResults>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<CharacterResults>> call, Response<ApiResponse<CharacterResults>> response) {
+                Log.d("Ignis", response.body().toString());
+                ApiResponse<CharacterResults> apiResponse = response.body();
+
+
+                if (apiResponse.getResults().length == 0) {
                     superheroInformation.setText("No results found.");
                 } else {
                     superheroInformation.setText("");
                 }
 
-                for (CharacterResults characterResults : apiResopnse.getResults()
+                for (CharacterResults characterResults : apiResponse.getResults()
                         ) {
                     if (!(characterResults.getRealName() == null)) {
                         superheroInformation.append(characterResults.getName() + "\n");
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<CharacterResults>> call, Throwable t) {
                 Log.d("Ignis", t.toString());
             }
         });

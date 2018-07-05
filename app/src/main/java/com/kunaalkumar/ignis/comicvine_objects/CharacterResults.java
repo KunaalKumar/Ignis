@@ -4,7 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Character {
+/*
+* Essentially /characters/
+*
+* ... as opposed to /character/
+* */
+public class CharacterResults {
 
     private final static String FIELD_LIST = "aliases, birth, character_enemies";
 
@@ -64,7 +69,7 @@ public class Character {
         this.name = name;
     }
 
-    public Character(String aliases, String birth, List<String> characterEnemies, List<String> characterFriends, Integer countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, String gender, Integer id, Image image, Origin origin, Publisher publisher, String realName, String name) {
+    public CharacterResults(String aliases, String birth, List<String> characterEnemies, List<String> characterFriends, Integer countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, String gender, Integer id, Image image, Origin origin, Publisher publisher, String realName, String name) {
         this.aliases = aliases;
         this.birth = birth;
         this.characterEnemies = characterEnemies;

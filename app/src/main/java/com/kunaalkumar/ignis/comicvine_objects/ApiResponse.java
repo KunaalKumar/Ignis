@@ -23,12 +23,12 @@ public class ApiResponse {
     private Integer statusCode;
 
     @SerializedName("results")
-    private Character[] results;
+    private CharacterResults[] results;
 
     @SerializedName("version")
     private String version;
 
-    public ApiResponse(String error, Integer limit, Integer offset, Integer numberOfPageResults, Integer numberOfTotalResults, Integer statusCode, Character[] results, String version) {
+    public ApiResponse(String error, Integer limit, Integer offset, Integer numberOfPageResults, Integer numberOfTotalResults, Integer statusCode, CharacterResults[] results, String version) {
         this.error = error;
         this.limit = limit;
         this.offset = offset;
@@ -87,11 +87,11 @@ public class ApiResponse {
         this.statusCode = statusCode;
     }
 
-    public Character[] getResults() {
+    public CharacterResults[] getResults() {
         return results;
     }
 
-    public void setResults(Character[] results) {
+    public void setResults(CharacterResults[] results) {
         this.results = results;
     }
 

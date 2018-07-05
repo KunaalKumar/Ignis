@@ -10,7 +10,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
-import com.kunaalkumar.ignis.comicvine_objects.Character;
+import com.kunaalkumar.ignis.comicvine_objects.CharacterResults;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
 
@@ -60,11 +59,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Ignis", response.body().toString());
                 ApiResponse apiResopnse = response.body();
 
-                superheroInformation.setText("");
-                for (Character character : apiResopnse.getResults()
+                if (apiResopnse.getResults().length == 0) {
+                    superheroInformation.setText("No results found.");
+                } else {
+                    superheroInformation.setText("");
+                }
+
+                for (CharacterResults characterResults : apiResopnse.getResults()
                         ) {
-                    if (!(character.getRealName() == null)) {
-                        superheroInformation.append(character.getName() + "\n");
+                    if (!(characterResults.getRealName() == null)) {
+                        superheroInformation.append(characterResults.getName() + "\n");
                     }
                 }
             }

@@ -36,8 +36,4 @@ dependencies {
     }
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    // BaseRecyclerViewAdapterHelper: BRVAH
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
-
-
 }

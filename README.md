@@ -15,6 +15,8 @@ Android app for information about ~~marvel characters~~ superheroes from all uni
 
 * ![alt text](http://jakewharton.github.io/butterknife/static/logo.png "ButterKnife")
 
+* ![alt text](https://seedroid.com/img/post/icons/128/com.chad.baserecyclerviewadapterhelper.jpg "RecyclerView")
+
 * Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [FlatIcon](www.flaticon.com)
 
 ## Developer

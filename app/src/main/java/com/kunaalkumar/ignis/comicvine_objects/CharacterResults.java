@@ -3,10 +3,12 @@ package com.kunaalkumar.ignis.comicvine_objects;
 import com.google.gson.annotations.SerializedName;
 
 /*
-* Essentially /characters/
-*
-* ... as opposed to /character/
-* */
+ * Essentially /characters/
+ *
+ * ... as opposed to /character/
+ *
+ */
+
 public class CharacterResults {
 
     private final static String FIELD_LIST = "aliases, birth, character_enemies";

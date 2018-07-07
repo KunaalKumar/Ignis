@@ -9,3 +9,6 @@
 /build
 /captures
 .externalNativeBuild
+/.idea/
+.idea/markdown-navigator/
+app/src/main/gen/

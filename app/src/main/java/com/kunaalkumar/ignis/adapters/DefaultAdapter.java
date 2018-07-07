@@ -54,7 +54,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
             }
         } else if (character.getGender() == 1) {
             Picasso.get()
-                    .load(characterResults[position].getImage().getSmallUrl())
+                    .load(characterResults[position].getImage().getScreenLargeUrl())
                     .placeholder(R.drawable.placeholder_male_superhero)
                     .into(holder.superheroImage);
         } else {

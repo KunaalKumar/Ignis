@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Button searchButton;
 
     @BindView(R.id.superhero_information)
-    TextView superheroInformation;
+    ImageView superheroInformation;
 
     // Api key for ComicVine
     private static final String apiKey = "9aa1dc67801a2cdc8460790837f94b73057ce351";
@@ -61,18 +61,12 @@ public class MainActivity extends AppCompatActivity {
                 ApiResponse<CharacterResults> apiResponse = response.body();
 
 
-                if (apiResponse.getResults().length == 0) {
-                    superheroInformation.setText("No results found.");
-                } else {
-                    superheroInformation.setText("");
-                }
-
-                for (CharacterResults characterResults : apiResponse.getResults()
-                        ) {
-                    if (!(characterResults.getRealName() == null)) {
-                        superheroInformation.append(characterResults.getName() + "\n");
-                    }
-                }
+//                for (CharacterResults characterResults : apiResponse.getResults()
+//                        ) {
+//                    if (!(characterResults.getRealName() == null)) {
+//                        superheroInformation.append(characterResults.getName() + "\n");
+//                    }
+//                }
             }
 
             @Override

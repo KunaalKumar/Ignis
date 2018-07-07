@@ -10,6 +10,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.CharacterResults;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,11 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<ApiResponse<CharacterResults>>() {
             @Override
-            public void onResponse(Call<ApiResponse<CharacterResults>> call, Response<ApiResponse<CharacterResults>> response) {
+            public void onResponse(@NonNull Call<ApiResponse<CharacterResults>> call, @NonNull Response<ApiResponse<CharacterResults>> response) {
                 Log.d("Ignis", response.body().toString());
                 ApiResponse<CharacterResults> apiResponse = response.body();
 
-
+                if (apiResponse.getResults().length != 0) {
+                    String image_url = apiResponse.getResults()[0].getImage().getOriginalUrl();
+                    Picasso.get().load(image_url).into(superheroInformation);
+                }
 //                for (CharacterResults characterResults : apiResponse.getResults()
 //                        ) {
 //                    if (!(characterResults.getRealName() == null)) {
@@ -70,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<CharacterResults>> call, Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse<CharacterResults>> call, @NonNull Throwable t) {
                 Log.d("Ignis", t.toString());
             }
         });

@@ -1,6 +1,8 @@
 package com.kunaalkumar.ignis;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -15,14 +17,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.kunaalkumar.ignis.adapters.DefaultAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.CharacterResults;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
-import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,8 +33,11 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.search_button)
     Button searchButton;
 
-    @BindView(R.id.superhero_information)
-    ImageView superheroInformation;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    DefaultAdapter adapter;
+
 
     // Api key for ComicVine
     private static final String apiKey = "9aa1dc67801a2cdc8460790837f94b73057ce351";
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
     }
 
 
@@ -62,16 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Ignis", response.body().toString());
                 ApiResponse<CharacterResults> apiResponse = response.body();
 
-                if (apiResponse.getResults().length != 0) {
-                    String image_url = apiResponse.getResults()[0].getImage().getOriginalUrl();
-                    Picasso.get().load(image_url).into(superheroInformation);
-                }
-//                for (CharacterResults characterResults : apiResponse.getResults()
-//                        ) {
-//                    if (!(characterResults.getRealName() == null)) {
-//                        superheroInformation.append(characterResults.getName() + "\n");
-//                    }
-//                }
+                // TODO: call /character/ for additional information
+                recyclerView.setHasFixedSize(true);
+                adapter = new DefaultAdapter(apiResponse.getResults());
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
             }
 
             @Override

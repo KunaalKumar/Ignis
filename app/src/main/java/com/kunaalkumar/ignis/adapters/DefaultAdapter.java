@@ -39,11 +39,11 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d("Ignis", "onBindViewHolder called: " + characterResults[position].getName());
 
-        Character character = (Character) characterResults[position];
+        CharacterResults character = characterResults[position];
 
         // TODO: Check if character gender and apply placeholder image if needed
-        if (characterResults[position].getImage() == null) {
-            if (characterResults[position].getGender() == 1) {
+        if (character.getImage() == null) {
+            if (character.getGender() == 1) {
                 Picasso.get()
                         .load(R.drawable.placeholder_male_superhero)
                         .into(holder.superheroImage);
@@ -52,10 +52,15 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
                         .load(R.drawable.placeholder_female_superhero)
                         .into(holder.superheroImage);
             }
-        } else {
+        } else if (character.getGender() == 1) {
             Picasso.get()
                     .load(characterResults[position].getImage().getSmallUrl())
                     .placeholder(R.drawable.placeholder_male_superhero)
+                    .into(holder.superheroImage);
+        } else {
+            Picasso.get()
+                    .load(characterResults[position].getImage().getSmallUrl())
+                    .placeholder(R.drawable.placeholder_female_superhero)
                     .into(holder.superheroImage);
         }
 

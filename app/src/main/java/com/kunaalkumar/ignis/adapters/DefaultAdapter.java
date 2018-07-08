@@ -49,7 +49,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
                     .into(holder.image);
         } else {
             Glide.with(holder.itemView)
-                    .load(result.getImage().getScreenLargeUrl())
+                    .load(result.getImage().getOriginalUrl())
                     .into(holder.image);
         }
 

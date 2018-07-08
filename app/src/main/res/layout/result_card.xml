@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/mtrl_card_spacing"
         android:layout_marginTop="@dimen/mtrl_card_spacing"
         android:layout_marginRight="@dimen/mtrl_card_spacing">
@@ -19,13 +18,14 @@
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="155dp"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="230dp"
                 android:contentDescription="Image of character"
-                android:minHeight="200dp"
+                android:minHeight="230dp"
                 android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:src="@drawable/placeholder_male_superhero"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,52 +34,42 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:text="Name"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image" />
 
             <TextView
                 android:id="@+id/real_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:text="--Insert more info here--"
+                app:layout_constraintBottom_toTopOf="@+id/resource_type"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/image"
-                app:layout_constraintTop_toBottomOf="@+id/name" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="352dp"
-                android:layout_height="1dp"
-                android:layout_marginBottom="8dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image"
-                app:layout_constraintTop_toBottomOf="@+id/real_name"
-                app:layout_constraintVertical_bias="0.368" />
+                app:layout_constraintTop_toBottomOf="@+id/image" />
 
             <TextView
                 android:id="@+id/resource_type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:text="Resource Type"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/image"
-                app:layout_constraintTop_toBottomOf="@+id/divider" />
+                app:layout_constraintTop_toBottomOf="@+id/image"
+                app:layout_constraintVertical_bias="0.861" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

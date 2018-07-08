@@ -42,16 +42,10 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
         Log.d("Ignis", "onBindViewHolder called: " + result.getId());
 
-        // TODO: Check if character gender and apply placeholder image if needed
-        if (result.getImage() == null) {
-            Glide.with(holder.itemView)
-                    .load(R.drawable.placeholder_male_superhero)
-                    .into(holder.image);
-        } else {
-            Glide.with(holder.itemView)
-                    .load(result.getImage().getOriginalUrl())
-                    .into(holder.image);
-        }
+        Glide.with(holder.itemView)
+                .load(result.getImage().getOriginalUrl())
+                .into(holder.image);
+
 
         holder.name.setText(result.getName());
         holder.resourceType.setText(result.getResourceType());

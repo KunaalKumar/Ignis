@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 
-public class CharacterResults {
+public class CharacterResults implements Comparable<CharacterResults> {
 
     private final static String FIELD_LIST = "aliases, birth, character_enemies";
 
@@ -186,6 +186,11 @@ public class CharacterResults {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    @Override
+    public int compareTo(CharacterResults characterResults) {
+        return characterResults.countOfIssueAppearances.compareTo(countOfIssueAppearances);
     }
 
     // characters/first_appeared_in_issue

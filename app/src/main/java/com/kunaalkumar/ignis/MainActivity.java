@@ -25,6 +25,8 @@ import com.kunaalkumar.ignis.comicvine_objects.CharacterResults;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.superhero_search)
@@ -65,11 +67,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ApiResponse<CharacterResults>> call, @NonNull Response<ApiResponse<CharacterResults>> response) {
                 Log.d("Ignis", response.body().toString());
-                ApiResponse<CharacterResults> apiResponse = response.body();
+                // TODO: Add loading animation
+                CharacterResults[] characterResults = response.body().getResults();
+                characterResults = sortByCount(characterResults);
 
                 // TODO: call /character/ for additional information
                 recyclerView.setHasFixedSize(true);
-                adapter = new DefaultAdapter(apiResponse.getResults());
+                adapter = new DefaultAdapter(characterResults);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
             }
@@ -79,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Ignis", t.toString());
             }
         });
+    }
+
+    private CharacterResults[] sortByCount(CharacterResults[] characterResults) {
+        Arrays.sort(characterResults);
+        return characterResults;
     }
 
 }

@@ -68,12 +68,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
         holder.superheroName.setText(character.getName());
         holder.realName.setText(character.getRealName());
-        if (character.getPublisher() != null) {
-            holder.publisher.setText(character.getPublisher().getName());
-        }
-        else {
-            holder.publisher.setText("Publisher not found.");
-        }
+        holder.count.setText(character.getCountOfIssueAppearances().toString());
 
     }
 
@@ -93,8 +88,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         @BindView(R.id.real_name)
         TextView realName;
 
-        @BindView(R.id.publisher)
-        TextView publisher;
+        @BindView(R.id.count)
+        TextView count;
 
         @BindView(R.id.parent_layout)
         RelativeLayout parentLayout;

@@ -1,5 +1,6 @@
 package com.kunaalkumar.ignis.adapters;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.Result;
 
@@ -35,7 +38,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
         Result result = searchResults[position];
 
@@ -43,9 +46,9 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         Log.d("Ignis", "onBindViewHolder called: " + result.getId());
 
         Glide.with(holder.itemView)
+                .asBitmap()
                 .load(result.getImage().getOriginalUrl())
                 .into(holder.image);
-
 
         holder.name.setText(result.getName());
         holder.resourceType.setText(result.getResourceType());
@@ -63,9 +66,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
         @BindView(R.id.name)
         TextView name;
-
-        @BindView(R.id.real_name)
-        TextView realName;
 
         @BindView(R.id.resource_type)
         TextView resourceType;

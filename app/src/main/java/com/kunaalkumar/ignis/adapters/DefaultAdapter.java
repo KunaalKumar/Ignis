@@ -8,10 +8,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.comicvine_objects.Character;
 import com.kunaalkumar.ignis.comicvine_objects.CharacterResults;
-import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,23 +43,21 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         // TODO: Check if character gender and apply placeholder image if needed
         if (character.getImage() == null) {
             if (character.getGender() == 1) {
-                Picasso.get()
+                Glide.with(holder.itemView)
                         .load(R.drawable.placeholder_male_superhero)
                         .into(holder.superheroImage);
             } else {
-                Picasso.get()
+                Glide.with(holder.itemView)
                         .load(R.drawable.placeholder_female_superhero)
                         .into(holder.superheroImage);
             }
         } else if (character.getGender() == 1) {
-            Picasso.get()
-                    .load(characterResults[position].getImage().getScreenLargeUrl())
-                    .placeholder(R.drawable.placeholder_male_superhero)
+            Glide.with(holder.itemView)
+                    .load(characterResults[position].getImage().getSmallUrl())
                     .into(holder.superheroImage);
         } else {
-            Picasso.get()
+            Glide.with(holder.itemView)
                     .load(characterResults[position].getImage().getSmallUrl())
-                    .placeholder(R.drawable.placeholder_female_superhero)
                     .into(holder.superheroImage);
         }
 

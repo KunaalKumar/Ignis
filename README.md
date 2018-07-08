@@ -15,7 +15,7 @@ Android app for information about ~~marvel characters~~ superheroes from all uni
 
 * ![alt text](http://jakewharton.github.io/butterknife/static/logo.png "ButterKnife")
 
-* [Picasso](http://square.github.io/picasso/)
+* ![alt text](https://github.com/bumptech/glide/blob/master/static/glide_logo.png "Glide")
 
 * Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [FlatIcon](www.flaticon.com)
 

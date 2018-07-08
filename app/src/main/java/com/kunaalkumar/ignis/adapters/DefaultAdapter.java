@@ -1,6 +1,7 @@
 package com.kunaalkumar.ignis.adapters;
 
-import android.graphics.Bitmap;
+import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.Result;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,10 +23,12 @@ import butterknife.ButterKnife;
 public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHolder> {
 
     private Result[] searchResults;
+    private Context context;
 
 
-    public DefaultAdapter(Result[] searchResults) {
+    public DefaultAdapter(Result[] searchResults, Context context) {
         this.searchResults = searchResults;
+        this.context = context;
     }
 
     @NonNull
@@ -45,12 +47,18 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
         Log.d("Ignis", "onBindViewHolder called: " + result.getId());
 
-        Glide.with(holder.itemView)
-                .asBitmap()
-                .load(result.getImage().getOriginalUrl())
-                .into(holder.image);
+        if (result.getImage() != null) {
+            Glide.with(holder.itemView)
+                    .asBitmap()
+                    .load(result.getImage().getOriginalUrl())
+                    .into(holder.image);
+        }
 
-        holder.name.setText(result.getName());
+        if (result.getName() != null) {
+            holder.name.setText(result.getName());
+        } else {
+            holder.name.setText("Name not found");
+        }
         holder.resourceType.setText(result.getResourceType());
     }
 

@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 Result[] results = response.body().getResults();
 
-                adapter = new DefaultAdapter(results);
+                adapter = new DefaultAdapter(results, getApplicationContext());
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
             }

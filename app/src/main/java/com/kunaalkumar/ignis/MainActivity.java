@@ -1,6 +1,5 @@
 package com.kunaalkumar.ignis;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,13 +20,13 @@ import android.widget.Toast;
 
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
-import com.kunaalkumar.ignis.comicvine_objects.CharacterResults;
+import com.kunaalkumar.ignis.comicvine_objects.Result;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
 
-import java.util.Arrays;
-
 public class MainActivity extends AppCompatActivity {
+
+    public static final String FORMAT = "json";
 
     @BindView(R.id.superhero_search)
     EditText superheroSearch;
@@ -60,34 +59,24 @@ public class MainActivity extends AppCompatActivity {
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
 
-        // TODO: Check for if name is null
-        Call<ApiResponse<CharacterResults>> call = client.searchCharacters(apiKey, "name:" + superheroSearch.getText().toString(), "json");
-
-        call.enqueue(new Callback<ApiResponse<CharacterResults>>() {
+        Call<ApiResponse> call = client.search(apiKey, superheroSearch.getText().toString(), FORMAT);
+        call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ApiResponse<CharacterResults>> call, @NonNull Response<ApiResponse<CharacterResults>> response) {
-                Log.d("Ignis", response.body().toString());
-                // TODO: Add loading animation
-                CharacterResults[] characterResults = response.body().getResults();
-                characterResults = sortByCount(characterResults);
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                Result[] results = response.body().getResults();
 
-                // TODO: call /character/ for additional information
                 recyclerView.setHasFixedSize(true);
-                adapter = new DefaultAdapter(characterResults);
+                adapter = new DefaultAdapter(results);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
             }
 
             @Override
-            public void onFailure(@NonNull Call<ApiResponse<CharacterResults>> call, @NonNull Throwable t) {
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
                 Log.d("Ignis", t.toString());
             }
         });
-    }
 
-    private CharacterResults[] sortByCount(CharacterResults[] characterResults) {
-        Arrays.sort(characterResults);
-        return characterResults;
     }
 
 }

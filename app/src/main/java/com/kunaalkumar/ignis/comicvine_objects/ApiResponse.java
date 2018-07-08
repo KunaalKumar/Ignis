@@ -2,7 +2,7 @@ package com.kunaalkumar.ignis.comicvine_objects;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ApiResponse<T> {
+public class ApiResponse {
 
     @SerializedName("error")
     private String error;
@@ -23,12 +23,12 @@ public class ApiResponse<T> {
     private Integer statusCode;
 
     @SerializedName("results")
-    private T[] results;
+    private Result[] results;
 
     @SerializedName("version")
     private String version;
 
-    public ApiResponse(String error, Integer limit, Integer offset, Integer numberOfPageResults, Integer numberOfTotalResults, Integer statusCode, T[] results, String version) {
+    public ApiResponse(String error, Integer limit, Integer offset, Integer numberOfPageResults, Integer numberOfTotalResults, Integer statusCode, Result[] results, String version) {
         this.error = error;
         this.limit = limit;
         this.offset = offset;
@@ -87,20 +87,13 @@ public class ApiResponse<T> {
         this.statusCode = statusCode;
     }
 
-    public T[] getResults() {
+    public Result[] getResults() {
         return results;
-    }
-
-    public void setResults(T[] results) {
-        this.results = results;
     }
 
     public String getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
-    }
 }
 

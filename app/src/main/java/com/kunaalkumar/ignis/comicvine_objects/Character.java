@@ -2,16 +2,54 @@ package com.kunaalkumar.ignis.comicvine_objects;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Character extends CharacterResults {
+public class Character {
 
+    @SerializedName("aliases")
+    private String aliases;
+
+    @SerializedName("birth")
+    private String birth;
+
+    @SerializedName("count_of_issue_appearances")
+    private Integer countOfIssueAppearances;
+
+    @SerializedName("date_last_updated")
+    private String dateLastUpdated;
+
+    @SerializedName("deck")
+    private String briefSummary;
+
+    @SerializedName("description")
+    private String description;
+
+    @SerializedName("first_appeared_in_issue")
+    private FirstAppearedInIssue firstAppearedInIssue;
+
+    @SerializedName("gender")
+    private Integer gender;
+
+    @SerializedName("id")
+    private Integer id;
+
+    @SerializedName("image")
+    private Image image;
+
+    @SerializedName("origin")
+    private Origin origin;
+
+    @SerializedName("publisher")
+    private Publisher publisher;
+
+    @SerializedName("real_name")
+    private String realName;
+
+    @SerializedName("name")
+    private String name;
     @SerializedName("character_enemies")
     private Relation[] characterEnemies;
 
     @SerializedName("character_friends")
     private Relation[] characterFriends;
-
-    @SerializedName("count_of_issue_appearances")
-    private Integer countOfIssueAppearances;
 
     @SerializedName("creators")
     private Relation[] creators;
@@ -43,11 +81,26 @@ public class Character extends CharacterResults {
     @SerializedName("volume_credits")
     private Relation[] volumeCredits;
 
-    public Character(String aliases, String birth, Integer countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, int gender, Integer id, Image image, Origin origin, Publisher publisher, String realName, String name, Relation[] characterEnemies, Relation[] characterFriends, Integer countOfIssueAppearances1, Relation[] creators, Relation[] issuesAppearedIn, Relation[] issuesDiedIn, Relation[] movies, Relation[] powers, Relation[] storyArcCredits, Relation[] teamEnemies, Relation[] teamFriends, Relation[] teams, Relation[] volumeCredits) {
-        super(aliases, birth, countOfIssueAppearances, dateLastUpdated, briefSummary, description, firstAppearedInIssue, gender, id, image, origin, publisher, realName, name);
+    @SerializedName("api_detail_url")
+    private String apiDetailUrl;
+
+    public Character(String aliases, String birth, Integer countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, FirstAppearedInIssue firstAppearedInIssue, Integer gender, Integer id, Image image, Origin origin, Publisher publisher, String realName, String name, Relation[] characterEnemies, Relation[] characterFriends, Relation[] creators, Relation[] issuesAppearedIn, Relation[] issuesDiedIn, Relation[] movies, Relation[] powers, Relation[] storyArcCredits, Relation[] teamEnemies, Relation[] teamFriends, Relation[] teams, Relation[] volumeCredits, String apiDetailUrl) {
+        this.aliases = aliases;
+        this.birth = birth;
+        this.countOfIssueAppearances = countOfIssueAppearances;
+        this.dateLastUpdated = dateLastUpdated;
+        this.briefSummary = briefSummary;
+        this.description = description;
+        this.firstAppearedInIssue = firstAppearedInIssue;
+        this.gender = gender;
+        this.id = id;
+        this.image = image;
+        this.origin = origin;
+        this.publisher = publisher;
+        this.realName = realName;
+        this.name = name;
         this.characterEnemies = characterEnemies;
         this.characterFriends = characterFriends;
-        this.countOfIssueAppearances = countOfIssueAppearances1;
         this.creators = creators;
         this.issuesAppearedIn = issuesAppearedIn;
         this.issuesDiedIn = issuesDiedIn;
@@ -58,6 +111,15 @@ public class Character extends CharacterResults {
         this.teamFriends = teamFriends;
         this.teams = teams;
         this.volumeCredits = volumeCredits;
+        this.apiDetailUrl = apiDetailUrl;
+    }
+
+    public String getApiDetailUrl() {
+        return apiDetailUrl;
+    }
+
+    public void setApiDetailUrl(String apiDetailUrl) {
+        this.apiDetailUrl = apiDetailUrl;
     }
 
     public Relation[] getCharacterEnemies() {
@@ -74,16 +136,6 @@ public class Character extends CharacterResults {
 
     public void setCharacterFriends(Relation[] characterFriends) {
         this.characterFriends = characterFriends;
-    }
-
-    @Override
-    public Integer getCountOfIssueAppearances() {
-        return countOfIssueAppearances;
-    }
-
-    @Override
-    public void setCountOfIssueAppearances(Integer countOfIssueAppearances) {
-        this.countOfIssueAppearances = countOfIssueAppearances;
     }
 
     public Relation[] getCreators() {
@@ -166,8 +218,60 @@ public class Character extends CharacterResults {
         this.volumeCredits = volumeCredits;
     }
 
-    public Character(String aliases, String birth, Integer countOfIssueAppearances, String dateLastUpdated, String briefSummary, String description, CharacterResults.FirstAppearedInIssue firstAppearedInIssue, int gender, Integer id, CharacterResults.Image image, CharacterResults.Origin origin, CharacterResults.Publisher publisher, String realName, String name) {
-        super(aliases, birth, countOfIssueAppearances, dateLastUpdated, briefSummary, description, firstAppearedInIssue, gender, id, image, origin, publisher, realName, name);
+    public String getAliases() {
+        return aliases;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public Integer getCountOfIssueAppearances() {
+        return countOfIssueAppearances;
+    }
+
+    public String getDateLastUpdated() {
+        return dateLastUpdated;
+    }
+
+    public String getBriefSummary() {
+        return briefSummary;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public FirstAppearedInIssue getFirstAppearedInIssue() {
+        return firstAppearedInIssue;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public Origin getOrigin() {
+        return origin;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public class Relation {
@@ -193,6 +297,76 @@ public class Character extends CharacterResults {
 
         public void setApiDetailUrl(String apiDetailUrl) {
             this.apiDetailUrl = apiDetailUrl;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    public class FirstAppearedInIssue {
+        @SerializedName("id")
+        private Integer id;
+
+        @SerializedName("name")
+        private String name;
+
+        @SerializedName("issue_number")
+        private Double issueNumber;
+
+        public FirstAppearedInIssue(Integer id, String name, Double issueNumber) {
+            this.id = id;
+            this.name = name;
+            this.issueNumber = issueNumber;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Double getIssueNumber() {
+            return issueNumber;
+        }
+
+        public void setIssueNumber(Double issueNumber) {
+            this.issueNumber = issueNumber;
+        }
+    }
+
+    public class Origin {
+        @SerializedName("id")
+        private Integer id;
+
+        @SerializedName("name")
+        private String name;
+
+        public Origin(Integer id, String name) {
+            this.id = id;
+            this.name = name;
         }
 
         public Integer getId() {

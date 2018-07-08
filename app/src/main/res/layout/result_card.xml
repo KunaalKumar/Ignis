@@ -18,7 +18,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/character_image"
+                android:id="@+id/image"
                 android:layout_width="155dp"
                 android:layout_height="match_parent"
                 android:contentDescription="Image of character"
@@ -30,16 +30,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/superhero_name"
+                android:id="@+id/name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Superhero name"
+                android:text="Name"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/character_image"
+                app:layout_constraintStart_toEndOf="@+id/image"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -50,11 +50,11 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="center"
-                android:text="Real Name"
+                android:text="--Insert more info here--"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/character_image"
-                app:layout_constraintTop_toBottomOf="@+id/superhero_name" />
+                app:layout_constraintStart_toEndOf="@+id/image"
+                app:layout_constraintTop_toBottomOf="@+id/name" />
 
             <View
                 android:id="@+id/divider"
@@ -63,24 +63,23 @@
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/listDivider"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/character_image"
+                app:layout_constraintStart_toEndOf="@+id/image"
                 app:layout_constraintTop_toBottomOf="@+id/real_name"
                 app:layout_constraintVertical_bias="0.368" />
 
             <TextView
-                android:id="@+id/count"
+                android:id="@+id/resource_type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="center"
-                android:text="Count"
+                android:text="Resource Type"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/character_image"
+                app:layout_constraintStart_toEndOf="@+id/image"
                 app:layout_constraintTop_toBottomOf="@+id/divider" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

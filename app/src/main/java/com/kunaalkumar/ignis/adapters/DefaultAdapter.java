@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.CharacterResults;
 
@@ -54,14 +55,25 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         } else if (character.getGender() == 1) {
             Glide.with(holder.itemView)
                     .load(characterResults[position].getImage().getSmallUrl())
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.placeholder_male_superhero))
                     .into(holder.superheroImage);
         } else {
             Glide.with(holder.itemView)
                     .load(characterResults[position].getImage().getSmallUrl())
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.placeholder_female_superhero))
                     .into(holder.superheroImage);
         }
 
-        holder.superheroName.setText(characterResults[position].getName());
+        holder.superheroName.setText(character.getName());
+        holder.realName.setText(character.getRealName());
+        if (character.getPublisher() != null) {
+            holder.publisher.setText(character.getPublisher().getName());
+        }
+        else {
+            holder.publisher.setText("Publisher not found.");
+        }
 
     }
 
@@ -77,6 +89,12 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
         @BindView(R.id.superhero_name)
         TextView superheroName;
+
+        @BindView(R.id.real_name)
+        TextView realName;
+
+        @BindView(R.id.publisher)
+        TextView publisher;
 
         @BindView(R.id.parent_layout)
         RelativeLayout parentLayout;

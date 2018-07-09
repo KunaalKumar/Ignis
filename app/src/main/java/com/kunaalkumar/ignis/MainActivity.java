@@ -2,12 +2,15 @@ package com.kunaalkumar.ignis;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,10 +20,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
@@ -39,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.search_button)
     Button searchButton;
 
+    @BindView(R.id.search)
+    ImageView search;
+
+    @BindView(R.id.settings)
+    ImageView settings;
+
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -55,9 +67,18 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+    @OnClick(R.id.search)
+    public void searchOnClick(View view) {
+        Toast.makeText(this, "Clicked search", Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.settings)
+    public void settingsOnClick(View view) {
+        Toast.makeText(this, "Clicked settings", Toast.LENGTH_LONG).show();
+    }
 
     @OnClick(R.id.search_button)
-    public void search(View view) {
+    public void searchButton(View view) {
         Toast.makeText(MainActivity.this, "Getting results", Toast.LENGTH_SHORT).show();
 
         Retrofit retrofit = ClientInstance.getClient();

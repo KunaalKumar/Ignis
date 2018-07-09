@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.Result;
@@ -51,11 +51,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
 
         if (result.getImage() != null) {
-//            Glide.with(holder.itemView)
-//                    .asBitmap()
-//                    .load(result.getImage().getOriginalUrl())
-//                    .into(holder.image);
             Uri uri = Uri.parse(result.getImage().getMediumUrl());
+            holder.image.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
             holder.image.setImageURI(uri);
         }
 

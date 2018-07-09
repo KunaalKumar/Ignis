@@ -1,8 +1,6 @@
 package com.kunaalkumar.ignis.adapters;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,16 +10,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.drawable.ProgressBarDrawable;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.Result;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,10 +41,10 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
             @Override
             public void onPeek(View view, int position) {
 
-//                peekImageView.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
-//                peekImageView.setImageURI(Uri.parse(searchResults[position].getImage().getMediumUrl()));
-
-                Picasso.get().load(Uri.parse(searchResults[position].getImage().getOriginalUrl())).into(peekImageView);
+                Picasso.get()
+                        .load(Uri.parse(searchResults[position].getImage().getOriginalUrl()))
+                        .placeholder(R.drawable.ic_launcher)
+                        .into(peekImageView);
             }
 
             @Override
@@ -80,9 +72,11 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
 
         if (result.getImage() != null) {
-            Uri uri = Uri.parse(result.getImage().getOriginalUrl());
-            holder.image.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
-            holder.image.setImageURI(uri);
+
+            Picasso.get()
+                    .load(Uri.parse(searchResults[position].getImage().getOriginalUrl()))
+                    .placeholder(R.drawable.ic_launcher)
+                    .into(holder.image);
         }
 
         if (result.getName() != null) {
@@ -102,7 +96,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.image)
-        SimpleDraweeView image;
+        ImageView image;
 
         @BindView(R.id.name)
         TextView name;

@@ -1,7 +1,8 @@
 package com.kunaalkumar.ignis.adapters;
 
-import android.content.Context;
-import android.graphics.Color;
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +16,14 @@ import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.Result;
+import com.peekandpop.shalskar.peekandpop.PeekAndPop;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,12 +31,34 @@ import butterknife.ButterKnife;
 public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHolder> {
 
     private Result[] searchResults;
-    private Context context;
+    private Activity activity;
+    private PeekAndPop peekAndPop;
+    private View peekView;
+    private ImageView peekImageView;
 
-
-    public DefaultAdapter(Result[] searchResults, Context context) {
+    public DefaultAdapter(final Result[] searchResults, Activity context, PeekAndPop peekAndPop) {
         this.searchResults = searchResults;
-        this.context = context;
+        this.activity = context;
+        this.peekAndPop = peekAndPop;
+
+        peekView = peekAndPop.getPeekView();
+
+        peekImageView = peekView.findViewById(R.id.preview_dialog);
+
+        peekAndPop.setOnGeneralActionListener(new PeekAndPop.OnGeneralActionListener() {
+            @Override
+            public void onPeek(View view, int position) {
+
+//                peekImageView.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
+//                peekImageView.setImageURI(Uri.parse(searchResults[position].getImage().getMediumUrl()));
+
+                Picasso.get().load(Uri.parse(searchResults[position].getImage().getOriginalUrl())).into(peekImageView);
+            }
+
+            @Override
+            public void onPop(View view, int position) {
+            }
+        });
     }
 
     @NonNull
@@ -44,14 +72,15 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        Result result = searchResults[position];
+        final Result result = searchResults[position];
 
+        peekAndPop.addLongClickView(holder.parentLayout, position);
 
         Log.d("Ignis", "onBindViewHolder called: " + result.getId());
 
 
         if (result.getImage() != null) {
-            Uri uri = Uri.parse(result.getImage().getMediumUrl());
+            Uri uri = Uri.parse(result.getImage().getOriginalUrl());
             holder.image.getHierarchy().setProgressBarImage(new ProgressBarDrawable());
             holder.image.setImageURI(uri);
         }
@@ -61,6 +90,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         } else {
             holder.name.setText("Name not found");
         }
+
         holder.resourceType.setText(result.getResourceType());
     }
 

@@ -1,40 +1,32 @@
 package com.kunaalkumar.ignis;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.TooltipCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipeline;
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.Result;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
+import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     DefaultAdapter adapter;
 
+    private PeekAndPop peekAndPop;
 
     // Api key for ComicVine
     private static final String apiKey = "9aa1dc67801a2cdc8460790837f94b73057ce351";
@@ -67,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Fresco.initialize(this);
+
+        peekAndPop = new PeekAndPop.Builder(this)
+                .peekLayout(R.layout.peek_preview)
+                .parentViewGroupToDisallowTouchEvents(recyclerView)
+                .build();
     }
 
     @OnClick(R.id.search)
@@ -92,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 Result[] results = response.body().getResults();
 
-                adapter = new DefaultAdapter(results, getApplicationContext());
+                adapter = new DefaultAdapter(results, MainActivity.this, peekAndPop);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
             }
@@ -102,7 +100,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Ignis", t.toString());
             }
         });
-
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        imagePipeline.clearCaches();
+    }
 }

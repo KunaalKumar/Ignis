@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.Result;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        Fresco.initialize(this);
     }
 
     @OnClick(R.id.search)

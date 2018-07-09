@@ -2,6 +2,7 @@ package com.kunaalkumar.ignis.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.Result;
 
@@ -47,11 +49,14 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
         Log.d("Ignis", "onBindViewHolder called: " + result.getId());
 
+
         if (result.getImage() != null) {
-            Glide.with(holder.itemView)
-                    .asBitmap()
-                    .load(result.getImage().getOriginalUrl())
-                    .into(holder.image);
+//            Glide.with(holder.itemView)
+//                    .asBitmap()
+//                    .load(result.getImage().getOriginalUrl())
+//                    .into(holder.image);
+            Uri uri = Uri.parse(result.getImage().getMediumUrl());
+            holder.image.setImageURI(uri);
         }
 
         if (result.getName() != null) {
@@ -70,7 +75,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.image)
-        ImageView image;
+        SimpleDraweeView image;
 
         @BindView(R.id.name)
         TextView name;

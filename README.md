@@ -15,7 +15,7 @@ Android app for information about ~~marvel characters~~ superheroes from all uni
 
 * ![alt text](http://jakewharton.github.io/butterknife/static/logo.png "ButterKnife")
 
-* ![alt text](https://i1.wp.com/www.gadgetsaint.com/wp-content/uploads/2016/12/glide_logo.png?resize=720%2C240 "Glide")
+* ![alt text](http://frescolib.org/static/sample-images/fresco_logo_anim_full_frames_with_pause_s.gif"Fresco")
 
 * Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [FlatIcon](www.flaticon.com)
 

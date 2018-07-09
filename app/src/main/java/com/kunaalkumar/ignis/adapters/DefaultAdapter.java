@@ -1,21 +1,31 @@
 package com.kunaalkumar.ignis.adapters;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.Result;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
-import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,9 +51,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
             @Override
             public void onPeek(View view, int position) {
 
-                Picasso.get()
+                Glide.with(activity)
                         .load(Uri.parse(searchResults[position].getImage().getOriginalUrl()))
-                        .placeholder(R.drawable.ic_launcher)
                         .into(peekImageView);
             }
 
@@ -73,10 +82,23 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
         if (result.getImage() != null) {
 
-            Picasso.get()
+            Glide.with(activity)
                     .load(Uri.parse(searchResults[position].getImage().getOriginalUrl()))
-                    .placeholder(R.drawable.ic_launcher)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            holder.progressBar.setVisibility(View.GONE);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            holder.progressBar.setVisibility(View.GONE);
+                            return false;
+                        }
+                    })
                     .into(holder.image);
+
         }
 
         if (result.getName() != null) {
@@ -106,6 +128,9 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
         @BindView(R.id.parent_layout)
         RelativeLayout parentLayout;
+
+        @BindView(R.id.progress)
+        ProgressBar progressBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

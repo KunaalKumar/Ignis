@@ -1,10 +1,7 @@
 package com.kunaalkumar.ignis.adapters;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +50,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
             public void onPeek(View view, int position) {
 
                 Glide.with(activity)
-                        .load(Uri.parse(searchResults[position].getImage().getOriginalUrl()))
+                        .load(searchResults[position].getImage().getOriginalUrl())
                         .apply(new RequestOptions()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(peekImageView);
@@ -86,7 +83,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         if (result.getImage() != null) {
 
             Glide.with(activity)
-                    .load(Uri.parse(searchResults[position].getImage().getOriginalUrl()))
+                    .load(searchResults[position].getImage().getOriginalUrl())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .listener(new RequestListener<Drawable>() {

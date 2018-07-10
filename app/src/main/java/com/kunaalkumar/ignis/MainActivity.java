@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         peekAndPop = new PeekAndPop.Builder(this)
                 .peekLayout(R.layout.peek_preview)
                 .parentViewGroupToDisallowTouchEvents(recyclerView)

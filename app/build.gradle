@@ -45,7 +45,4 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation "com.github.bumptech.glide:okhttp3-integration:4.7.1"
 
-    // Fresco
-    implementation 'com.facebook.fresco:fresco:1.9.0'
-
 }

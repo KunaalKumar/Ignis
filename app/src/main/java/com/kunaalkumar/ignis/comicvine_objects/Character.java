@@ -2,6 +2,8 @@ package com.kunaalkumar.ignis.comicvine_objects;
 
 import com.google.gson.annotations.SerializedName;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
+import com.kunaalkumar.ignis.comicvine_objects.misc.FirstAppearedInIssue;
+import com.kunaalkumar.ignis.comicvine_objects.misc.Relation;
 
 public class Character extends CharacterBrief {
 
@@ -41,40 +43,19 @@ public class Character extends CharacterBrief {
     @SerializedName("volume_credits")
     private Relation[] volumeCredits;
 
-    public Character( String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id) {
-        super( deck, dateLastUpdated, image, name, siteDetailUrl, id);
+    public Character(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, Origin origin, Publisher publisher, String realName, Relation[] characterEnemies, Relation[] characterFriends, Relation[] creators, Relation[] issuesAppearedIn, Relation[] issuesDiedIn, Relation[] movies, Relation[] powers, Relation[] storyArcCredits, Relation[] teamEnemies, Relation[] teamFriends, Relation[] teams, Relation[] volumeCredits) {
+        super(deck, dateLastUpdated, image, name, siteDetailUrl, id, aliases, birth, countOfIssueAppearances, firstAppearedInIssue, gender, origin, publisher, realName);
+        this.characterEnemies = characterEnemies;
+        this.characterFriends = characterFriends;
+        this.creators = creators;
+        this.issuesAppearedIn = issuesAppearedIn;
+        this.issuesDiedIn = issuesDiedIn;
+        this.movies = movies;
+        this.powers = powers;
+        this.storyArcCredits = storyArcCredits;
+        this.teamEnemies = teamEnemies;
+        this.teamFriends = teamFriends;
+        this.teams = teams;
+        this.volumeCredits = volumeCredits;
     }
-
-    public class Relation {
-
-        @SerializedName("api_detail_url")
-        private String apiDetailUrl;
-
-        @SerializedName("id")
-        private Integer id;
-
-        @SerializedName("name")
-        private String name;
-
-        public Relation(String apiDetailUrl, Integer id, String name) {
-            this.apiDetailUrl = apiDetailUrl;
-            this.id = id;
-            this.name = name;
-        }
-
-        public String getApiDetailUrl() {
-            return apiDetailUrl;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-    }
-
-
 }

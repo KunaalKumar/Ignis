@@ -41,10 +41,9 @@ public class Character extends CharacterBrief {
     @SerializedName("volume_credits")
     private Relation[] volumeCredits;
 
-    public Character(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id) {
-        super(apiDetailUrl, deck, dateLastUpdated, image, name, siteDetailUrl, id);
+    public Character( String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id) {
+        super( deck, dateLastUpdated, image, name, siteDetailUrl, id);
     }
-
 
     public class Relation {
 

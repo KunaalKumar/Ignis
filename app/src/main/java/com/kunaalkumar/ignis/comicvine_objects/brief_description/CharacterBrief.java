@@ -30,8 +30,8 @@ public class CharacterBrief extends Brief {
     @SerializedName("real_name")
     private String realName;
 
-    public CharacterBrief(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id) {
-        super(apiDetailUrl, deck, dateLastUpdated, image, name, siteDetailUrl, id);
+    public CharacterBrief( String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id) {
+        super(deck, dateLastUpdated, image, name, siteDetailUrl, id);
     }
 
     public class FirstAppearedInIssue {

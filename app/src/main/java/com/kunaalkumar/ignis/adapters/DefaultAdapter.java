@@ -88,7 +88,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
             Glide.with(activity)
                     .load(Uri.parse(searchResults[position].getImage().getOriginalUrl()))
                     .apply(new RequestOptions()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL))
+                            .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

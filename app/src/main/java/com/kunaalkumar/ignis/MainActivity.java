@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private PeekAndPop peekAndPop;
 
     // Api key for ComicVine
-    private static final String apiKey = "9aa1dc67801a2cdc8460790837f94b73057ce351";
+    public static final String API_KEY = "9aa1dc67801a2cdc8460790837f94b73057ce351";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +77,18 @@ public class MainActivity extends AppCompatActivity {
     public void searchButton(View view) {
         Toast.makeText(MainActivity.this, "Getting results", Toast.LENGTH_SHORT).show();
 
+        searchCall();
+    }
+
+    // Retrofit call to search for word in superheroSearch
+    private void searchCall() {
+
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
-
-        Call<ApiResponse> call = client.search(apiKey, superheroSearch.getText().toString(), FORMAT);
-        call.enqueue(new Callback<ApiResponse>() {
+        Call<ApiResponse<Result[]>> call = client.search(superheroSearch.getText().toString(), API_KEY, FORMAT);
+        call.enqueue(new Callback<ApiResponse<Result[]>>() {
             @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+            public void onResponse(Call<ApiResponse<Result[]>> call, Response<ApiResponse<Result[]>> response) {
                 Result[] results = response.body().getResults();
 
                 adapter = new DefaultAdapter(results, MainActivity.this, peekAndPop);
@@ -92,10 +97,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<Result[]>> call, Throwable t) {
                 Log.d("Ignis", t.toString());
             }
         });
     }
-
 }

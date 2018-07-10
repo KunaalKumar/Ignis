@@ -31,6 +31,38 @@ public class CharacterBrief extends Brief {
     @SerializedName("real_name")
     private String realName;
 
+    public String getAliases() {
+        return aliases;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public Integer getCountOfIssueAppearances() {
+        return countOfIssueAppearances;
+    }
+
+    public FirstAppearedInIssue getFirstAppearedInIssue() {
+        return firstAppearedInIssue;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public Origin getOrigin() {
+        return origin;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
     public CharacterBrief(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, Origin origin, Publisher publisher, String realName) {
         super(deck, dateLastUpdated, image, name, siteDetailUrl, id);
         this.aliases = aliases;
@@ -62,7 +94,5 @@ public class CharacterBrief extends Brief {
         public String getName() {
             return name;
         }
-
     }
-
 }

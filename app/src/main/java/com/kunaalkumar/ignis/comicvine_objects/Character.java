@@ -43,6 +43,54 @@ public class Character extends CharacterBrief {
     @SerializedName("volume_credits")
     private Relation[] volumeCredits;
 
+    public Relation[] getCharacterEnemies() {
+        return characterEnemies;
+    }
+
+    public Relation[] getCharacterFriends() {
+        return characterFriends;
+    }
+
+    public Relation[] getCreators() {
+        return creators;
+    }
+
+    public Relation[] getIssuesAppearedIn() {
+        return issuesAppearedIn;
+    }
+
+    public Relation[] getIssuesDiedIn() {
+        return issuesDiedIn;
+    }
+
+    public Relation[] getMovies() {
+        return movies;
+    }
+
+    public Relation[] getPowers() {
+        return powers;
+    }
+
+    public Relation[] getStoryArcCredits() {
+        return storyArcCredits;
+    }
+
+    public Relation[] getTeamEnemies() {
+        return teamEnemies;
+    }
+
+    public Relation[] getTeamFriends() {
+        return teamFriends;
+    }
+
+    public Relation[] getTeams() {
+        return teams;
+    }
+
+    public Relation[] getVolumeCredits() {
+        return volumeCredits;
+    }
+
     public Character(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, Origin origin, Publisher publisher, String realName, Relation[] characterEnemies, Relation[] characterFriends, Relation[] creators, Relation[] issuesAppearedIn, Relation[] issuesDiedIn, Relation[] movies, Relation[] powers, Relation[] storyArcCredits, Relation[] teamEnemies, Relation[] teamFriends, Relation[] teams, Relation[] volumeCredits) {
         super(deck, dateLastUpdated, image, name, siteDetailUrl, id, aliases, birth, countOfIssueAppearances, firstAppearedInIssue, gender, origin, publisher, realName);
         this.characterEnemies = characterEnemies;
@@ -57,5 +105,9 @@ public class Character extends CharacterBrief {
         this.teamFriends = teamFriends;
         this.teams = teams;
         this.volumeCredits = volumeCredits;
+
+
     }
+
+
 }

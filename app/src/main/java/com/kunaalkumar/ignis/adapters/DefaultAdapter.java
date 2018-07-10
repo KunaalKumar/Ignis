@@ -83,7 +83,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         if (result.getImage() != null) {
 
             Glide.with(activity)
-                    .load(searchResults[position].getImage().getOriginalUrl())
+                    .load(result.getImage().getMediumUrl())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .listener(new RequestListener<Drawable>() {
@@ -100,6 +100,10 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
                         }
                     })
                     .into(holder.image);
+
+            Glide.with(activity)
+                    .load(result.getImage().getOriginalUrl())
+                    .preload();
 
         }
 

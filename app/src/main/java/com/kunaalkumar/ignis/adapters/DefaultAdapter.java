@@ -1,6 +1,7 @@
 package com.kunaalkumar.ignis.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -18,6 +20,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.kunaalkumar.ignis.CharacterActivity;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.Result;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
@@ -29,6 +32,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHolder> {
+
+    public static final String EXTRA_URL = "com.kunaalkumar.ignis.URL";
 
     private Result[] searchResults;
     private Activity activity;
@@ -51,8 +56,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
                 Glide.with(activity)
                         .load(searchResults[position].getImage().getOriginalUrl())
-                        .apply(new RequestOptions()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(peekImageView);
             }
 
@@ -71,7 +74,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         final Result result = searchResults[position];
 
@@ -114,6 +117,17 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         }
 
         holder.resourceType.setText(result.getResourceType());
+
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(activity, CharacterActivity.class);
+                String url = result.getImage().getOriginalUrl();
+                intent.putExtra(EXTRA_URL, url);
+                activity.startActivity(intent);
+            }
+        });
     }
 
     @Override

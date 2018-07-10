@@ -28,6 +28,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <activity
+            android:name=".CharacterActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"/>
     </application>
 
 </manifest>

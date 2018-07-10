@@ -20,8 +20,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
-import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
-import com.kunaalkumar.ignis.comicvine_objects.Result;
+import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
+import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
@@ -85,19 +85,19 @@ public class MainActivity extends AppCompatActivity {
 
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
-        Call<ApiResponse<Result[]>> call = client.search(superheroSearch.getText().toString(), API_KEY, FORMAT);
-        call.enqueue(new Callback<ApiResponse<Result[]>>() {
+        Call<ApiResponse<SearchResult[]>> call = client.search(superheroSearch.getText().toString(), API_KEY, FORMAT);
+        call.enqueue(new Callback<ApiResponse<SearchResult[]>>() {
             @Override
-            public void onResponse(Call<ApiResponse<Result[]>> call, Response<ApiResponse<Result[]>> response) {
-                Result[] results = response.body().getResults();
+            public void onResponse(Call<ApiResponse<SearchResult[]>> call, Response<ApiResponse<SearchResult[]>> response) {
+                SearchResult[] searchResults = response.body().getResults();
 
-                adapter = new DefaultAdapter(results, MainActivity.this, peekAndPop);
+                adapter = new DefaultAdapter(searchResults, MainActivity.this, peekAndPop);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<Result[]>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<SearchResult[]>> call, Throwable t) {
                 Log.d("Ignis", t.toString());
             }
         });

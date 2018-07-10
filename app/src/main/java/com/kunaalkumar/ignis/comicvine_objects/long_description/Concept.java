@@ -1,8 +1,9 @@
-package com.kunaalkumar.ignis.comicvine_objects;
+package com.kunaalkumar.ignis.comicvine_objects.long_description;
 
 import com.google.gson.annotations.SerializedName;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.ConceptBrief;
 import com.kunaalkumar.ignis.comicvine_objects.misc.FirstAppearedInIssue;
+import com.kunaalkumar.ignis.comicvine_objects.misc.Image;
 import com.kunaalkumar.ignis.comicvine_objects.misc.Relation;
 
 public class Concept extends ConceptBrief {

@@ -1,7 +1,7 @@
 package com.kunaalkumar.ignis.comicvine_objects.brief_description;
 
 import com.google.gson.annotations.SerializedName;
-import com.kunaalkumar.ignis.comicvine_objects.Image;
+import com.kunaalkumar.ignis.comicvine_objects.misc.Image;
 import com.kunaalkumar.ignis.comicvine_objects.Publisher;
 import com.kunaalkumar.ignis.comicvine_objects.misc.FirstAppearedInIssue;
 
@@ -22,8 +22,8 @@ public class CharacterBrief extends Brief {
     @SerializedName("gender")
     private Integer gender;
 
-    @SerializedName("origin")
-    private Origin origin;
+    @SerializedName("originBrief")
+    private OriginBrief originBrief;
 
     @SerializedName("publisher")
     private Publisher publisher;
@@ -51,8 +51,8 @@ public class CharacterBrief extends Brief {
         return gender;
     }
 
-    public Origin getOrigin() {
-        return origin;
+    public OriginBrief getOriginBrief() {
+        return originBrief;
     }
 
     public Publisher getPublisher() {
@@ -63,36 +63,15 @@ public class CharacterBrief extends Brief {
         return realName;
     }
 
-    public CharacterBrief(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, Origin origin, Publisher publisher, String realName) {
+    public CharacterBrief(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, OriginBrief originBrief, Publisher publisher, String realName) {
         super(deck, dateLastUpdated, image, name, siteDetailUrl, id);
         this.aliases = aliases;
         this.birth = birth;
         this.countOfIssueAppearances = countOfIssueAppearances;
         this.firstAppearedInIssue = firstAppearedInIssue;
         this.gender = gender;
-        this.origin = origin;
+        this.originBrief = originBrief;
         this.publisher = publisher;
         this.realName = realName;
-    }
-
-    public class Origin {
-        @SerializedName("id")
-        private Integer id;
-
-        @SerializedName("name")
-        private String name;
-
-        public Origin(Integer id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
     }
 }

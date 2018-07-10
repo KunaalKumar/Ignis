@@ -1,4 +1,4 @@
-package com.kunaalkumar.ignis.comicvine_objects;
+package com.kunaalkumar.ignis.comicvine_objects.long_description;
 
 import com.google.gson.annotations.SerializedName;
 

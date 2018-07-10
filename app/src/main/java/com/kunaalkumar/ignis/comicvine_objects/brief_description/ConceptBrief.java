@@ -1,7 +1,7 @@
 package com.kunaalkumar.ignis.comicvine_objects.brief_description;
 
 import com.google.gson.annotations.SerializedName;
-import com.kunaalkumar.ignis.comicvine_objects.Image;
+import com.kunaalkumar.ignis.comicvine_objects.misc.Image;
 import com.kunaalkumar.ignis.comicvine_objects.misc.FirstAppearedInIssue;
 
 public class ConceptBrief extends Brief {

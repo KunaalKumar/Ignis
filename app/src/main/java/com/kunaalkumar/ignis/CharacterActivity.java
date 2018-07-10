@@ -15,10 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.kunaalkumar.ignis.comicvine_objects.ApiResponse;
-import com.kunaalkumar.ignis.comicvine_objects.Character;
-import com.kunaalkumar.ignis.comicvine_objects.brief_description.Brief;
-import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
+import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
+import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
 

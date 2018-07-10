@@ -1,8 +1,9 @@
 package com.kunaalkumar.ignis.comicvine_objects;
 
 import com.google.gson.annotations.SerializedName;
+import com.kunaalkumar.ignis.comicvine_objects.misc.Image;
 
-public class Result {
+public class SearchResult {
 
     @SerializedName("name")
     private String name;
@@ -19,7 +20,7 @@ public class Result {
     @SerializedName("image")
     private Image image;
 
-    public Result(String name, String resourceType, Integer id, String apiDetailUrl, Image image) {
+    public SearchResult(String name, String resourceType, Integer id, String apiDetailUrl, Image image) {
         this.name = name;
         this.resourceType = resourceType;
         this.id = id;

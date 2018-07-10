@@ -22,7 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.kunaalkumar.ignis.CharacterActivity;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.comicvine_objects.Result;
+import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 
 import androidx.annotation.NonNull;
@@ -36,13 +36,13 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     public static final String EXTRA_URL = "com.kunaalkumar.ignis.URL";
     public static final String EXTRA_ID = "com.kunaalkumar.ignis.ID";
 
-    private Result[] searchResults;
+    private SearchResult[] searchResults;
     private Activity activity;
     private PeekAndPop peekAndPop;
     private View peekView;
     private ImageView peekImageView;
 
-    public DefaultAdapter(final Result[] searchResults, Activity context, PeekAndPop peekAndPop) {
+    public DefaultAdapter(final SearchResult[] searchResults, Activity context, PeekAndPop peekAndPop) {
         this.searchResults = searchResults;
         this.activity = context;
         this.peekAndPop = peekAndPop;
@@ -77,17 +77,17 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        final Result result = searchResults[position];
+        final SearchResult searchResult = searchResults[position];
 
         peekAndPop.addLongClickView(holder.parentLayout, position);
 
-        Log.d("Ignis", "onBindViewHolder called: " + result.getId());
+        Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
 
 
-        if (result.getImage() != null) {
+        if (searchResult.getImage() != null) {
 
             Glide.with(activity)
-                    .load(result.getImage().getMediumUrl())
+                    .load(searchResult.getImage().getMediumUrl())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .listener(new RequestListener<Drawable>() {
@@ -106,27 +106,27 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
                     .into(holder.image);
 
             Glide.with(activity)
-                    .load(result.getImage().getOriginalUrl())
+                    .load(searchResult.getImage().getOriginalUrl())
                     .preload();
 
         }
 
-        if (result.getName() != null) {
-            holder.name.setText(result.getName());
+        if (searchResult.getName() != null) {
+            holder.name.setText(searchResult.getName());
         } else {
             holder.name.setText("Name not found");
         }
 
-        holder.resourceType.setText(result.getResourceType());
+        holder.resourceType.setText(searchResult.getResourceType());
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(activity, CharacterActivity.class);
-                String url = result.getImage().getOriginalUrl();
+                String url = searchResult.getImage().getOriginalUrl();
                 intent.putExtra(EXTRA_URL, url);
-                intent.putExtra(EXTRA_ID, result.getId());
+                intent.putExtra(EXTRA_ID, searchResult.getId());
                 activity.startActivity(intent);
             }
         });

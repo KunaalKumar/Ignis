@@ -1,8 +1,11 @@
-package com.kunaalkumar.ignis.comicvine_objects;
+package com.kunaalkumar.ignis.comicvine_objects.long_description;
 
 import com.google.gson.annotations.SerializedName;
+import com.kunaalkumar.ignis.comicvine_objects.Publisher;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.comicvine_objects.misc.FirstAppearedInIssue;
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.OriginBrief;
+import com.kunaalkumar.ignis.comicvine_objects.misc.Image;
 import com.kunaalkumar.ignis.comicvine_objects.misc.Relation;
 
 public class Character extends CharacterBrief {
@@ -91,8 +94,8 @@ public class Character extends CharacterBrief {
         return volumeCredits;
     }
 
-    public Character(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, Origin origin, Publisher publisher, String realName, Relation[] characterEnemies, Relation[] characterFriends, Relation[] creators, Relation[] issuesAppearedIn, Relation[] issuesDiedIn, Relation[] movies, Relation[] powers, Relation[] storyArcCredits, Relation[] teamEnemies, Relation[] teamFriends, Relation[] teams, Relation[] volumeCredits) {
-        super(deck, dateLastUpdated, image, name, siteDetailUrl, id, aliases, birth, countOfIssueAppearances, firstAppearedInIssue, gender, origin, publisher, realName);
+    public Character(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, OriginBrief originBrief, Publisher publisher, String realName, Relation[] characterEnemies, Relation[] characterFriends, Relation[] creators, Relation[] issuesAppearedIn, Relation[] issuesDiedIn, Relation[] movies, Relation[] powers, Relation[] storyArcCredits, Relation[] teamEnemies, Relation[] teamFriends, Relation[] teams, Relation[] volumeCredits) {
+        super(deck, dateLastUpdated, image, name, siteDetailUrl, id, aliases, birth, countOfIssueAppearances, firstAppearedInIssue, gender, originBrief, publisher, realName);
         this.characterEnemies = characterEnemies;
         this.characterFriends = characterFriends;
         this.creators = creators;
@@ -106,8 +109,6 @@ public class Character extends CharacterBrief {
         this.teams = teams;
         this.volumeCredits = volumeCredits;
 
-
     }
-
 
 }

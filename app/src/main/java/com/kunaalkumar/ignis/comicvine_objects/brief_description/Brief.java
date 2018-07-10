@@ -1,9 +1,12 @@
 package com.kunaalkumar.ignis.comicvine_objects.brief_description;
 
 import com.google.gson.annotations.SerializedName;
-import com.kunaalkumar.ignis.comicvine_objects.Image;
+import com.kunaalkumar.ignis.comicvine_objects.misc.Image;
 
 public class Brief {
+
+    @SerializedName("api_detail_url")
+    private String apiDetailUrl;
 
     @SerializedName("deck")
     private String deck;
@@ -23,13 +26,18 @@ public class Brief {
     @SerializedName("site_detail_url")
     private String siteDetailUrl;
 
-    public Brief(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id) {
+    public Brief(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl) {
+        this.apiDetailUrl = apiDetailUrl;
         this.deck = deck;
         this.dateLastUpdated = dateLastUpdated;
         this.image = image;
         this.name = name;
-        this.siteDetailUrl = siteDetailUrl;
         this.id = id;
+        this.siteDetailUrl = siteDetailUrl;
+    }
+
+    public String getApiDetailUrl() {
+        return apiDetailUrl;
     }
 
     public Integer getId() {

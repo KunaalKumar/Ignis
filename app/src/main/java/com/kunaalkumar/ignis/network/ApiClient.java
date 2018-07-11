@@ -7,6 +7,8 @@ import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
 import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.OriginBrief;
+import com.kunaalkumar.ignis.comicvine_objects.long_description.Location;
+import com.kunaalkumar.ignis.comicvine_objects.long_description.Object;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Origin;
 
 import retrofit2.Call;
@@ -110,4 +112,10 @@ public interface ApiClient {
     Call<ApiResponse<Object>> getObject(@Path("object_id") Integer originId,
                                         @Query("api_key") String apiKey,
                                         @Query("format") String format);
+
+    // Gets detailed information about location
+    @GET("location/4020-{location_id/")
+    Call<ApiResponse<Location>> getLocation(@Path("location_id") Integer originId,
+                                            @Query("api_key") String apiKey,
+                                            @Query("format") String format);
 }

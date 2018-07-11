@@ -63,8 +63,8 @@ public class CharacterBrief extends Brief {
         return realName;
     }
 
-    public CharacterBrief(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, OriginBrief originBrief, Publisher publisher, String realName) {
-        super(deck, dateLastUpdated, image, name, siteDetailUrl, id);
+    public CharacterBrief(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, OriginBrief originBrief, Publisher publisher, String realName) {
+        super(apiDetailUrl, deck, dateLastUpdated, image, name, id, siteDetailUrl);
         this.aliases = aliases;
         this.birth = birth;
         this.countOfIssueAppearances = countOfIssueAppearances;

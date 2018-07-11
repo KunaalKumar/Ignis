@@ -17,8 +17,8 @@ public class Concept extends ConceptBrief {
     @SerializedName("volume_credits")
     private Relation[] volume_credits;
 
-    public Concept(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id, String aliases, Integer count_of_issue_appearances, FirstAppearedInIssue firstAppearedInIssue, Relation issueCredits, Relation[] movies, Relation[] volume_credits) {
-        super(deck, dateLastUpdated, image, name, siteDetailUrl, id, aliases, count_of_issue_appearances, firstAppearedInIssue);
+    public Concept(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, Integer count_of_issue_appearances, FirstAppearedInIssue firstAppearedInIssue, Relation issueCredits, Relation[] movies, Relation[] volume_credits) {
+        super(apiDetailUrl, deck, dateLastUpdated, image, name, id, siteDetailUrl, aliases, count_of_issue_appearances, firstAppearedInIssue);
         this.issueCredits = issueCredits;
         this.movies = movies;
         this.volume_credits = volume_credits;

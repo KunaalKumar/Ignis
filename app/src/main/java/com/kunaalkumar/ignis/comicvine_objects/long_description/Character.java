@@ -94,8 +94,8 @@ public class Character extends CharacterBrief {
         return volumeCredits;
     }
 
-    public Character(String deck, String dateLastUpdated, Image image, String name, String siteDetailUrl, Integer id, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, OriginBrief originBrief, Publisher publisher, String realName, Relation[] characterEnemies, Relation[] characterFriends, Relation[] creators, Relation[] issuesAppearedIn, Relation[] issuesDiedIn, Relation[] movies, Relation[] powers, Relation[] storyArcCredits, Relation[] teamEnemies, Relation[] teamFriends, Relation[] teams, Relation[] volumeCredits) {
-        super(deck, dateLastUpdated, image, name, siteDetailUrl, id, aliases, birth, countOfIssueAppearances, firstAppearedInIssue, gender, originBrief, publisher, realName);
+    public Character(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, OriginBrief originBrief, Publisher publisher, String realName, Relation[] characterEnemies, Relation[] characterFriends, Relation[] creators, Relation[] issuesAppearedIn, Relation[] issuesDiedIn, Relation[] movies, Relation[] powers, Relation[] storyArcCredits, Relation[] teamEnemies, Relation[] teamFriends, Relation[] teams, Relation[] volumeCredits) {
+        super(apiDetailUrl, deck, dateLastUpdated, image, name, id, siteDetailUrl, aliases, birth, countOfIssueAppearances, firstAppearedInIssue, gender, originBrief, publisher, realName);
         this.characterEnemies = characterEnemies;
         this.characterFriends = characterFriends;
         this.creators = creators;
@@ -108,7 +108,5 @@ public class Character extends CharacterBrief {
         this.teamFriends = teamFriends;
         this.teams = teams;
         this.volumeCredits = volumeCredits;
-
     }
-
 }

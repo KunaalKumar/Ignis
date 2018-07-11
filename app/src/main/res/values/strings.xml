@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Ignis</string>
+    <string name="search_box_hint">Search for characters, issues, comics, etc</string>
 </resources>

@@ -157,7 +157,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
     }
 }

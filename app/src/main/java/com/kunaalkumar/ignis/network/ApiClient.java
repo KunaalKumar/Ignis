@@ -3,6 +3,7 @@ package com.kunaalkumar.ignis.network;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.IssueBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.LocationBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.ObjectBrief;
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.StoryArcBrief;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
 import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
@@ -83,6 +84,12 @@ public interface ApiClient {
                                                @Query("api_key") String apiKey,
                                                @Query("format") String format);
 
+    // General story arc search
+    @GET("story_arcs/")
+    Call<ApiResponse<StoryArcBrief>> searchStoryArcs(@Query("filter") String filter,
+                                                     @Query("api_key") String apiKey,
+                                                     @Query("format") String format);
+
       /*
 
 
@@ -132,4 +139,10 @@ public interface ApiClient {
     Call<ApiResponse<Issue>> getIssue(@Path("issue_id") Integer originId,
                                       @Query("api_key") String apiKey,
                                       @Query("format") String format);
+
+    // Gets detailed information about a story arc
+    @GET("story_arc/4045-{story_arc_id}/")
+    Call<ApiResponse<StoryArcBrief>> getStoryArc(@Path("story_arc_id") Integer originId,
+                                                 @Query("api_key") String apiKey,
+                                                 @Query("format") String format);
 }

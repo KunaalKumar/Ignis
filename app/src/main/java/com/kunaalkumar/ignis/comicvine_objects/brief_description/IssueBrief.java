@@ -19,9 +19,9 @@ public class IssueBrief extends Brief {
     private String storeDate;
 
     @SerializedName("volume")
-    private Relation[] volume;
+    private Relation volume;
 
-    public IssueBrief(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, String coverDate, String issueNumber, String storeDate, Relation[] volume) {
+    public IssueBrief(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, String coverDate, String issueNumber, String storeDate, Relation volume) {
         super(apiDetailUrl, deck, dateLastUpdated, image, name, id, siteDetailUrl);
         this.aliases = aliases;
         this.coverDate = coverDate;
@@ -46,7 +46,7 @@ public class IssueBrief extends Brief {
         return storeDate;
     }
 
-    public Relation[] getVolume() {
+    public Relation getVolume() {
         return volume;
     }
 }

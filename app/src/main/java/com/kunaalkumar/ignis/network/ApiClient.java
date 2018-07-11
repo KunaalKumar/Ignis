@@ -1,5 +1,6 @@
 package com.kunaalkumar.ignis.network;
 
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.IssueBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.LocationBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.ObjectBrief;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
@@ -7,6 +8,7 @@ import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
 import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.OriginBrief;
+import com.kunaalkumar.ignis.comicvine_objects.long_description.Issue;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Location;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Object;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Origin;
@@ -75,6 +77,12 @@ public interface ApiClient {
                                                      @Query("api_key") String apiKey,
                                                      @Query("format") String format);
 
+    // General issue search
+    @GET("issues/")
+    Call<ApiResponse<IssueBrief>> searchIssues(@Query("filter") String filter,
+                                               @Query("api_key") String apiKey,
+                                               @Query("format") String format);
+
       /*
 
 
@@ -113,9 +121,15 @@ public interface ApiClient {
                                         @Query("api_key") String apiKey,
                                         @Query("format") String format);
 
-    // Gets detailed information about location
+    // Gets detailed information about a location
     @GET("location/4020-{location_id/")
     Call<ApiResponse<Location>> getLocation(@Path("location_id") Integer originId,
                                             @Query("api_key") String apiKey,
                                             @Query("format") String format);
+
+    // Gets detailed information about an issue
+    @GET("issue/4000-{issue_id}/")
+    Call<ApiResponse<Issue>> getIssue(@Path("issue_id") Integer originId,
+                                      @Query("api_key") String apiKey,
+                                      @Query("format") String format);
 }

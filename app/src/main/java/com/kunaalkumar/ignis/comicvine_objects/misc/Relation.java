@@ -13,10 +13,18 @@ public class Relation {
     @SerializedName("name")
     private String name;
 
-    public Relation(String apiDetailUrl, Integer id, String name) {
+    @SerializedName("site_detail_url")
+    private String siteDetailUrl;
+
+    public Relation(String apiDetailUrl, Integer id, String name, String siteDetailUrl) {
         this.apiDetailUrl = apiDetailUrl;
         this.id = id;
         this.name = name;
+        this.siteDetailUrl = siteDetailUrl;
+    }
+
+    public String getSiteDetailUrl() {
+        return siteDetailUrl;
     }
 
     public String getApiDetailUrl() {

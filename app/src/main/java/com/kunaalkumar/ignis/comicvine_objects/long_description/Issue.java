@@ -47,7 +47,7 @@ public class Issue extends IssueBrief {
     @SerializedName("team_credits")
     private Relation[] teamCredits;
 
-    public Issue(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, String coverDate, String issueNumber, String storeDate, Relation[] volume, Relation[] characterCredits, Relation[] characterDiedIn, Relation[] conceptCredits, Relation[] firstAppearanceCharacters, Relation[] firstAppearanceLocations, Relation[] firstAppearanceObjects, Relation[] firstAppearanceStoryarcs, Relation[] firstAppearanceTeams, Relation[] locationCredits, Relation[] objectCredits, Relation[] personCredits, Relation[] storyArcCredits, Relation[] teamCredits) {
+    public Issue(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, String coverDate, String issueNumber, String storeDate, Relation volume, Relation[] characterCredits, Relation[] characterDiedIn, Relation[] conceptCredits, Relation[] firstAppearanceCharacters, Relation[] firstAppearanceLocations, Relation[] firstAppearanceObjects, Relation[] firstAppearanceStoryarcs, Relation[] firstAppearanceTeams, Relation[] locationCredits, Relation[] objectCredits, Relation[] personCredits, Relation[] storyArcCredits, Relation[] teamCredits) {
         super(apiDetailUrl, deck, dateLastUpdated, image, name, id, siteDetailUrl, aliases, coverDate, issueNumber, storeDate, volume);
         this.characterCredits = characterCredits;
         this.characterDiedIn = characterDiedIn;

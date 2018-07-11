@@ -2,8 +2,8 @@ package com.kunaalkumar.ignis.comicvine_objects.brief_description;
 
 import com.google.gson.annotations.SerializedName;
 import com.kunaalkumar.ignis.comicvine_objects.misc.Image;
-import com.kunaalkumar.ignis.comicvine_objects.Publisher;
 import com.kunaalkumar.ignis.comicvine_objects.misc.FirstAppearedInIssue;
+import com.kunaalkumar.ignis.comicvine_objects.misc.Relation;
 
 public class CharacterBrief extends Brief {
 
@@ -26,7 +26,7 @@ public class CharacterBrief extends Brief {
     private OriginBrief originBrief;
 
     @SerializedName("publisher")
-    private Publisher publisher;
+    private Relation publisher;
 
     @SerializedName("real_name")
     private String realName;
@@ -55,7 +55,7 @@ public class CharacterBrief extends Brief {
         return originBrief;
     }
 
-    public Publisher getPublisher() {
+    public Relation getPublisher() {
         return publisher;
     }
 
@@ -63,7 +63,7 @@ public class CharacterBrief extends Brief {
         return realName;
     }
 
-    public CharacterBrief(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, OriginBrief originBrief, Publisher publisher, String realName) {
+    public CharacterBrief(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, String birth, Integer countOfIssueAppearances, FirstAppearedInIssue firstAppearedInIssue, Integer gender, OriginBrief originBrief, Relation publisher, String realName) {
         super(apiDetailUrl, deck, dateLastUpdated, image, name, id, siteDetailUrl);
         this.aliases = aliases;
         this.birth = birth;

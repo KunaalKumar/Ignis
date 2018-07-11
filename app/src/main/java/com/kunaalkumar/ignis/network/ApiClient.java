@@ -1,5 +1,7 @@
 package com.kunaalkumar.ignis.network;
 
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.LocationBrief;
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.ObjectBrief;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
 import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
@@ -40,7 +42,7 @@ public interface ApiClient {
        /_____/      \/        \/
 
 
-                General
+                Brief
 
 
 
@@ -59,6 +61,18 @@ public interface ApiClient {
                                                  @Query("api_key") String apiKey,
                                                  @Query("format") String format);
 
+    // General object search
+    @GET("objects/")
+    Call<ApiResponse<ObjectBrief>> searchObjects(@Query("filter") String filter,
+                                                 @Query("api_key") String apiKey,
+                                                 @Query("format") String format);
+
+    // General location search
+    @GET("locations/")
+    Call<ApiResponse<LocationBrief>> searchLocations(@Query("filter") String filter,
+                                                     @Query("api_key") String apiKey,
+                                                     @Query("format") String format);
+
       /*
 
 
@@ -72,7 +86,7 @@ public interface ApiClient {
        /_____/      \/        \/
 
 
-                Brief
+                Detailed
 
 
 
@@ -85,9 +99,15 @@ public interface ApiClient {
                                               @Query("api_key") String apiKey,
                                               @Query("format") String format);
 
-    // Gets detailed information about a origin
+    // Gets detailed information about an origin
     @GET("origin/4030-{origin_id}/")
     Call<ApiResponse<Origin>> getOrigin(@Path("origin_id") Integer originId,
+                                        @Query("api_key") String apiKey,
+                                        @Query("format") String format);
+
+    // Gets detailed information about an object
+    @GET("object/4055-{object_id}/")
+    Call<ApiResponse<Object>> getObject(@Path("object_id") Integer originId,
                                         @Query("api_key") String apiKey,
                                         @Query("format") String format);
 }

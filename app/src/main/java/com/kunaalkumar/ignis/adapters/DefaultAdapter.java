@@ -20,7 +20,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.kunaalkumar.ignis.CharacterActivity;
+import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;

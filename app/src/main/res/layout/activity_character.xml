@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
-    tools:context=".CharacterActivity">
+    tools:context=".activities.CharacterActivity">
 
     <ImageView
         android:id="@+id/character_image"

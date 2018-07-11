@@ -1,4 +1,4 @@
-package com.kunaalkumar.ignis;
+package com.kunaalkumar.ignis.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +11,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.search)
     public void searchOnClick(View view) {
-        Toast.makeText(this, "Clicked search", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(this, SearchActivity.class));
     }
 
     @OnClick(R.id.settings)

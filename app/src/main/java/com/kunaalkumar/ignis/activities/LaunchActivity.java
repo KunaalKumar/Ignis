@@ -5,7 +5,7 @@
 * */
 
 
-package com.kunaalkumar.ignis;
+package com.kunaalkumar.ignis.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

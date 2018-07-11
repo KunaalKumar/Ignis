@@ -1,4 +1,4 @@
-package com.kunaalkumar.ignis;
+package com.kunaalkumar.ignis.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
 import com.kunaalkumar.ignis.network.ApiClient;

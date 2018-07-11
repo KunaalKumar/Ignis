@@ -19,6 +19,7 @@ import com.kunaalkumar.ignis.comicvine_objects.long_description.Origin;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Person;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Publisher;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.StoryArc;
+import com.kunaalkumar.ignis.comicvine_objects.long_description.Team;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Volume;
 
 import retrofit2.Call;
@@ -189,4 +190,10 @@ public interface ApiClient {
     Call<ApiResponse<Person>> getPerson(@Path("person_id") Integer originId,
                                         @Query("api_key") String apiKey,
                                         @Query("format") String format);
+
+    // Detailed information about a team
+    @GET("team/4060-{team_id}/")
+    Call<ApiResponse<Team>> getTeam(@Path("person_id") Integer originId,
+                                    @Query("api_key") String apiKey,
+                                    @Query("format") String format);
 }

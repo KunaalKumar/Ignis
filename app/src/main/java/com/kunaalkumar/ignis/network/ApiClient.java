@@ -3,6 +3,7 @@ package com.kunaalkumar.ignis.network;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.IssueBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.LocationBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.ObjectBrief;
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.PeopleBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.PublisherBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.StoryArcBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.VolumeBrief;
@@ -15,6 +16,7 @@ import com.kunaalkumar.ignis.comicvine_objects.long_description.Issue;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Location;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Object;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Origin;
+import com.kunaalkumar.ignis.comicvine_objects.long_description.Person;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Publisher;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.StoryArc;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Volume;
@@ -107,6 +109,13 @@ public interface ApiClient {
                                                        @Query("api_key") String apiKey,
                                                        @Query("format") String format);
 
+    // General people search
+    @GET("people/")
+    Call<ApiResponse<PeopleBrief>> searchPeople(@Query("filter") String filter,
+                                                @Query("api_key") String apiKey,
+                                                @Query("format") String format);
+
+
       /*
 
 
@@ -174,4 +183,10 @@ public interface ApiClient {
     Call<ApiResponse<Publisher>> getPublisher(@Path("publisher_id") Integer originId,
                                               @Query("api_key") String apiKey,
                                               @Query("format") String format);
+
+    // Detailed information about a person
+    @GET("person/4040-{person_id}/")
+    Call<ApiResponse<Person>> getPerson(@Path("person_id") Integer originId,
+                                        @Query("api_key") String apiKey,
+                                        @Query("format") String format);
 }

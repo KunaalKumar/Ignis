@@ -15,11 +15,11 @@ import retrofit2.Retrofit;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -52,6 +52,9 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.search_back)
     ImageView backButton;
 
+    @BindView(R.id.search_clear)
+    ImageView clearButton;
+
     @BindView(R.id.search_recycler_view)
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -80,7 +83,7 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onVisibilityChanged(boolean isOpen) {
                         // closed
-                        if(!isOpen) {
+                        if (!isOpen) {
                             searchBox.clearFocus();
                         }
                     }
@@ -112,6 +115,32 @@ public class SearchActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!TextUtils.isEmpty(searchBox.getText())) {
+                    clearButton.setVisibility(View.VISIBLE);
+                } else {
+                    clearButton.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    @OnClick(R.id.search_clear)
+    public void onClearClick(View view) {
+        searchBox.setText(null);
     }
 
     @OnClick(R.id.search_back)

@@ -30,7 +30,7 @@
                 android:longClickable="true"
                 android:scaleX="0.50"
                 android:scaleY="0.50"
-                android:src="@drawable/ic_arrow_18dp"
+                android:src="@drawable/ic_arrow_back_24dp"
                 android:tooltipText="back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"

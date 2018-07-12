@@ -1,11 +1,11 @@
 package com.kunaalkumar.ignis.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,12 +15,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
@@ -34,11 +34,12 @@ import static com.kunaalkumar.ignis.activities.MainActivity.FORMAT;
 
 public class SearchActivity extends AppCompatActivity {
 
-    @BindView(R.id.search_back)
-    ImageView backButton;
+
+    @BindView(R.id.search_toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.search_searchBox)
-    TextInputEditText searchBox;
+    EditText searchBox;
 
     @BindView(R.id.search_recycler_view)
     RecyclerView recyclerView;
@@ -59,15 +60,12 @@ public class SearchActivity extends AppCompatActivity {
         init();
     }
 
-    @OnClick(R.id.search_back)
-    public void backButtonOnClick(View view) {
-
-        // Hide keyboard
-        hideKeyboard(view);
-        onBackPressed();
-    }
-
     private void init() {
+
+        // Init back button
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Basic init for peekAndPop
         peekAndPop = new PeekAndPop.Builder(this)
@@ -94,6 +92,16 @@ public class SearchActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // Retrofit call to search for word in superheroSearch

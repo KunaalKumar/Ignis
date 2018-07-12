@@ -6,19 +6,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
@@ -28,6 +33,9 @@ import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 import static com.kunaalkumar.ignis.activities.MainActivity.API_KEY;
 import static com.kunaalkumar.ignis.activities.MainActivity.FORMAT;
@@ -40,6 +48,9 @@ public class SearchActivity extends AppCompatActivity {
 
     @BindView(R.id.search_searchBox)
     EditText searchBox;
+
+    @BindView(R.id.search_back)
+    ImageView backButton;
 
     @BindView(R.id.search_recycler_view)
     RecyclerView recyclerView;
@@ -60,12 +71,20 @@ public class SearchActivity extends AppCompatActivity {
         init();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void init() {
 
-        // Init back button
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        KeyboardVisibilityEvent.setEventListener(
+                SearchActivity.this,
+                new KeyboardVisibilityEventListener() {
+                    @Override
+                    public void onVisibilityChanged(boolean isOpen) {
+                        // closed
+                        if(!isOpen) {
+                            searchBox.clearFocus();
+                        }
+                    }
+                });
 
         // Basic init for peekAndPop
         peekAndPop = new PeekAndPop.Builder(this)
@@ -78,6 +97,7 @@ public class SearchActivity extends AppCompatActivity {
         searchBox.requestFocus();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
 
         // Listener for on "enter" pressed
         searchBox.setOnKeyListener(new View.OnKeyListener() {
@@ -94,14 +114,10 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    @OnClick(R.id.search_back)
+    public void onBackClick(View view) {
+        hideKeyboard(view);
+        onBackPressed();
     }
 
     // Retrofit call to search for word in superheroSearch

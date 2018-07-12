@@ -30,7 +30,6 @@
 
         <activity
             android:name=".activities.CharacterActivity"
-            android:parentActivityName=".activities.MainActivity"
             android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar" />
         <activity
             android:name=".activities.SearchActivity"

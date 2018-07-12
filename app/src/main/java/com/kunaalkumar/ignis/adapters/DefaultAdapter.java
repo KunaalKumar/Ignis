@@ -69,7 +69,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.result_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.result_character, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

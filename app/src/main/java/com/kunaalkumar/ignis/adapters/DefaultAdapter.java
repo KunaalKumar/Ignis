@@ -31,7 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHolder> {
+public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.BannerViewHolder> {
 
     public static final String EXTRA_URL = "com.kunaalkumar.ignis.URL";
     public static final String EXTRA_ID = "com.kunaalkumar.ignis.ID";
@@ -68,14 +68,14 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.result_character, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+    public BannerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_banner, parent, false);
+        BannerViewHolder bannerViewHolder = new BannerViewHolder(view);
+        return bannerViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final BannerViewHolder holder, final int position) {
 
         final SearchResult searchResult = searchResults[position];
 
@@ -137,24 +137,48 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.ViewHold
         return searchResults.length;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class BannerViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.image)
+        @BindView(R.id.banner_image)
         ImageView image;
 
-        @BindView(R.id.name)
+        @BindView(R.id.banner_name)
         TextView name;
 
-        @BindView(R.id.resource_type)
+        @BindView(R.id.banner_resource_type)
         TextView resourceType;
 
-        @BindView(R.id.parent_layout)
+        @BindView(R.id.banner_parent_layout)
         RelativeLayout parentLayout;
 
-        @BindView(R.id.progress)
+        @BindView(R.id.banner_progress)
         ProgressBar progressBar;
 
-        public ViewHolder(@NonNull View itemView) {
+        public BannerViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    public static class CoverViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.cover_image)
+        ImageView image;
+
+        @BindView(R.id.cover_name)
+        TextView name;
+
+        @BindView(R.id.cover_resource_type)
+        TextView resourceType;
+
+        @BindView(R.id.cover_parent_layout)
+        RelativeLayout parentLayout;
+
+        @BindView(R.id.cover_progress)
+        ProgressBar progressBar;
+
+
+        public CoverViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

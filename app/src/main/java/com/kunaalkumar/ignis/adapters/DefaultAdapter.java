@@ -31,7 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.BannerViewHolder> {
+public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final String EXTRA_URL = "com.kunaalkumar.ignis.URL";
     public static final String EXTRA_ID = "com.kunaalkumar.ignis.ID";
@@ -68,73 +68,153 @@ public class DefaultAdapter extends RecyclerView.Adapter<DefaultAdapter.BannerVi
 
     @NonNull
     @Override
-    public BannerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_banner, parent, false);
-        BannerViewHolder bannerViewHolder = new BannerViewHolder(view);
-        return bannerViewHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == 0) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_banner, parent, false);
+            BannerViewHolder bannerViewHolder = new BannerViewHolder(view);
+            return bannerViewHolder;
+        }
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_cover, parent, false);
+        CoverViewHolder coverViewHolder = new CoverViewHolder(view);
+        return coverViewHolder;
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final BannerViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
 
         final SearchResult searchResult = searchResults[position];
 
-        peekAndPop.addLongClickView(holder.parentLayout, position);
+        switch (holder.getItemViewType()) {
+            // Case: is Banner View
+            case 0:
 
-        Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
+                final BannerViewHolder viewHolder = (BannerViewHolder) holder;
+
+                peekAndPop.addLongClickView(viewHolder.parentLayout, position);
+
+                Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
 
 
-        if (searchResult.getImage() != null) {
+                if (searchResult.getImage() != null) {
 
-            Glide.with(activity)
-                    .load(searchResult.getImage().getMediumUrl())
-                    .apply(new RequestOptions()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL))
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            holder.progressBar.setVisibility(View.GONE);
-                            return false;
-                        }
+                    Glide.with(activity)
+                            .load(searchResult.getImage().getScreenLargeUrl())
+                            .apply(new RequestOptions()
+                                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
+                            .listener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    viewHolder.progressBar.setVisibility(View.GONE);
+                                    return false;
+                                }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            holder.progressBar.setVisibility(View.GONE);
-                            return false;
-                        }
-                    })
-                    .into(holder.image);
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    viewHolder.progressBar.setVisibility(View.GONE);
+                                    return false;
+                                }
+                            })
+                            .into(viewHolder.image);
 
-            Glide.with(activity)
-                    .load(searchResult.getImage().getOriginalUrl())
-                    .preload();
+                    Glide.with(activity)
+                            .load(searchResult.getImage().getOriginalUrl())
+                            .preload();
 
+                }
+
+                if (searchResult.getName() != null) {
+                    viewHolder.name.setText(searchResult.getName());
+                } else {
+                    viewHolder.name.setText("Name not found");
+                }
+
+                viewHolder.resourceType.setText(searchResult.getResourceType());
+
+                viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(activity, CharacterActivity.class);
+                        String url = searchResult.getImage().getOriginalUrl();
+                        intent.putExtra(EXTRA_URL, url);
+                        intent.putExtra(EXTRA_ID, searchResult.getId());
+                        activity.startActivity(intent);
+                    }
+                });
+                break;
+
+            // Case: is Cover View
+            case 1:
+                final CoverViewHolder coverViewHolder = (CoverViewHolder) holder;
+
+                peekAndPop.addLongClickView(coverViewHolder.parentLayout, position);
+
+                Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
+
+
+                if (searchResult.getImage() != null) {
+
+                    Glide.with(activity)
+                            .load(searchResult.getImage().getMediumUrl())
+                            .apply(new RequestOptions()
+                                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
+                            .listener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    coverViewHolder.progressBar.setVisibility(View.GONE);
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    coverViewHolder.progressBar.setVisibility(View.GONE);
+                                    return false;
+                                }
+                            })
+                            .into(coverViewHolder.image);
+
+                    Glide.with(activity)
+                            .load(searchResult.getImage().getOriginalUrl())
+                            .preload();
+
+                }
+
+                if (searchResult.getName() != null) {
+                    coverViewHolder.name.setText(searchResult.getName());
+                } else {
+                    coverViewHolder.name.setText("Name not found");
+                }
+
+                coverViewHolder.resourceType.setText(searchResult.getResourceType());
+
+                coverViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(activity, CharacterActivity.class);
+                        String url = searchResult.getImage().getOriginalUrl();
+                        intent.putExtra(EXTRA_URL, url);
+                        intent.putExtra(EXTRA_ID, searchResult.getId());
+                        activity.startActivity(intent);
+                    }
+                });
         }
-
-        if (searchResult.getName() != null) {
-            holder.name.setText(searchResult.getName());
-        } else {
-            holder.name.setText("Name not found");
-        }
-
-        holder.resourceType.setText(searchResult.getResourceType());
-
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(activity, CharacterActivity.class);
-                String url = searchResult.getImage().getOriginalUrl();
-                intent.putExtra(EXTRA_URL, url);
-                intent.putExtra(EXTRA_ID, searchResult.getId());
-                activity.startActivity(intent);
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
         return searchResults.length;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (searchResults[position].getResourceType().equals("character")) {
+            return 0;
+        }
+
+        return 1;
     }
 
     public static class BannerViewHolder extends RecyclerView.ViewHolder {

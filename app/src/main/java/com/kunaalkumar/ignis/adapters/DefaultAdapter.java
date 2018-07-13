@@ -27,6 +27,7 @@ import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +41,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static final String EXTRA_ID = "com.kunaalkumar.ignis.ID";
 
     public static ArrayList<SearchResult> searchResults;
+    public static String[] bannerViewTypes = new String[]{"character", "team", "person"};
     private Activity activity;
     private PeekAndPop peekAndPop;
     private View peekView;
@@ -131,7 +133,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Glide.with(activity)
                             .load(searchResult.getImage().getOriginalUrl())
                             .preload();
-
                 }
 
                 if (searchResult.getName() != null) {
@@ -220,7 +221,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (searchResults.get(position).getResourceType().equals("character")) {
+        if (Arrays.asList(bannerViewTypes).contains(searchResults.get(position).getResourceType())) {
             return 0;
         }
 

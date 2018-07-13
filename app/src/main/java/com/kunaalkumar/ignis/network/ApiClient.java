@@ -40,7 +40,8 @@ public interface ApiClient {
     @GET("search/")
     Call<ApiResponse<SearchResult[]>> search(@Query("query") String search,
                                              @Query("api_key") String apiKey,
-                                             @Query("format") String format);
+                                             @Query("format") String format,
+                                             @Query("page") Integer page);
 
      /*
 

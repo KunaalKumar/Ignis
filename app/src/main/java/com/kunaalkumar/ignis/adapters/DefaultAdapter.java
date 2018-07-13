@@ -22,8 +22,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
+
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,16 +39,17 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static final String EXTRA_URL = "com.kunaalkumar.ignis.URL";
     public static final String EXTRA_ID = "com.kunaalkumar.ignis.ID";
 
-    private SearchResult[] searchResults;
+    public static ArrayList<SearchResult> searchResults;
     private Activity activity;
     private PeekAndPop peekAndPop;
     private View peekView;
     private ImageView peekImageView;
 
-    public DefaultAdapter(final SearchResult[] searchResults, Activity context, PeekAndPop peekAndPop) {
-        this.searchResults = searchResults;
+    public DefaultAdapter(Activity context, PeekAndPop peekAndPop) {
         this.activity = context;
         this.peekAndPop = peekAndPop;
+
+        searchResults = new ArrayList<SearchResult>();
 
         peekView = peekAndPop.getPeekView();
 
@@ -56,7 +60,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             public void onPeek(View view, int position) {
 
                 Glide.with(activity)
-                        .load(searchResults[position].getImage().getOriginalUrl())
+                        .load(searchResults.get(position).getImage().getOriginalUrl())
                         .into(peekImageView);
             }
 
@@ -84,7 +88,13 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
 
-        final SearchResult searchResult = searchResults[position];
+        // Last item loaded, load more if available
+        if (position == (getItemCount() - 1)) {
+            SearchActivity.nextPage(activity);
+            Toast.makeText(activity, "Last element is visible", Toast.LENGTH_LONG).show();
+        }
+
+        final SearchResult searchResult = searchResults.get(position);
 
         switch (holder.getItemViewType()) {
             // Case: is Banner View
@@ -205,12 +215,12 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return searchResults.length;
+        return searchResults.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (searchResults[position].getResourceType().equals("character")) {
+        if (searchResults.get(position).getResourceType().equals("character")) {
             return 0;
         }
 

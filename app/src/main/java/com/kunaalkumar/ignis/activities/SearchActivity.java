@@ -13,6 +13,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -37,6 +38,8 @@ import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
+import java.util.Arrays;
+
 import static com.kunaalkumar.ignis.activities.MainActivity.API_KEY;
 import static com.kunaalkumar.ignis.activities.MainActivity.FORMAT;
 
@@ -55,14 +58,16 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.search_clear)
     ImageView clearButton;
 
-    @BindView(R.id.search_recycler_view)
-    RecyclerView recyclerView;
+    public static RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    DefaultAdapter adapter;
+    public static DefaultAdapter adapter;
+
+    public static Integer pageNumber;
+    public static String query;
 
     InputMethodManager imm;
 
-    private PeekAndPop peekAndPop;
+    public static PeekAndPop peekAndPop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,7 @@ public class SearchActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
 
+        recyclerView = findViewById(R.id.search_recycler_view);
         KeyboardVisibilityEvent.setEventListener(
                 SearchActivity.this,
                 new KeyboardVisibilityEventListener() {
@@ -107,7 +113,9 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (i == KeyEvent.KEYCODE_ENTER) {
-                    searchCall();
+                    query = searchBox.getText().toString();
+                    pageNumber = 1;
+                    searchCall(SearchActivity.this);
                     searchBox.clearFocus();
                     hideKeyboard(view);
                     Toast.makeText(SearchActivity.this, "Entered " + searchBox.getText(), Toast.LENGTH_LONG).show();
@@ -149,20 +157,40 @@ public class SearchActivity extends AppCompatActivity {
         onBackPressed();
     }
 
-    // Retrofit call to search for word in superheroSearch
-    private void searchCall() {
+    // Increments pageNumber and calls searchCall
+    public static void nextPage(Activity activity) {
+        pageNumber++;
+        searchCall(activity);
+    }
+
+
+    /*
+     * Retrofit call to search for word in superheroSearch
+     * Make sure to init query variable before calling this
+     */
+    public static void searchCall(final Activity activity) {
 
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
-        Call<ApiResponse<SearchResult[]>> call = client.search(searchBox.getText().toString(), API_KEY, FORMAT);
+        Call<ApiResponse<SearchResult[]>> call = client.search(query, API_KEY, FORMAT, pageNumber);
         call.enqueue(new Callback<ApiResponse<SearchResult[]>>() {
             @Override
             public void onResponse(Call<ApiResponse<SearchResult[]>> call, Response<ApiResponse<SearchResult[]>> response) {
-                SearchResult[] searchResults = response.body().getResults();
 
-                adapter = new DefaultAdapter(searchResults, SearchActivity.this, peekAndPop);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+                if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
+                    if (pageNumber == 1) {
+                        adapter = new DefaultAdapter(activity, peekAndPop);
+                        recyclerView.setAdapter(adapter);
+                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
+                        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                    } else {
+                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
+                        adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    Toast.makeText(activity, "No more", Toast.LENGTH_LONG).show();
+                }
+
             }
 
             @Override

@@ -30,9 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         SettingsActivity.sharedPrefs = new SharedPrefs(this);
 
-        if (SettingsActivity.sharedPrefs.getDarkThemeState()) {
-            setTheme(R.style.DarkTheme);
-        } else setTheme(R.style.LightTheme);
+        SharedPrefs.applyTheme(this);
 
         super.onCreate(savedInstanceState);
 

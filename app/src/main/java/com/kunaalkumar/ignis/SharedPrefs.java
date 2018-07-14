@@ -1,7 +1,10 @@
 package com.kunaalkumar.ignis;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.kunaalkumar.ignis.activities.SettingsActivity;
 
 public class SharedPrefs {
 
@@ -19,5 +22,11 @@ public class SharedPrefs {
 
     public Boolean getDarkThemeState() {
         return preferences.getBoolean("DarkTheme", false);
+    }
+
+    public static void applyTheme(Activity activity) {
+        if (SettingsActivity.sharedPrefs.getDarkThemeState()) {
+            activity.setTheme(R.style.DarkTheme);
+        } else activity.setTheme(R.style.LightTheme);
     }
 }

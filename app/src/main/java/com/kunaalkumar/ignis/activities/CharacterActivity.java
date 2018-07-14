@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.SharedPrefs;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
 import com.kunaalkumar.ignis.network.ApiClient;
@@ -34,6 +35,9 @@ public class CharacterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPrefs.applyTheme(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character);
         ButterKnife.bind(this);

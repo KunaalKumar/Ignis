@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.SharedPrefs;
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
@@ -69,6 +70,8 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPrefs.applyTheme(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         Log.d("Ignis", "SearchActivity started");

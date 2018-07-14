@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.settings)
     public void settingsOnClick(View view) {
-        Toast.makeText(this, "Clicked settings", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 }

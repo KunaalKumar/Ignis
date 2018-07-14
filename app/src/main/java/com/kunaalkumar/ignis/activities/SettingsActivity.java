@@ -2,16 +2,18 @@ package com.kunaalkumar.ignis.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.SharedPrefs;
@@ -24,8 +26,11 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.theme_button)
     SwitchCompat nightMode;
 
-    @BindView(R.id.licenses)
-    CardView licenses;
+    @BindView(R.id.settings_libraries)
+    ImageView licenses;
+
+    @BindView(R.id.version_number)
+    TextView versionNumber;
 
     public static SharedPrefs sharedPrefs;
 
@@ -56,6 +61,21 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        versionNumber.setText(getVersionName());
+    }
+
+    // Return version name from app.gradle
+    private String getVersionName() {
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            String version = pInfo.versionName;
+            return pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return "Not found";
     }
 
     private void restartOnThemeChanged() {
@@ -74,7 +94,7 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    @OnClick(R.id.licenses)
+    @OnClick(R.id.settings_libraries)
     public void onLicensesPressed() {
         startActivity(new Intent(this, LicenseActivity.class));
     }

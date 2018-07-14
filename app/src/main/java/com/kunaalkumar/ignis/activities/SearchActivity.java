@@ -12,7 +12,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -78,7 +77,6 @@ public class SearchActivity extends AppCompatActivity {
         init();
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private void init() {
 
         recyclerView = findViewById(R.id.search_recycler_view);
@@ -149,13 +147,6 @@ public class SearchActivity extends AppCompatActivity {
     public void onSearchBackPressed(View view) {
         hideKeyboard(view);
         onBackPressed();
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        hideKeyboard(findViewById(R.id.search_recycler_view));
-        onBackPressed();
-        return super.onSupportNavigateUp();
     }
 
     @OnClick(R.id.search_clear)

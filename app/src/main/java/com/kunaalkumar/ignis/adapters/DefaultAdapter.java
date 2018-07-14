@@ -214,6 +214,10 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    private void populateViewHolder() {
+
+    }
+
     @Override
     public int getItemCount() {
         return searchResults.size();

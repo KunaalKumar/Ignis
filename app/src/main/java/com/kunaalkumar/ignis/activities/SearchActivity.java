@@ -59,7 +59,6 @@ public class SearchActivity extends AppCompatActivity {
     ImageView clearButton;
 
     public static RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
     public static DefaultAdapter adapter;
 
     public static Integer pageNumber;
@@ -146,15 +145,22 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    @OnClick
+    public void onSearchBackPressed(View view) {
+        hideKeyboard(view);
+        onBackPressed();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        hideKeyboard(findViewById(R.id.search_recycler_view));
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
+
     @OnClick(R.id.search_clear)
     public void onClearClick(View view) {
         searchBox.setText(null);
-    }
-
-    @OnClick(R.id.search_back)
-    public void onBackClick(View view) {
-        hideKeyboard(view);
-        onBackPressed();
     }
 
     // Increments pageNumber and calls searchCall

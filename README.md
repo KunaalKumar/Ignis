@@ -1,11 +1,14 @@
 ![alt text](https://github.com/KunaalKumar/Ignis/blob/master/app/src/main/res/drawable/ic_launcher.png "Ignis")
 # Ignis
 
-Android app for information about ~~marvel characters~~ superheroes from all universes.
+Android app for information about anything comic book related.
 
 ## Features
 
-*WIP*
+* Information about characters, issues, people, etc. and anything else comic book related
+* Long press to view high resolution image preview
+* Optimized for Android P
+* Comic book news section coming soon
 
 ## Credits
 
@@ -15,7 +18,7 @@ Android app for information about ~~marvel characters~~ superheroes from all uni
 
 * ![alt text](http://jakewharton.github.io/butterknife/static/logo.png "ButterKnife")
 
-* ![alt text](http://frescolib.org/static/sample-images/fresco_logo_anim_full_frames_with_pause_s.gif "Fresco")
+* ![alt text](https://github.com/bumptech/glide/blob/master/static/glide_logo.png "Glide")
 
 * Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [FlatIcon](www.flaticon.com)
 

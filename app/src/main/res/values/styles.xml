@@ -9,7 +9,7 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="backgroundColor">@color/white</item>
-        <item name="toolbarColor">@color/white</item>
+        <item name="toolbarColor">#000000</item>
     </style>
 
     <style name="LaunchTheme" parent="LightTheme">

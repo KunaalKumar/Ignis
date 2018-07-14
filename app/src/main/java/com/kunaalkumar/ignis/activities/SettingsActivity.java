@@ -1,11 +1,9 @@
 package com.kunaalkumar.ignis.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 import android.content.Intent;
@@ -25,11 +23,10 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.theme_button)
     SwitchCompat nightMode;
 
-    SharedPrefs sharedPrefs;
+    public static SharedPrefs sharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        sharedPrefs = new SharedPrefs(this);
         if (sharedPrefs.getDarkThemeState()) {
             setTheme(R.style.DarkTheme);
         } else setTheme(R.style.LightTheme);
@@ -48,13 +45,18 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     sharedPrefs.setDarkThemeState(true);
-                    restart();
+                    restartOnThemeChanged();
                 } else {
                     sharedPrefs.setDarkThemeState(false);
-                    restart();
+                    restartOnThemeChanged();
                 }
             }
         });
+    }
+
+    private void restartOnThemeChanged() {
+        startActivity(new Intent(this, SettingsActivity.class));
+        finish();
     }
 
     @OnClick(R.id.settings_back)
@@ -62,10 +64,9 @@ public class SettingsActivity extends AppCompatActivity {
         onBackPressed();
     }
 
-    private void restart() {
-        Intent i = new Intent(this, SettingsActivity.class);
-        startActivity(i);
-        finish();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
     }
-
 }

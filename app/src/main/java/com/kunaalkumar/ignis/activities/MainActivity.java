@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.SharedPrefs;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SettingsActivity.sharedPrefs = new SharedPrefs(this);
+
+        if (SettingsActivity.sharedPrefs.getDarkThemeState()) {
+            setTheme(R.style.DarkTheme);
+        } else setTheme(R.style.LightTheme);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);

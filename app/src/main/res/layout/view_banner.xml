@@ -58,6 +58,7 @@
             android:ellipsize="none"
             android:fontFamily="@font/roboto_medium"
             android:scrollHorizontally="false"
+            android:textColor="?attr/textColor"
             android:text="Name"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"

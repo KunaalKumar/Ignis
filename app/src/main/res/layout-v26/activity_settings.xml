@@ -48,6 +48,7 @@
                 android:padding="8dp"
                 android:paddingStart="16dp"
                 android:text="@string/settings"
+                android:textColor="?attr/textColor"
                 android:textSize="21sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +69,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/roboto_light"
+        android:padding="8dp"
         android:text="@string/dark_mode"
+        android:textColor="?attr/textColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -83,6 +86,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:backgroundTint="?attr/backgroundColor"
+        app:cardBackgroundColor="?attr/backgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -98,6 +103,7 @@
             android:fontFamily="@font/roboto_light"
             android:text="@string/licenses"
             android:textAlignment="center"
+            android:textColor="?attr/textColor"
             android:textSize="16sp" />
 
     </androidx.cardview.widget.CardView>

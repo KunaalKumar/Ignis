@@ -79,7 +79,7 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="News coming soon..."
-        android:textColor="@color/colorAccent"
+        android:textColor="?attr/textColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

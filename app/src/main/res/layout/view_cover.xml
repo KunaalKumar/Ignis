@@ -63,6 +63,7 @@
             android:fontFamily="@font/roboto_medium"
             android:scrollHorizontally="false"
             android:text="Name"
+            android:textColor="?attr/textColor"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cover_card_image"

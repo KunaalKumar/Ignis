@@ -143,7 +143,7 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick
+    @OnClick(R.id.search_back)
     public void onSearchBackPressed(View view) {
         hideKeyboard(view);
         onBackPressed();

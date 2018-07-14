@@ -38,7 +38,8 @@
         <activity
             android:name=".activities.SearchActivity"
             android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.LicenseActivity"></activity>
     </application>
 
 </manifest>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
-    tools:context=".activities.SettingsActivity">
+    tools:context=".activities.LicenseActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -27,13 +27,12 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/settings_back"
+                android:id="@+id/license_back"
                 android:layout_width="0dp"
                 android:layout_height="?attr/actionBarSize"
                 android:padding="8dp"
                 android:paddingStart="16dp"
                 android:src="@drawable/ic_arrow_back_24dp"
-                android:tooltipText="@string/back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -47,7 +46,7 @@
                 android:gravity="center_vertical"
                 android:padding="8dp"
                 android:paddingStart="16dp"
-                android:text="@string/settings"
+                android:text="@string/licences"
                 android:textSize="21sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -59,47 +58,20 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/theme_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/license_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:fontFamily="@font/roboto_light"
-        android:text="@string/dark_mode"
+        android:backgroundTint="?attr/backgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
-        app:layout_constraintVertical_bias="0.485" />
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/licenses"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/theme_button"
-        app:layout_constraintVertical_bias="0.288">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:fontFamily="@font/roboto_light"
-            android:text="@string/licenses"
-            android:textAlignment="center"
-            android:textSize="16sp" />
-
-    </androidx.cardview.widget.CardView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

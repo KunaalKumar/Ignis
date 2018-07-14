@@ -7,5 +7,5 @@
     <color name="colorAccentDark">#c53d13</color>
     <color name="colorAccentLight">#ffa06d</color>
     <color name="white">#FFFFFF</color>
-    <color name="textColor">#000000</color>
+    <color name="black">#000000</color>
 </resources>

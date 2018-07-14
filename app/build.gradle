@@ -48,7 +48,6 @@ dependencies {
     // Keyboard visibility
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
 
-    // Theme customizer
-
+    implementation 'net.yslibrary.licenseadapter:licenseadapter:2.1.1'
 
 }

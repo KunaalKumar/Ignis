@@ -2,6 +2,7 @@ package com.kunaalkumar.ignis.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,6 +23,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     @BindView(R.id.theme_button)
     SwitchCompat nightMode;
+
+    @BindView(R.id.licenses)
+    CardView licenses;
 
     public static SharedPrefs sharedPrefs;
 
@@ -68,5 +72,10 @@ public class SettingsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @OnClick(R.id.licenses)
+    public void onLicensesPressed() {
+        startActivity(new Intent(this, LicenseActivity.class));
     }
 }

@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SettingsActivity.sharedPrefs = new SharedPrefs(this);
 
         SharedPrefs.applyTheme(this);
 

@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
     tools:context=".activities.SearchActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_margin="0dp"
-        android:background="?attr/colorPrimary"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="?attr/toolbarColor"
         android:elevation="0dp"
         android:padding="0dp"
         app:contentInsetEnd="0dp"

@@ -39,7 +39,13 @@
             android:name=".activities.SearchActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.SettingsActivity" />
-        <activity android:name=".activities.LicenseActivity"/>
+        <activity android:name=".activities.LicenseActivity" />
+
+        <provider
+            android:name=".utils.MySliceProvider"
+            android:authorities="com.kunaalkumar.ignis"
+            android:exported="true">
+        </provider>
     </application>
 
 </manifest>

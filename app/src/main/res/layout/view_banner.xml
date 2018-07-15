@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/banner_parent_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -51,36 +52,54 @@
 
         <TextView
             android:id="@+id/banner_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginEnd="8dp"
             android:ellipsize="none"
             android:fontFamily="@font/roboto_medium"
+            android:padding="8dp"
             android:scrollHorizontally="false"
-            android:textColor="?attr/textColor"
             android:text="Name"
+            android:textColor="?attr/headingTextColor"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/banner_resource_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.029"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/banner_card_image" />
+            app:layout_constraintTop_toBottomOf="@+id/banner_card_image"
+            app:layout_constraintVertical_bias="0.14" />
 
         <TextView
             android:id="@+id/banner_resource_type"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/roboto_light"
             android:gravity="center"
+            android:padding="8dp"
             android:text="Resource Type"
-            android:textColor="@color/colorAccentLight"
+            android:textColor="?attr/textColor"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.948"
+            app:layout_constraintStart_toEndOf="@+id/banner_name"
             app:layout_constraintTop_toBottomOf="@+id/banner_card_image"
-            app:layout_constraintVertical_bias="0.454" />
+            app:layout_constraintVertical_bias="0.363" />
+
+        <TextView
+            android:id="@+id/banner_additional_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:padding="8dp"
+            android:text="Publisher"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.972"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/banner_resource_type"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

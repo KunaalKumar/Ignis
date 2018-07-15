@@ -29,7 +29,7 @@ import android.widget.Toast;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.SharedPrefs;
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
-import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;

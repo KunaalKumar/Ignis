@@ -23,7 +23,7 @@ import com.bumptech.glide.request.target.Target;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.SearchActivity;
-import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 
 import java.util.ArrayList;
@@ -39,6 +39,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public static final String EXTRA_URL = "com.kunaalkumar.ignis.URL";
     public static final String EXTRA_ID = "com.kunaalkumar.ignis.ID";
+    public static final String EXTRA_NAME = "com.kunaalkumar.ignis.NAME";
 
     public static ArrayList<SearchResult> searchResults;
     private static String[] bannerViewTypes = new String[]{"character", "team", "person"};
@@ -99,6 +100,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         final SearchResult searchResult = searchResults.get(position);
 
         switch (holder.getItemViewType()) {
+
             // Case: is Banner View
             case 0:
 
@@ -123,17 +125,30 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 viewHolder.resourceType.setText(searchResult.getResourceType());
 
-                viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(activity, CharacterActivity.class);
-                        String url = searchResult.getImage().getOriginalUrl();
-                        intent.putExtra(EXTRA_URL, url);
-                        intent.putExtra(EXTRA_ID, searchResult.getId());
-                        activity.startActivity(intent);
-                    }
-                });
+                if (searchResult.getResourceType().equals("character")) {
+                    viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
+
+                    viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(activity, CharacterActivity.class);
+                            String url = searchResult.getImage().getOriginalUrl();
+                            intent.putExtra(EXTRA_URL, url);
+                            intent.putExtra(EXTRA_ID, searchResult.getId());
+                            intent.putExtra(EXTRA_NAME, searchResult.getName());
+                            activity.startActivity(intent);
+                        }
+                    });
+                }
+
+                if (searchResult.getResourceType().equals("team")) {
+                    viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
+                }
+
+                if (searchResult.getResourceType().equals("person")) {
+                    viewHolder.additionInformation.setText(searchResult.getCountry());
+                }
                 break;
 
             // Case: is Cover View
@@ -162,15 +177,16 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 coverViewHolder.resourceType.setText(searchResult.getResourceType());
 
+                // TODO: change to call other activity with intent
                 coverViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(activity, CharacterActivity.class);
-                        String url = searchResult.getImage().getOriginalUrl();
-                        intent.putExtra(EXTRA_URL, url);
-                        intent.putExtra(EXTRA_ID, searchResult.getId());
-                        activity.startActivity(intent);
+                        Toast.makeText(activity, "Not implemented yet", Toast.LENGTH_LONG).show();
+//                        Intent intent = new Intent(activity, CharacterActivity.class);
+//                        String url = searchResult.getImage().getOriginalUrl();
+//                        intent.putExtra(EXTRA_URL, url);
+//                        intent.putExtra(EXTRA_ID, searchResult.getId());
+//                        activity.startActivity(intent);
                     }
                 });
         }
@@ -222,6 +238,9 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @BindView(R.id.banner_name)
         TextView name;
+
+        @BindView(R.id.banner_additional_info)
+        TextView additionInformation;
 
         @BindView(R.id.banner_resource_type)
         TextView resourceType;

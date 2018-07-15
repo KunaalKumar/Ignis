@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:background="?attr/backgroundColor"
     tools:context=".activities.CharacterActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -27,7 +27,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/settings_back"
+                android:id="@+id/character_back"
                 android:layout_width="0dp"
                 android:layout_height="?attr/actionBarSize"
                 android:padding="8dp"
@@ -40,7 +40,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/character_name"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:fontFamily="@font/roboto_medium"
@@ -52,7 +52,7 @@
                 android:textSize="21sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/settings_back"
+                app:layout_constraintStart_toEndOf="@+id/character_back"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 

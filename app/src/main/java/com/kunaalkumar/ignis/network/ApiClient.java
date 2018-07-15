@@ -9,7 +9,7 @@ import com.kunaalkumar.ignis.comicvine_objects.brief_description.StoryArcBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.VolumeBrief;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
-import com.kunaalkumar.ignis.comicvine_objects.SearchResult;
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.OriginBrief;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Issue;

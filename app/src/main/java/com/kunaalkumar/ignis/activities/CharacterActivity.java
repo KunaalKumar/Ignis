@@ -3,6 +3,7 @@ package com.kunaalkumar.ignis.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -11,7 +12,9 @@ import retrofit2.Retrofit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.kunaalkumar.ignis.R;
@@ -22,12 +25,19 @@ import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
 
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_ID;
+import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_NAME;
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_URL;
 
 public class CharacterActivity extends AppCompatActivity {
 
     @BindView(R.id.character_image)
     ImageView characterImage;
+
+    @BindView(R.id.character_back)
+    ImageView characterBack;
+
+    @BindView(R.id.character_name)
+    TextView characterName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +51,8 @@ public class CharacterActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String url = intent.getStringExtra(EXTRA_URL);
 
+        characterName.setText(intent.getStringExtra(EXTRA_NAME));
+
         searchCall(intent.getIntExtra(EXTRA_ID, -1));
 
         Glide.with(this)
@@ -48,10 +60,9 @@ public class CharacterActivity extends AppCompatActivity {
                 .into(characterImage);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
+    @OnClick(R.id.character_back)
+    public void onBackClick(View view) {
         onBackPressed();
-        return true;
     }
 
     // Retrofit call to search character for given id
@@ -65,8 +76,6 @@ public class CharacterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ApiResponse<Character>> call, Response<ApiResponse<Character>> response) {
                 Character character = response.body().getResults();
-
-                // TODO: Need to replace - just for testing
             }
 
             @Override

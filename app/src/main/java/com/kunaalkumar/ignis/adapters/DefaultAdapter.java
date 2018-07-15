@@ -41,7 +41,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static final String EXTRA_ID = "com.kunaalkumar.ignis.ID";
 
     public static ArrayList<SearchResult> searchResults;
-    public static String[] bannerViewTypes = new String[]{"character", "team", "person"};
+    private static String[] bannerViewTypes = new String[]{"character", "team", "person"};
     private Activity activity;
     private PeekAndPop peekAndPop;
     private View peekView;
@@ -110,29 +110,9 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
                 if (searchResult.getImage() != null) {
-
-                    Glide.with(activity)
-                            .load(searchResult.getImage().getScreenLargeUrl())
-                            .apply(new RequestOptions()
-                                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
-                            .listener(new RequestListener<Drawable>() {
-                                @Override
-                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                    viewHolder.progressBar.setVisibility(View.GONE);
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                    viewHolder.progressBar.setVisibility(View.GONE);
-                                    return false;
-                                }
-                            })
-                            .into(viewHolder.image);
-
-                    Glide.with(activity)
-                            .load(searchResult.getImage().getOriginalUrl())
-                            .preload();
+                    populateImage(searchResult.getImage().getScreenLargeUrl(),
+                            searchResult.getImage().getOriginalUrl(),
+                            viewHolder.progressBar, viewHolder.image);
                 }
 
                 if (searchResult.getName() != null) {
@@ -166,29 +146,11 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
                 if (searchResult.getImage() != null) {
-
-                    Glide.with(activity)
-                            .load(searchResult.getImage().getMediumUrl())
-                            .apply(new RequestOptions()
-                                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
-                            .listener(new RequestListener<Drawable>() {
-                                @Override
-                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                    coverViewHolder.progressBar.setVisibility(View.GONE);
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                    coverViewHolder.progressBar.setVisibility(View.GONE);
-                                    return false;
-                                }
-                            })
-                            .into(coverViewHolder.image);
-
-                    Glide.with(activity)
-                            .load(searchResult.getImage().getOriginalUrl())
-                            .preload();
+                    if (searchResult.getImage() != null) {
+                        populateImage(searchResult.getImage().getMediumUrl(),
+                                searchResult.getImage().getOriginalUrl(),
+                                coverViewHolder.progressBar, coverViewHolder.image);
+                    }
 
                 }
 
@@ -212,6 +174,31 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
         }
+    }
+
+    private void populateImage(String imageUrl, String originalImageUrl, final ProgressBar progressBar, ImageView imageView) {
+        Glide.with(activity)
+                .load(imageUrl)
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+                })
+                .into(imageView);
+
+        Glide.with(activity)
+                .load(originalImageUrl)
+                .preload();
     }
 
     @Override

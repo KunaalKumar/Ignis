@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.SharedPrefs;
+import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 import net.yslibrary.licenseadapter.Library;
 import net.yslibrary.licenseadapter.LicenseAdapter;

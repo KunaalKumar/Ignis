@@ -12,10 +12,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.kunaalkumar.ignis.FavoritesFragment;
-import com.kunaalkumar.ignis.NewsFragment;
+import com.kunaalkumar.ignis.fragments.FavoritesFragment;
+import com.kunaalkumar.ignis.fragments.NewsFragment;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.SharedPrefs;
+import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.frame_fragmentholder, favoritesFragment)
                                 .commit();
                         return true;
-
                 }
                 return false;
             }

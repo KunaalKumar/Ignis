@@ -10,7 +10,7 @@ package com.kunaalkumar.ignis.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.kunaalkumar.ignis.SharedPrefs;
+import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 import androidx.appcompat.app.AppCompatActivity;
 

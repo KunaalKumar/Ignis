@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.SharedPrefs;
+import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 public class SettingsActivity extends AppCompatActivity {
 

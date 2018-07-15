@@ -17,6 +17,7 @@
         <item name="android:navigationBarColor">@color/white</item>
         <item name="cardBackgroundColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="disabledColor">@color/gray</item>
     </style>
 
     <style name="LaunchTheme" parent="LightTheme">
@@ -42,6 +43,8 @@
         <item name="toolbarColor">#000000</item>]
         <item name="cardBackgroundColor">@color/gray</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="disabledColor">@color/white</item>
+        <item name="colorControlHighlight">#75ff6e40</item>
     </style>
 
 </resources>

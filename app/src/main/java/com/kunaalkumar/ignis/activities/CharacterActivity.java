@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.kunaalkumar.ignis.R;
@@ -29,9 +28,6 @@ public class CharacterActivity extends AppCompatActivity {
 
     @BindView(R.id.character_image)
     ImageView characterImage;
-
-    @BindView(R.id.character_name)
-    TextView characterName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +67,6 @@ public class CharacterActivity extends AppCompatActivity {
                 Character character = response.body().getResults();
 
                 // TODO: Need to replace - just for testing
-                characterName.setText(character.getCharacterEnemies()[0].getName());
             }
 
             @Override

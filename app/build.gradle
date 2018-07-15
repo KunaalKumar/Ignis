@@ -48,6 +48,10 @@ dependencies {
     // Keyboard visibility
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
 
+    // License information
     implementation 'net.yslibrary.licenseadapter:licenseadapter:2.1.1'
+
+    // App intro library
+    implementation 'com.github.apl-devs:appintro:v4.2.3'
 
 }

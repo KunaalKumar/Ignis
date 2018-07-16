@@ -2,7 +2,9 @@
 # Ignis
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f2e93d42d09649b48da05c1e39ef8e7c)](https://app.codacy.com/app/kunaal/Ignis?utm_source=github.com&utm_medium=referral&utm_content=KunaalKumar/Ignis&utm_campaign=badger)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)[![Build Status](https://travis-ci.org/KunaalKumar/Ignis.svg?branch=master)](https://travis-ci.org/KunaalKumar/Ignis)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0)
+[[![API](https://img.shields.io/badge/API-22%2B-brightgreen.svg?style=flat-square)](https://android-arsenal.com/api?level=22)
+
 
 Android app for information about anything comic book related.
 

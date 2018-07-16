@@ -1,16 +1,11 @@
 package com.kunaalkumar.ignis.activities;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import android.content.Intent;
-import android.content.pm.ShortcutInfo;
-import android.content.pm.ShortcutManager;
-import android.graphics.drawable.Icon;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +16,6 @@ import com.kunaalkumar.ignis.fragments.FavoritesFragment;
 import com.kunaalkumar.ignis.fragments.NewsFragment;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
-
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 

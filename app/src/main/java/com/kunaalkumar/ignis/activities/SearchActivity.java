@@ -14,6 +14,7 @@ import retrofit2.Retrofit;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -42,6 +43,7 @@ import java.util.Arrays;
 
 import static com.kunaalkumar.ignis.activities.MainActivity.API_KEY;
 import static com.kunaalkumar.ignis.activities.MainActivity.FORMAT;
+import static com.kunaalkumar.ignis.activities.MainActivity.SHORTCUT_FAV;
 
 public class SearchActivity extends AppCompatActivity {
 

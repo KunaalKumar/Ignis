@@ -189,6 +189,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 break;
             default:
                 Snackbar.make(holder.itemView, "Something is terribly wrong.", Snackbar.LENGTH_INDEFINITE).show();
+                break;
         }
     }
 

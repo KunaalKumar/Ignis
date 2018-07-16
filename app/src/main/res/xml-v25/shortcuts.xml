@@ -3,7 +3,6 @@
     <shortcut
         android:enabled="true"
         android:icon="@drawable/ic_search_24dp"
-        android:shortcutDisabledMessage="@string/search"
         android:shortcutId="search"
         android:shortcutLongLabel="@string/search_box_hint"
         android:shortcutShortLabel="@string/search">
@@ -12,5 +11,16 @@
             android:targetClass="com.kunaalkumar.ignis.activities.SearchActivity"
             android:targetPackage="com.kunaalkumar.ignis" />
     </shortcut>
-    <!-- Specify more shortcuts here. -->
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_favorite_24dp"
+        android:shortcutId="favorite"
+        android:shortcutLongLabel="@string/favorite"
+        android:shortcutShortLabel="@string/favorite">
+        <intent
+            android:action="com.kunaalkumar.ignis.shortcut.favorite"
+            android:targetClass="com.kunaalkumar.ignis.activities.MainActivity"
+            android:targetPackage="com.kunaalkumar.ignis" />
+    </shortcut>
 </shortcuts>

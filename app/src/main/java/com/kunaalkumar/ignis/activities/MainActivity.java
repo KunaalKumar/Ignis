@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String FORMAT = "json";
 
-    public static final String SHORTCUT_FAV = "shortcut_fav";
+    public static final String SHORTCUT_FAV = "com.kunaalkumar.ignis.shortcut.favorite";
 
     private NewsFragment newsFragment = new NewsFragment();
     private FavoritesFragment favoritesFragment = new FavoritesFragment();
@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        SettingsActivity.sharedPrefs = new SharedPrefs(this);
+
         SharedPrefs.applyTheme(this);
 
         super.onCreate(savedInstanceState);
@@ -63,20 +65,14 @@ public class MainActivity extends AppCompatActivity {
 
         initBottomNav();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            initShortcuts();
-        }
+        if (SHORTCUT_FAV.equals(getIntent().getAction())) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_fragmentholder, favoritesFragment)
+                    .commit();
 
-        if (getIntent() != null) {
-            Intent intent = getIntent();
-            if (intent.getBooleanExtra(SHORTCUT_FAV, false)) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frame_fragmentholder, favoritesFragment)
-                        .commit();
+            bottomNavigationView.setSelectedItemId(R.id.bottom_navigation_favorites);
 
-                bottomNavigationView.setSelectedItemId(R.id.bottom_navigation_favorites);
-            }
         }
     }
 
@@ -115,23 +111,5 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
-    private void initShortcuts() {
-        ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
-
-        Intent intentFav = new Intent(getBaseContext(), LaunchActivity.class);
-        intentFav.putExtra(SHORTCUT_FAV, true);
-        intentFav.setAction(Intent.ACTION_VIEW);
-
-        ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(this, "Favorites")
-                .setShortLabel("Favorites")
-                .setLongLabel("Favorites")
-                .setIcon(Icon.createWithResource(this, R.drawable.ic_favorite_24dp))
-                .setIntent(intentFav)
-                .build();
-
-        shortcutManager.addDynamicShortcuts(Arrays.asList(shortcutInfo));
     }
 }

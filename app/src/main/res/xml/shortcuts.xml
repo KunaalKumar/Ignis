@@ -8,5 +8,12 @@
             android:targetClass="com.kunaalkumar.ignis.activities.SearchActivity"
             android:targetPackage="com.kunaalkumar.ignis" />
     </shortcut>
-    <!-- Specify more shortcuts here. -->
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_search_24dp">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.kunaalkumar.ignis.activities.SearchActivity"
+            android:targetPackage="com.kunaalkumar.ignis" />
+    </shortcut>
 </shortcuts>

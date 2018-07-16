@@ -12,9 +12,9 @@ import android.os.Bundle;
 
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.kunaalkumar.ignis.activities.MainActivity.SHORTCUT_FAV;
 
 public class LaunchActivity extends AppCompatActivity {
 
@@ -27,16 +27,9 @@ public class LaunchActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        if (getIntent().getBooleanExtra(MainActivity.SHORTCUT_FAV, false)) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(SHORTCUT_FAV, true);
-            startActivity(intent);
-            setIntent(null);
-            finish();
-        } else {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 }

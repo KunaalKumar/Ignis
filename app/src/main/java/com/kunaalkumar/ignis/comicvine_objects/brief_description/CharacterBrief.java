@@ -74,4 +74,5 @@ public class CharacterBrief extends Brief {
         this.publisher = publisher;
         this.realName = realName;
     }
+
 }

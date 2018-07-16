@@ -69,7 +69,6 @@ public class SettingsActivity extends AppCompatActivity {
     private String getVersionName() {
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            String version = pInfo.versionName;
             return pInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

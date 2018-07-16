@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.kunaalkumar.ignis.fragments.FavoritesFragment;
 import com.kunaalkumar.ignis.fragments.NewsFragment;
 import com.kunaalkumar.ignis.R;
@@ -100,8 +102,10 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.frame_fragmentholder, favoritesFragment)
                                 .commit();
                         return true;
+                    default:
+                        Toast.makeText(MainActivity.this, "Something went terribly wrong", Toast.LENGTH_LONG).show();
+                        return false;
                 }
-                return false;
             }
         });
     }

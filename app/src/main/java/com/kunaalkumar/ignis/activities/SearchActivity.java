@@ -131,7 +131,7 @@ public class SearchActivity extends AppCompatActivity {
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                // Called right before text is changed
             }
 
             @Override
@@ -145,7 +145,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                // Called right after text is changed
             }
         });
     }

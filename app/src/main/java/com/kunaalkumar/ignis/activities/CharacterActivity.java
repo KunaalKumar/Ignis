@@ -75,7 +75,8 @@ public class CharacterActivity extends AppCompatActivity {
         call.enqueue(new Callback<ApiResponse<Character>>() {
             @Override
             public void onResponse(Call<ApiResponse<Character>> call, Response<ApiResponse<Character>> response) {
-                Character character = response.body().getResults();
+//      Do something with this
+//      Character character = response.body().getResults()
             }
 
             @Override

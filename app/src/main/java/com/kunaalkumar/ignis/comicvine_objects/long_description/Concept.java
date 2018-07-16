@@ -15,13 +15,13 @@ public class Concept extends ConceptBrief {
     private Relation[] movies;
 
     @SerializedName("volume_credits")
-    private Relation[] volume_credits;
+    private Relation[] volumeCredits;
 
     public Concept(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, Integer count_of_issue_appearances, FirstAppearedInIssue firstAppearedInIssue, Relation issueCredits, Relation[] movies, Relation[] volume_credits) {
         super(apiDetailUrl, deck, dateLastUpdated, image, name, id, siteDetailUrl, aliases, count_of_issue_appearances, firstAppearedInIssue);
         this.issueCredits = issueCredits;
         this.movies = movies;
-        this.volume_credits = volume_credits;
+        this.volumeCredits = volumeCredits;
     }
 
     public Relation getIssueCredits() {
@@ -40,11 +40,11 @@ public class Concept extends ConceptBrief {
         this.movies = movies;
     }
 
-    public Relation[] getVolume_credits() {
-        return volume_credits;
+    public Relation[] getVolumeCredits() {
+        return volumeCredits;
     }
 
-    public void setVolume_credits(Relation[] volume_credits) {
-        this.volume_credits = volume_credits;
+    public void setVolumeCredits(Relation[] volume_credits) {
+        this.volumeCredits = volume_credits;
     }
 }

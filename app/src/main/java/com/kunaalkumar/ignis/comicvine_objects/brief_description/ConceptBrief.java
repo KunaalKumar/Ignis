@@ -10,15 +10,15 @@ public class ConceptBrief extends Brief {
     private String aliases;
 
     @SerializedName("count_of_issue_appearances")
-    private Integer count_of_issue_appearances;
+    private Integer countOfissueAppearances;
 
     @SerializedName("first_appeared_in_issue")
     private FirstAppearedInIssue firstAppearedInIssue;
 
-    public ConceptBrief(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, Integer count_of_issue_appearances, FirstAppearedInIssue firstAppearedInIssue) {
+    public ConceptBrief(String apiDetailUrl, String deck, String dateLastUpdated, Image image, String name, Integer id, String siteDetailUrl, String aliases, Integer countOfissueAppearances, FirstAppearedInIssue firstAppearedInIssue) {
         super(apiDetailUrl, deck, dateLastUpdated, image, name, id, siteDetailUrl);
         this.aliases = aliases;
-        this.count_of_issue_appearances = count_of_issue_appearances;
+        this.countOfissueAppearances = countOfissueAppearances;
         this.firstAppearedInIssue = firstAppearedInIssue;
     }
 
@@ -26,8 +26,8 @@ public class ConceptBrief extends Brief {
         return aliases;
     }
 
-    public Integer getCount_of_issue_appearances() {
-        return count_of_issue_appearances;
+    public Integer getCountOfissueAppearances() {
+        return countOfissueAppearances;
     }
 
     public FirstAppearedInIssue getFirstAppearedInIssue() {

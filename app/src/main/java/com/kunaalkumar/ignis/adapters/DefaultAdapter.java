@@ -232,7 +232,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return 1;
     }
 
-    private static class BannerViewHolder extends RecyclerView.ViewHolder {
+    public static class BannerViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.banner_image)
         ImageView image;
@@ -258,7 +258,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    private static class CoverViewHolder extends RecyclerView.ViewHolder {
+    public static class CoverViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.cover_image)
         ImageView image;

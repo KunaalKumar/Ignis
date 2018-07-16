@@ -20,6 +20,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.material.snackbar.Snackbar;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.SearchActivity;
@@ -45,16 +46,15 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static String[] bannerViewTypes = new String[]{"character", "team", "person"};
     private Activity activity;
     private PeekAndPop peekAndPop;
-    private View peekView;
     private ImageView peekImageView;
 
     public DefaultAdapter(Activity context, PeekAndPop peekAndPop) {
         this.activity = context;
         this.peekAndPop = peekAndPop;
 
-        searchResults = new ArrayList<SearchResult>();
+        searchResults = new ArrayList<>();
 
-        peekView = peekAndPop.getPeekView();
+        View peekView = peekAndPop.getPeekView();
 
         peekImageView = peekView.findViewById(R.id.preview_dialog);
 
@@ -69,6 +69,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             @Override
             public void onPop(View view, int position) {
+                // Called when finger is lifted
             }
         });
     }
@@ -78,13 +79,11 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == 0) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_banner, parent, false);
-            BannerViewHolder bannerViewHolder = new BannerViewHolder(view);
-            return bannerViewHolder;
+            return new BannerViewHolder(view);
         }
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_cover, parent, false);
-        CoverViewHolder coverViewHolder = new CoverViewHolder(view);
-        return coverViewHolder;
+        return new CoverViewHolder(view);
 
     }
 
@@ -120,7 +119,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if (searchResult.getName() != null) {
                     viewHolder.name.setText(searchResult.getName());
                 } else {
-                    viewHolder.name.setText("Name not found");
+                    viewHolder.name.setText(R.string.error_name_nf);
                 }
 
                 viewHolder.resourceType.setText(searchResult.getResourceType());
@@ -161,18 +160,15 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
                 if (searchResult.getImage() != null) {
-                    if (searchResult.getImage() != null) {
-                        populateImage(searchResult.getImage().getMediumUrl(),
-                                searchResult.getImage().getOriginalUrl(),
-                                coverViewHolder.progressBar, coverViewHolder.image);
-                    }
-
+                    populateImage(searchResult.getImage().getMediumUrl(),
+                            searchResult.getImage().getOriginalUrl(),
+                            coverViewHolder.progressBar, coverViewHolder.image);
                 }
 
                 if (searchResult.getName() != null) {
                     coverViewHolder.name.setText(searchResult.getName());
                 } else {
-                    coverViewHolder.name.setText("Name not found");
+                    coverViewHolder.name.setText(R.string.error_name_nf);
                 }
 
                 coverViewHolder.resourceType.setText(searchResult.getResourceType());
@@ -189,6 +185,10 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 //                        activity.startActivity(intent);
                     }
                 });
+
+                break;
+            default:
+                Snackbar.make(holder.itemView, "Something is terribly wrong.", Snackbar.LENGTH_INDEFINITE).show();
         }
     }
 
@@ -231,7 +231,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return 1;
     }
 
-    public static class BannerViewHolder extends RecyclerView.ViewHolder {
+    private static class BannerViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.banner_image)
         ImageView image;
@@ -251,13 +251,13 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @BindView(R.id.banner_progress)
         ProgressBar progressBar;
 
-        public BannerViewHolder(@NonNull View itemView) {
+        private BannerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public static class CoverViewHolder extends RecyclerView.ViewHolder {
+    private static class CoverViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.cover_image)
         ImageView image;
@@ -275,7 +275,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ProgressBar progressBar;
 
 
-        public CoverViewHolder(View itemView) {
+        private CoverViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

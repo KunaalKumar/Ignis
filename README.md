@@ -1,6 +1,8 @@
 ![alt text](https://github.com/KunaalKumar/Ignis/blob/master/app/src/main/res/drawable/ic_launcher.png "Ignis")
 # Ignis
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f2e93d42d09649b48da05c1e39ef8e7c)](https://app.codacy.com/app/kunaal/Ignis?utm_source=github.com&utm_medium=referral&utm_content=KunaalKumar/Ignis&utm_campaign=badger)
+
 Android app for information about anything comic book related.
 
 ## Features

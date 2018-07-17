@@ -18,7 +18,7 @@ public class SharedPrefs {
     public void setDarkThemeState(Boolean state) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("DarkTheme", state);
-        editor.commit();
+        editor.apply();
     }
 
     public Boolean getDarkThemeState() {

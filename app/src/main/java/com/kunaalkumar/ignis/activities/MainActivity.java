@@ -1,6 +1,7 @@
 package com.kunaalkumar.ignis.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -16,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kunaalkumar.ignis.fragments.FavoritesFragment;
 import com.kunaalkumar.ignis.fragments.NewsFragment;
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.fragments.RandomFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
     public static final String FORMAT = "json";
 
     public static final String SHORTCUT_FAV = "com.kunaalkumar.ignis.shortcut.favorite";
+    public static final String SHORTCUT_RANDOM = "com.kunaalkumar.ignis.shortcut.random";
 
     private NewsFragment newsFragment = new NewsFragment();
     private FavoritesFragment favoritesFragment = new FavoritesFragment();
+    private RandomFragment randomFragment = new RandomFragment();
 
 
     // Api key for ComicVine
@@ -43,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        SettingsActivity.sharedPrefs = new SharedPrefs(this);
+        if (SettingsActivity.sharedPrefs == null) {
+            SettingsActivity.sharedPrefs = new SharedPrefs(this);
+        }
 
         SharedPrefs.applyTheme(this);
 
@@ -60,14 +66,21 @@ public class MainActivity extends AppCompatActivity {
         initBottomNav();
 
         if (SHORTCUT_FAV.equals(getIntent().getAction())) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frame_fragmentholder, favoritesFragment)
-                    .commit();
-
-            bottomNavigationView.setSelectedItemId(R.id.bottom_navigation_favorites);
-
+            changeBottom(R.id.bottom_navigation_favorites, favoritesFragment);
         }
+
+        if (SHORTCUT_RANDOM.equals(getIntent().getAction())) {
+            changeBottom(R.id.bottom_navigation_random, randomFragment);
+        }
+    }
+
+    private void changeBottom(int id, Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_fragmentholder, fragment)
+                .commit();
+
+        bottomNavigationView.setSelectedItemId(id);
     }
 
     @OnClick(R.id.search)
@@ -101,6 +114,14 @@ public class MainActivity extends AppCompatActivity {
                                 .replace(R.id.frame_fragmentholder, favoritesFragment)
                                 .commit();
                         return true;
+
+                    case R.id.bottom_navigation_random:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.frame_fragmentholder, randomFragment)
+                                .commit();
+                        return true;
+
                     default:
                         Toast.makeText(MainActivity.this, "Something went terribly wrong", Toast.LENGTH_LONG).show();
                         return false;

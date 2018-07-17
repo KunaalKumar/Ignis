@@ -13,6 +13,6 @@
 
     <item
         android:id="@+id/bottom_navigation_random"
-        android:icon="@drawable/ic_random_24dp"
+        android:icon="@drawable/ic_explore_24dp"
         android:title="Random" />
 </menu>

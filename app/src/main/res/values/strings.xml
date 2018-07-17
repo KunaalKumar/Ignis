@@ -7,11 +7,12 @@
     <string name="back">Back</string>
     <string name="dark_mode">Dark mode</string>
     <string name="licenses">Licenses</string>
-    <string name="licences">Licences</string>
     <string name="app_copyright">© 2018 Kunaal Kumar</string>
     <string name="version">Version</string>
     <string name="character">Character</string>
     <string name="favorite">Favorite</string>
+    <string name="go_to_random_page">Random page</string>
+    <string name="random">random</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -23,4 +23,17 @@
             android:targetClass="com.kunaalkumar.ignis.activities.MainActivity"
             android:targetPackage="com.kunaalkumar.ignis" />
     </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_explore_24dp"
+        android:shortcutId="explore"
+        android:shortcutLongLabel="@string/go_to_random_page"
+        android:shortcutShortLabel="@string/random">
+        <intent
+            android:action="com.kunaalkumar.ignis.shortcut.random"
+            android:targetClass="com.kunaalkumar.ignis.activities.MainActivity"
+            android:targetPackage="com.kunaalkumar.ignis" />
+    </shortcut>
+
 </shortcuts>

@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
-    <shortcut
-        android:enabled="true"
-        android:icon="@drawable/ic_search_24dp">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetClass="com.kunaalkumar.ignis.activities.SearchActivity"
-            android:targetPackage="com.kunaalkumar.ignis" />
-    </shortcut>
-    <shortcut
-        android:enabled="true"
-        android:icon="@drawable/ic_search_24dp">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetClass="com.kunaalkumar.ignis.activities.SearchActivity"
-            android:targetPackage="com.kunaalkumar.ignis" />
-    </shortcut>
+<shortcuts>
+
 </shortcuts>

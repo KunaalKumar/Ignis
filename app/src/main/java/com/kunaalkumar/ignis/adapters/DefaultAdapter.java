@@ -21,8 +21,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.snackbar.Snackbar;
-import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
@@ -48,7 +48,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private PeekAndPop peekAndPop;
     private ImageView peekImageView;
 
-    public DefaultAdapter(Activity context, PeekAndPop peekAndPop) {
+    public DefaultAdapter(Activity context, final PeekAndPop peekAndPop) {
         this.activity = context;
         this.peekAndPop = peekAndPop;
 
@@ -61,10 +61,19 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         peekAndPop.setOnGeneralActionListener(new PeekAndPop.OnGeneralActionListener() {
             @Override
             public void onPeek(View view, int position) {
+                if (searchResults.get(position).getImage() == null) {
 
-                Glide.with(activity)
-                        .load(searchResults.get(position).getImage().getOriginalUrl())
-                        .into(peekImageView);
+                    populateImageWithError(peekImageView);
+
+                    Toast.makeText(activity, "No image found for " + searchResults.get(position).getName(), Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    Glide.with(activity)
+                            .load(searchResults.get(position).getImage().getOriginalUrl())
+                            .into(peekImageView);
+                }
+
             }
 
             @Override
@@ -110,7 +119,9 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
 
 
-                if (searchResult.getImage() != null) {
+                if (searchResult.getImage() == null) {
+                    populateImageWithError(viewHolder.image);
+                } else {
                     populateImage(searchResult.getImage().getScreenLargeUrl(),
                             searchResult.getImage().getOriginalUrl(),
                             viewHolder.progressBar, viewHolder.image);
@@ -132,8 +143,11 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         public void onClick(View view) {
                             Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(activity, CharacterActivity.class);
-                            String url = searchResult.getImage().getOriginalUrl();
-                            intent.putExtra(EXTRA_URL, url);
+                            if (searchResult.getImage() != null) {
+                                String url = searchResult.getImage().getOriginalUrl();
+                                intent.putExtra(EXTRA_URL, url);
+                            }
+
                             intent.putExtra(EXTRA_ID, searchResult.getId());
                             intent.putExtra(EXTRA_NAME, searchResult.getName());
                             activity.startActivity(intent);
@@ -159,7 +173,9 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
 
 
-                if (searchResult.getImage() != null) {
+                if (searchResult.getImage() == null) {
+                    populateImageWithError(coverViewHolder.image);
+                } else {
                     populateImage(searchResult.getImage().getMediumUrl(),
                             searchResult.getImage().getOriginalUrl(),
                             coverViewHolder.progressBar, coverViewHolder.image);
@@ -191,6 +207,13 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Snackbar.make(holder.itemView, "Something is terribly wrong.", Snackbar.LENGTH_INDEFINITE).show();
                 break;
         }
+    }
+
+    // Populates given image view with error
+    private void populateImageWithError(ImageView imageView) {
+        Glide.with(activity)
+                .load(R.drawable.image_not_available)
+                .into(imageView);
     }
 
     private void populateImage(String imageUrl, String originalImageUrl, final ProgressBar progressBar, ImageView imageView) {

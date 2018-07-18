@@ -11,10 +11,15 @@ Android app for information about anything comic book related.
 ## Features
 
 * Information about characters, issues, people, and anything else comic book related
+
 * Long press to view high resolution image preview
+
 * Optimized for Android P
+
+* Supported for versions back till Lollipop
+
 * Dark theme
-* Comic book news section coming soon
+
 
 ## Credits
 
@@ -36,8 +41,21 @@ Android app for information about anything comic book related.
 
 * Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [FlatIcon](www.flaticon.com)
 
-## Developer
-![alt text](https://github.com/KunaalKumar/Website/blob/master/img/letter-k-inside-a-circle.png "kunaalkumar.com")
+## Project Status
+
+* **Working on providing search suggestions based on history**
+
+* Implement api for news
+
+* Implement favorites
+
+* Implement more custom view holders
+
+* Implement interface for viewing additional character information
+
+* Divide license section and implement app + open source licenses
+
+* Show more information in peek preview
 
 ## License 
 ```

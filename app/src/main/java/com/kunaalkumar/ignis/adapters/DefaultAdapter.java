@@ -112,102 +112,169 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             // Case: is Banner View
             case 0:
 
-                final BannerViewHolder viewHolder = (BannerViewHolder) holder;
+                populateBanner((BannerViewHolder) holder, position, searchResult);
 
-                peekAndPop.addLongClickView(viewHolder.parentLayout, position);
-
-                Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
-
-
-                if (searchResult.getImage() == null) {
-                    populateImageWithError(viewHolder.image);
-                } else {
-                    populateImage(searchResult.getImage().getScreenLargeUrl(),
-                            searchResult.getImage().getOriginalUrl(),
-                            viewHolder.progressBar, viewHolder.image);
-                }
-
-                if (searchResult.getName() != null) {
-                    viewHolder.name.setText(searchResult.getName());
-                } else {
-                    viewHolder.name.setText(R.string.error_name_nf);
-                }
-
-                viewHolder.resourceType.setText(searchResult.getResourceType());
-
-                if (searchResult.getResourceType().equals("character")) {
-                    viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
-
-                    viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(activity, CharacterActivity.class);
-                            if (searchResult.getImage() != null) {
-                                String url = searchResult.getImage().getOriginalUrl();
-                                intent.putExtra(EXTRA_URL, url);
-                            }
-
-                            intent.putExtra(EXTRA_ID, searchResult.getId());
-                            intent.putExtra(EXTRA_NAME, searchResult.getName());
-                            activity.startActivity(intent);
-                        }
-                    });
-                }
-
-                if (searchResult.getResourceType().equals("team")) {
-                    viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
-                }
-
-                if (searchResult.getResourceType().equals("person")) {
-                    viewHolder.additionInformation.setText(searchResult.getCountry());
-                }
                 break;
 
             // Case: is Cover View
             case 1:
-                final CoverViewHolder coverViewHolder = (CoverViewHolder) holder;
 
-                peekAndPop.addLongClickView(coverViewHolder.parentLayout, position);
-
-                Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
-
-
-                if (searchResult.getImage() == null) {
-                    populateImageWithError(coverViewHolder.image);
-                } else {
-                    populateImage(searchResult.getImage().getMediumUrl(),
-                            searchResult.getImage().getOriginalUrl(),
-                            coverViewHolder.progressBar, coverViewHolder.image);
-                }
-
-                if (searchResult.getName() != null) {
-                    coverViewHolder.name.setText(searchResult.getName());
-                } else {
-                    coverViewHolder.name.setText(R.string.error_name_nf);
-                }
-
-                coverViewHolder.resourceType.setText(searchResult.getResourceType());
-
-                // TODO: change to call other activity with intent
-                coverViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(activity, "Not implemented yet", Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(activity, CharacterActivity.class);
-//                        String url = searchResult.getImage().getOriginalUrl();
-//                        intent.putExtra(EXTRA_URL, url);
-//                        intent.putExtra(EXTRA_ID, searchResult.getId());
-//                        activity.startActivity(intent);
-                    }
-                });
+                populateCover((CoverViewHolder) holder, position, searchResult);
 
                 break;
+
             default:
                 Snackbar.make(holder.itemView, "Something is terribly wrong.", Snackbar.LENGTH_INDEFINITE).show();
                 break;
         }
     }
+
+    @Override
+    public int getItemCount() {
+        return searchResults.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (Arrays.asList(bannerViewTypes).contains(searchResults.get(position).getResourceType())) {
+            return 0;
+        }
+
+        return 1;
+    }
+
+    /*
+
+
+
+
+    .___              .__
+    |   | ____   ____ |__| ______
+    |   |/ ___\ /    \|  |/  ___/
+    |   / /_/  >   |  \  |\___ \
+    |___\___  /|___|  /__/____  >
+       /_____/      \/        \/
+
+
+                Populate view holders
+
+
+
+
+     */
+
+
+    // Populate for cover view holder
+    private void populateCover(CoverViewHolder viewHolder, final int position, final SearchResult searchResult) {
+
+        peekAndPop.addLongClickView(viewHolder.parentLayout, position);
+
+        Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
+
+
+        if (searchResult.getImage() == null) {
+            populateImageWithError(viewHolder.image);
+        } else {
+            populateImage(searchResult.getImage().getMediumUrl(),
+                    searchResult.getImage().getOriginalUrl(),
+                    viewHolder.progressBar, viewHolder.image);
+        }
+
+        if (searchResult.getName() != null) {
+            viewHolder.name.setText(searchResult.getName());
+        } else {
+            viewHolder.name.setText(R.string.error_name_nf);
+        }
+
+        viewHolder.resourceType.setText(searchResult.getResourceType());
+
+        // TODO: change to call other activity with intent
+        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(activity, "Not implemented yet", Toast.LENGTH_LONG).show();
+//                        Intent intent = new Intent(activity, CharacterActivity.class);
+//                        String url = searchResult.getImage().getOriginalUrl();
+//                        intent.putExtra(EXTRA_URL, url);
+//                        intent.putExtra(EXTRA_ID, searchResult.getId());
+//                        activity.startActivity(intent);
+            }
+        });
+    }
+
+    // Populate for banner view holder
+    private void populateBanner(BannerViewHolder viewHolder, final int position, final SearchResult searchResult) {
+
+        peekAndPop.addLongClickView(viewHolder.parentLayout, position);
+
+        Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
+
+
+        if (searchResult.getImage() == null) {
+            populateImageWithError(viewHolder.image);
+        } else {
+            populateImage(searchResult.getImage().getScreenLargeUrl(),
+                    searchResult.getImage().getOriginalUrl(),
+                    viewHolder.progressBar, viewHolder.image);
+        }
+
+        if (searchResult.getName() != null) {
+            viewHolder.name.setText(searchResult.getName());
+        } else {
+            viewHolder.name.setText(R.string.error_name_nf);
+        }
+
+        viewHolder.resourceType.setText(searchResult.getResourceType());
+
+        if (searchResult.getResourceType().equals("character")) {
+            viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
+
+            viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(activity, CharacterActivity.class);
+                    if (searchResult.getImage() != null) {
+                        String url = searchResult.getImage().getOriginalUrl();
+                        intent.putExtra(EXTRA_URL, url);
+                    }
+
+                    intent.putExtra(EXTRA_ID, searchResult.getId());
+                    intent.putExtra(EXTRA_NAME, searchResult.getName());
+                    activity.startActivity(intent);
+                }
+            });
+        }
+
+        if (searchResult.getResourceType().equals("team")) {
+            viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
+        }
+
+        if (searchResult.getResourceType().equals("person")) {
+            viewHolder.additionInformation.setText(searchResult.getCountry());
+        }
+    }
+
+
+    /*
+
+
+
+
+    .___              .__
+    |   | ____   ____ |__| ______
+    |   |/ ___\ /    \|  |/  ___/
+    |   / /_/  >   |  \  |\___ \
+    |___\___  /|___|  /__/____  >
+       /_____/      \/        \/
+
+
+                Populate images
+
+
+
+
+     */
 
     // Populates given image view with error
     private void populateImageWithError(ImageView imageView) {
@@ -241,19 +308,26 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .preload();
     }
 
-    @Override
-    public int getItemCount() {
-        return searchResults.size();
-    }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (Arrays.asList(bannerViewTypes).contains(searchResults.get(position).getResourceType())) {
-            return 0;
-        }
+    /*
 
-        return 1;
-    }
+
+
+
+    .___              .__
+    |   | ____   ____ |__| ______
+    |   |/ ___\ /    \|  |/  ___/
+    |   / /_/  >   |  \  |\___ \
+    |___\___  /|___|  /__/____  >
+       /_____/      \/        \/
+
+
+                View holders
+
+
+
+
+     */
 
     public static class BannerViewHolder extends RecyclerView.ViewHolder {
 

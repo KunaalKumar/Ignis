@@ -48,7 +48,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private PeekAndPop peekAndPop;
     private ImageView peekImageView;
 
-    // IGNORE COMMNENT
     public DefaultAdapter(Activity context, PeekAndPop peekAndPop) {
         this.activity = context;
         this.peekAndPop = peekAndPop;

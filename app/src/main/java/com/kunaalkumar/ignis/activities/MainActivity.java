@@ -97,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.settings)
     public void settingsOnClick(View view) {
-        startActivityForResult(new Intent(this, SettingsActivity.class), EXIT);
+        Intent intent = new Intent(this, SettingsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivityForResult(intent, EXIT);
     }
 
     @Override

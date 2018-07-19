@@ -17,4 +17,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_name_nf">Error: Name not found</string>
+    <string name="preferences">Preferences</string>
+    <string name="social">Social</string>
+    <string name="google_plus_community">Google Plus Community</string>
 </resources>

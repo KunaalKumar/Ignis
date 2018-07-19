@@ -1,11 +1,5 @@
 package com.kunaalkumar.ignis.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,11 +8,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.fragments.FavoritesFragment;
 import com.kunaalkumar.ignis.fragments.NewsFragment;
-import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.fragments.RandomFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,13 +27,15 @@ public class MainActivity extends AppCompatActivity {
     public static final String SHORTCUT_FAV = "com.kunaalkumar.ignis.shortcut.favorite";
     public static final String SHORTCUT_RANDOM = "com.kunaalkumar.ignis.shortcut.random";
 
+    // Api key for ComicVine
+    public static final String API_KEY = "9aa1dc67801a2cdc8460790837f94b73057ce351";
+
+    public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/117230352217222987710";
+
+
     private NewsFragment newsFragment = new NewsFragment();
     private FavoritesFragment favoritesFragment = new FavoritesFragment();
     private RandomFragment randomFragment = new RandomFragment();
-
-
-    // Api key for ComicVine
-    public static final String API_KEY = "9aa1dc67801a2cdc8460790837f94b73057ce351";
 
     @BindView(R.id.search)
     ImageView search;

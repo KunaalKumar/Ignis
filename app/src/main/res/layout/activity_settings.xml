@@ -60,183 +60,282 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="?attr/cardBackgroundColor"
-        app:cardBackgroundColor="?attr/cardBackgroundColor"
-        app:cardCornerRadius="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
-        app:layout_constraintVertical_bias="0.0">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:src="@mipmap/ic_launcher"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/roboto_medium"
-                android:paddingTop="16dp"
-                android:text="@string/app_name"
-                android:textAlignment="viewStart"
-                android:textColor="?attr/headingTextColor"
-                android:textSize="21sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/roboto_light"
-                android:text="@string/app_copyright"
-                android:textAlignment="viewStart"
-                android:textColor="?attr/textColor"
-                app:layout_constraintBottom_toTopOf="@+id/appCompatTextView3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_info_24dp"
-                app:layout_constraintBottom_toTopOf="@+id/appCompatTextView5"
-                app:layout_constraintEnd_toStartOf="@+id/appCompatTextView3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
-                app:layout_constraintVertical_bias="0.372" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="104dp"
-                android:fontFamily="@font/roboto_medium"
-                android:paddingBottom="4dp"
-                android:text="@string/version"
-                android:textColor="?attr/headingTextColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.065" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/version_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="@font/roboto_light"
-                android:paddingBottom="4dp"
-                android:text="placeholder"
-                android:textColor="?attr/textColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatTextView3"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageView
-                android:id="@+id/settings_libraries"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_library_books_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/appCompatTextView5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appCompatTextView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="@font/roboto_medium"
-                android:paddingBottom="4dp"
-                android:text="@string/licenses"
-                android:textAlignment="viewStart"
-                android:textColor="?attr/headingTextColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/version_number"
-                app:layout_constraintVertical_bias="1.0" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="?attr/cardBackgroundColor"
-        app:cardBackgroundColor="?attr/cardBackgroundColor"
-        app:cardCornerRadius="4dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/theme_button"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_light"
-                android:padding="16dp"
-                android:text="@string/dark_mode"
-                android:textColor="?attr/headingTextColor"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="16dp"
+                android:backgroundTint="?attr/cardBackgroundColor"
+                app:cardBackgroundColor="?attr/cardBackgroundColor"
+                app:cardCornerRadius="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.398"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.682" />
+                app:layout_constraintVertical_bias="0.0">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:src="@mipmap/ic_launcher"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/appCompatTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:paddingTop="16dp"
+                        android:text="@string/app_name"
+                        android:textAlignment="viewStart"
+                        android:textColor="?attr/headingTextColor"
+                        android:textSize="21sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/roboto_light"
+                        android:text="@string/app_copyright"
+                        android:textAlignment="viewStart"
+                        android:textColor="?attr/textColor"
+                        app:layout_constraintBottom_toTopOf="@+id/appCompatTextView3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_info_24dp"
+                        app:layout_constraintBottom_toTopOf="@+id/settings_licenses_text"
+                        app:layout_constraintEnd_toStartOf="@+id/appCompatTextView3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView"
+                        app:layout_constraintVertical_bias="0.372" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/appCompatTextView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="104dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:paddingBottom="4dp"
+                        android:text="@string/version"
+                        android:textColor="?attr/headingTextColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.065" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/version_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/roboto_light"
+                        android:paddingBottom="4dp"
+                        android:text="placeholder"
+                        android:textColor="?attr/textColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView3"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/settings_libraries"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/ic_library_books_24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/settings_licenses_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/settings_licenses_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:paddingBottom="4dp"
+                        android:text="@string/licenses"
+                        android:textAlignment="viewStart"
+                        android:textColor="?attr/headingTextColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toBottomOf="@+id/version_number"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="?attr/cardBackgroundColor"
+                app:cardBackgroundColor="?attr/cardBackgroundColor"
+                app:cardCornerRadius="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:gravity="start"
+                        android:padding="16dp"
+                        android:paddingStart="16dp"
+                        android:text="@string/preferences"
+                        android:textAlignment="center"
+                        android:textColor="?attr/headingTextColor"
+                        android:textSize="21sp"
+                        app:layout_constraintBottom_toTopOf="@id/theme_button"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/theme_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:padding="16dp"
+                        android:text="@string/dark_mode"
+                        android:textColor="?attr/headingTextColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.682" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="?attr/cardBackgroundColor"
+                app:cardBackgroundColor="?attr/cardBackgroundColor"
+                app:cardCornerRadius="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/appCompatTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:gravity="start"
+                        android:padding="16dp"
+                        android:text="@string/social"
+                        android:textAlignment="center"
+                        android:textColor="?attr/headingTextColor"
+                        android:textSize="21sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/settings_google_plus_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:src="@mipmap/ic_google_plus"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/settings_google_plus_text"
+                        app:layout_constraintHorizontal_bias="0.181"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/settings_google_plus_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:padding="16dp"
+                        android:text="@string/google_plus_community"
+                        android:textAlignment="center"
+                        android:textColor="?attr/headingTextColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/appCompatTextView"
+                        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

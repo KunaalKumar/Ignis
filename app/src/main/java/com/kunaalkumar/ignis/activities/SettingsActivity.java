@@ -1,14 +1,9 @@
 package com.kunaalkumar.ignis.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -18,6 +13,12 @@ import android.widget.TextView;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class SettingsActivity extends AppCompatActivity {
 
     @BindView(R.id.settings_back)
@@ -26,11 +27,25 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.theme_button)
     SwitchCompat nightMode;
 
+    /*
+     * License
+     * */
     @BindView(R.id.settings_libraries)
-    ImageView licenses;
+    ImageView licenseImage;
+    @BindView(R.id.settings_licenses_text)
+    TextView licenseText;
+
+    /*
+     * Google plus community
+     * */
+    @BindView(R.id.settings_google_plus_image)
+    ImageView googlePlusImage;
+    @BindView(R.id.settings_google_plus_text)
+    TextView googlePlusText;
 
     @BindView(R.id.version_number)
     TextView versionNumber;
+
 
     public static SharedPrefs sharedPrefs;
 
@@ -62,19 +77,55 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        versionNumber.setText(getVersionName());
+        setVersionName();
+
+        setClickListeners();
+
+    }
+
+    private void setClickListeners() {
+
+        // License
+        licenseImage.setOnClickListener(licenseOnClick());
+        licenseText.setOnClickListener(licenseOnClick());
+
+        // Google plus
+        googlePlusImage.setOnClickListener(googlePlusOnClick());
+        googlePlusText.setOnClickListener(googlePlusOnClick());
+
+    }
+
+    // Returns onClick listener for license
+    private View.OnClickListener licenseOnClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SettingsActivity.this, LicenseActivity.class));
+            }
+        };
+    }
+
+    private View.OnClickListener googlePlusOnClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(MainActivity.GOOGLE_PLUS_URL));
+                startActivity(i);
+            }
+        };
     }
 
     // Return version name from app.gradle
-    private String getVersionName() {
+    private void setVersionName() {
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            return pInfo.versionName;
+            versionNumber.setText(pInfo.versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
-        return "Not found";
+        versionNumber.setText(R.string.error_name_nf);
     }
 
     private void restartOnThemeChanged() {
@@ -91,10 +142,5 @@ public class SettingsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(this, MainActivity.class));
-    }
-
-    @OnClick(R.id.settings_libraries)
-    public void onLicensesPressed() {
-        startActivity(new Intent(this, LicenseActivity.class));
     }
 }

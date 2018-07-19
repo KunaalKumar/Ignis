@@ -129,8 +129,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void restartOnThemeChanged() {
-        startActivity(new Intent(this, SettingsActivity.class));
+        MainActivity.CHANGED = true;
+        setResult(RESULT_OK, null);
         finish();
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 
     @OnClick(R.id.settings_back)
@@ -140,7 +142,12 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(this, MainActivity.class));
+        if (MainActivity.CHANGED) {
+            MainActivity.CHANGED = false;
+            startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+        } else {
+            super.onBackPressed();
+        }
+        finish();
     }
 }

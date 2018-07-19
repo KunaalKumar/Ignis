@@ -22,6 +22,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Request code
+    public static final Integer EXIT = 100;
     public static final String FORMAT = "json";
 
     public static final String SHORTCUT_FAV = "com.kunaalkumar.ignis.shortcut.favorite";
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/117230352217222987710";
     public static final String REDDIT_URL = "https://www.reddit.com/r/ignisandroid";
 
+    public static boolean CHANGED = false;
 
     private NewsFragment newsFragment = new NewsFragment();
     private FavoritesFragment favoritesFragment = new FavoritesFragment();
@@ -94,9 +97,17 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.settings)
     public void settingsOnClick(View view) {
-        startActivity(new Intent(this, SettingsActivity.class));
+        startActivityForResult(new Intent(this, SettingsActivity.class), EXIT);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EXIT) {
+            if (resultCode == RESULT_OK) {
+                this.finish();
+            }
+        }
+    }
 
     // handle bottom navigation events
     private void initBottomNav() {

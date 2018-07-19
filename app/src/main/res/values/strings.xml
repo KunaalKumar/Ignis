@@ -20,4 +20,6 @@
     <string name="preferences">Preferences</string>
     <string name="social">Social</string>
     <string name="google_plus_community">Google Plus Community</string>
+    <string name="subreddit">r/IgnisAndroid</string>
+    <string name="rate_ignis">Rate Ignis</string>
 </resources>

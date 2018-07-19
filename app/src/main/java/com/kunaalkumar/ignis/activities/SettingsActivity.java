@@ -43,6 +43,22 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.settings_google_plus_text)
     TextView googlePlusText;
 
+    /*
+     * Reddit
+     * */
+    @BindView(R.id.settings_reddit_image)
+    ImageView redditImage;
+    @BindView(R.id.settings_reddit_text)
+    TextView redditText;
+
+    /*
+     * Play store
+     * */
+    @BindView(R.id.settings_play_store_image)
+    ImageView playStoreImage;
+    @BindView(R.id.settings_play_store_text)
+    TextView playStoreText;
+
     @BindView(R.id.version_number)
     TextView versionNumber;
 
@@ -80,7 +96,6 @@ public class SettingsActivity extends AppCompatActivity {
         setVersionName();
 
         setClickListeners();
-
     }
 
     private void setClickListeners() {
@@ -93,27 +108,14 @@ public class SettingsActivity extends AppCompatActivity {
         googlePlusImage.setOnClickListener(googlePlusOnClick());
         googlePlusText.setOnClickListener(googlePlusOnClick());
 
-    }
+        // Reddit
+        redditImage.setOnClickListener(redditOnClick());
+        redditText.setOnClickListener(redditOnClick());
 
-    // Returns onClick listener for license
-    private View.OnClickListener licenseOnClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(SettingsActivity.this, LicenseActivity.class));
-            }
-        };
-    }
+        // Play store
+        playStoreImage.setOnClickListener(playStoreOnClick());
+        playStoreText.setOnClickListener(playStoreOnClick());
 
-    private View.OnClickListener googlePlusOnClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(MainActivity.GOOGLE_PLUS_URL));
-                startActivity(i);
-            }
-        };
     }
 
     // Return version name from app.gradle
@@ -150,5 +152,71 @@ public class SettingsActivity extends AppCompatActivity {
             super.onBackPressed();
         }
         finish();
+    }
+
+    /*
+
+
+
+
+    .___              .__
+    |   | ____   ____ |__| ______
+    |   |/ ___\ /    \|  |/  ___/
+    |   / /_/  >   |  \  |\___ \
+    |___\___  /|___|  /__/____  >
+       /_____/      \/        \/
+
+
+                onClick listeners
+
+
+
+
+     */
+
+    // Returns onClick listener for license
+    private View.OnClickListener licenseOnClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SettingsActivity.this, LicenseActivity.class));
+            }
+        };
+    }
+
+    // Returns onClick listener for google plus
+    private View.OnClickListener googlePlusOnClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(MainActivity.GOOGLE_PLUS_URL));
+                startActivity(i);
+            }
+        };
+    }
+
+    // Returns onClick listener for reddit
+    private View.OnClickListener redditOnClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(MainActivity.REDDIT_URL));
+                startActivity(i);
+            }
+        };
+    }
+
+    // Returns onClick listener for play store
+    private View.OnClickListener playStoreOnClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(MainActivity.PLAY_STORE_URL));
+                startActivity(i);
+            }
+        };
     }
 }

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     // Links
     public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/117230352217222987710";
     public static final String REDDIT_URL = "https://www.reddit.com/r/ignisandroid";
+    public static final String PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.kunaalkumar.ignis";
 
     public static boolean CHANGED = false;
 

@@ -1,19 +1,9 @@
 package com.kunaalkumar.ignis.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -27,18 +17,30 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
+import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 import java.util.Arrays;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static com.kunaalkumar.ignis.activities.MainActivity.API_KEY;
 import static com.kunaalkumar.ignis.activities.MainActivity.FORMAT;
@@ -82,6 +84,21 @@ public class SearchActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         init();
+
+        handleAppLink();
+
+    }
+
+    private void handleAppLink() {
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+
+        if (appLinkData != null) {
+            String query = appLinkData.getLastPathSegment();
+            Toast.makeText(this, "TODO: Search for " + query, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void init() {

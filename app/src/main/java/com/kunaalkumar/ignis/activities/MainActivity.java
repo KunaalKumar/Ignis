@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
     // Api key for ComicVine
     public static final String API_KEY = "9aa1dc67801a2cdc8460790837f94b73057ce351";
 
+    // Links
     public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/117230352217222987710";
+    public static final String REDDIT_URL = "https://www.reddit.com/r/ignisandroid";
 
 
     private NewsFragment newsFragment = new NewsFragment();

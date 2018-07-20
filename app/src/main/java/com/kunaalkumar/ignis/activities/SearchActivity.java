@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.adapters.DefaultAdapter;
+import com.kunaalkumar.ignis.adapters.SearchHistoryAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.network.ApiClient;
@@ -59,6 +60,9 @@ public class SearchActivity extends AppCompatActivity {
 
     @BindView(R.id.search_clear)
     ImageView clearButton;
+
+    public static RecyclerView historyRecyclerView;
+    public static SearchHistoryAdapter historyAdapter;
 
     public static RecyclerView recyclerView;
     public static DefaultAdapter adapter;
@@ -107,6 +111,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private void init() {
 
+        historyRecyclerView = findViewById(R.id.search_recycler_view_history);
+
         recyclerView = findViewById(R.id.search_recycler_view);
         KeyboardVisibilityEvent.setEventListener(
                 SearchActivity.this,
@@ -132,6 +138,10 @@ public class SearchActivity extends AppCompatActivity {
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
+        historyRecyclerView.setVisibility(View.VISIBLE);
+        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory());
+        historyRecyclerView.setAdapter(historyAdapter);
+        historyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Listener for on "enter" pressed
         searchBox.setOnKeyListener(new View.OnKeyListener() {
@@ -140,6 +150,7 @@ public class SearchActivity extends AppCompatActivity {
                 if (i == KeyEvent.KEYCODE_ENTER) {
                     query = searchBox.getText().toString();
                     pageNumber = 1;
+                    SharedPrefs.addToSearchHistory(query);
                     searchCall(SearchActivity.this);
                     searchBox.clearFocus();
                     hideKeyboard(view);
@@ -166,6 +177,18 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 // Called right after text is changed
+            }
+        });
+
+        searchBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    historyRecyclerView.setVisibility(View.VISIBLE);
+                    historyAdapter.searchHistory = SharedPrefs.getSearchHistory();
+                    historyAdapter.notifyDataSetChanged();
+                } else
+                    historyRecyclerView.setVisibility(View.GONE);
             }
         });
     }
@@ -204,7 +227,7 @@ public class SearchActivity extends AppCompatActivity {
 
         // Handle app link
         Intent appLinkIntent = getIntent();
-        String appLinkAction = appLinkIntent.getAction();
+//        String appLinkAction = appLinkIntent.getAction();
         Uri appLinkData = appLinkIntent.getData();
 
 
@@ -224,7 +247,7 @@ public class SearchActivity extends AppCompatActivity {
             return;
         }
 
-        // Needed ot hide keyboard without focus
+        // Needed to hide keyboard without focus
         view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

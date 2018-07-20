@@ -1,5 +1,6 @@
 package com.kunaalkumar.ignis.utils;
 
+
 import android.app.Activity;
 import android.content.Context;
 
@@ -47,17 +48,19 @@ public class SharedPrefs {
 
     public static void addToSearchHistory(String search) {
 
-        if (searchHistory.size() >= maxArraySize) {
-            // Remove first element; shift elements up; add new element to the end
-            for (int i = 0; i < searchHistory.size() - 1; i++) {
-                searchHistory.set(i, searchHistory.get(i + 1));
-            }
-            searchHistory.set(searchHistory.size() - 1, search);
+        if (!searchHistory.contains(search)) {
+            if (searchHistory.size() >= maxArraySize) {
+                // Remove first element; shift elements up; add new element to the end
+                for (int i = 0; i < searchHistory.size() - 1; i++) {
+                    searchHistory.set(i, searchHistory.get(i + 1));
+                }
+                searchHistory.set(searchHistory.size() - 1, search);
 
-            tinyDB.putListString(KEY_SEARCH_HISTORY, searchHistory);
-        } else {
-            searchHistory.add(search);
-            tinyDB.putListString(KEY_SEARCH_HISTORY, searchHistory);
+                tinyDB.putListString(KEY_SEARCH_HISTORY, searchHistory);
+            } else {
+                searchHistory.add(search);
+                tinyDB.putListString(KEY_SEARCH_HISTORY, searchHistory);
+            }
         }
     }
 

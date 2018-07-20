@@ -73,6 +73,44 @@ public class SearchActivity extends AppCompatActivity {
 
     public static PeekAndPop peekAndPop;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        if (SettingsActivity.sharedPrefs == null) {
+            SettingsActivity.sharedPrefs = new SharedPrefs(this);
+        }
+
+        SharedPrefs.applyTheme(this);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        Log.d("Ignis", "SearchActivity started");
+        ButterKnife.bind(this);
+
+        init();
+        appLinkCall();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        appLinkCall();
+    }
+
+    // Handle app link
+    private void appLinkCall() {
+        Intent appLinkIntent = getIntent();
+        Uri appLinkData = appLinkIntent.getData();
+
+        if (appLinkData != null) {
+            searchBox.setText(appLinkData.getLastPathSegment());
+            pageNumber = 1;
+            searchBox.clearFocus();
+            hideKeyboard(null);
+            searchCall(SearchActivity.this, appLinkData.getLastPathSegment());
+        }
+    }
+
     /*
      * Retrofit call to search for word in superheroSearch
      * Make sure to init query variable before calling this
@@ -118,36 +156,6 @@ public class SearchActivity extends AppCompatActivity {
     public static void plainCall(Activity activity, String query) {
         pageNumber = 1;
         searchCall(activity, query);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        if (SettingsActivity.sharedPrefs == null) {
-            SettingsActivity.sharedPrefs = new SharedPrefs(this);
-        }
-
-        SharedPrefs.applyTheme(this);
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        Log.d("Ignis", "SearchActivity started");
-        ButterKnife.bind(this);
-
-        init();
-
-        // Handle app link
-        Intent appLinkIntent = getIntent();
-//        String appLinkAction = appLinkIntent.getAction();
-        Uri appLinkData = appLinkIntent.getData();
-
-
-        if (appLinkData != null) {
-            searchBox.setText(appLinkData.getLastPathSegment());
-            pageNumber = 1;
-            searchBox.clearFocus();
-            hideKeyboard(null);
-            searchCall(SearchActivity.this, appLinkData.getLastPathSegment());
-        }
     }
 
     private void hideKeyboard(View view) {

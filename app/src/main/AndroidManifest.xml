@@ -38,6 +38,7 @@
 
         <activity
             android:name=".activities.SearchActivity"
+            android:launchMode="singleTask"
             android:parentActivityName=".activities.MainActivity">
             <tools:validation testUrl="http://ignis.kunaalkumar.com/search/batman" />
             <intent-filter android:autoVerify="true">

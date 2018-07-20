@@ -13,6 +13,26 @@ import androidx.slice.builders.ListBuilder;
 import androidx.slice.builders.ListBuilder.RowBuilder;
 
 
+/*
+
+
+
+
+    .___              .__
+    |   | ____   ____ |__| ______
+    |   |/ ___\ /    \|  |/  ___/
+    |   / /_/  >   |  \  |\___ \
+    |___\___  /|___|  /__/____  >
+       /_____/      \/        \/
+
+
+                Implement later, when a slices are stable
+
+
+
+
+     */
+
 public class MySliceProvider extends SliceProvider {
     /**
      * Instantiate any required objects. Return true if the provider was successfully created,

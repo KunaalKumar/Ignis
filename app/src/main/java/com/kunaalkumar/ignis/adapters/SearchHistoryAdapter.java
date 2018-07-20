@@ -1,5 +1,6 @@
 package com.kunaalkumar.ignis.adapters;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.activities.SearchActivity;
 
 import java.util.ArrayList;
 
@@ -15,12 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.kunaalkumar.ignis.activities.MainActivity.hideKeyboard;
+
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryViewHolder> {
 
     public ArrayList<String> searchHistory;
+    public Activity activity;
 
-    public SearchHistoryAdapter(ArrayList<String> searchHistory) {
+    public SearchHistoryAdapter(ArrayList<String> searchHistory, Activity activity) {
         this.searchHistory = searchHistory;
+        this.activity = activity;
     }
 
     @NonNull
@@ -31,8 +37,15 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchHistoryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchHistoryViewHolder holder, final int position) {
         holder.searchText.setText(searchHistory.get(position));
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchActivity.plainCall(activity, searchHistory.get(position));
+                hideKeyboard(activity);
+            }
+        });
     }
 
     @Override

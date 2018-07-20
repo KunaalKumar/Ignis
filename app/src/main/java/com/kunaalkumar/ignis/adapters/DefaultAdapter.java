@@ -43,15 +43,17 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static final String EXTRA_NAME = "com.kunaalkumar.ignis.NAME";
 
     public static ArrayList<SearchResult> searchResults;
+    public String currentQuery;
     private static String[] bannerViewTypes = new String[]{"character", "team", "person"};
     private Activity activity;
     private PeekAndPop peekAndPop;
     private ImageView peekImageView;
 
 
-    public DefaultAdapter(Activity context, final PeekAndPop peekAndPop) {
+    public DefaultAdapter(Activity context, final PeekAndPop peekAndPop, String currentQuery) {
         this.activity = context;
         this.peekAndPop = peekAndPop;
+        this.currentQuery = currentQuery;
 
         searchResults = new ArrayList<>();
 
@@ -102,7 +104,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         // Last item loaded, load more if available
         if (position == (getItemCount() - 1)) {
-            SearchActivity.nextPage(activity);
+            SearchActivity.nextPage(activity, currentQuery);
         }
 
         final SearchResult searchResult = searchResults.get(position);

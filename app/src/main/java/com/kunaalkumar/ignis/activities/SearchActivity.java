@@ -68,7 +68,6 @@ public class SearchActivity extends AppCompatActivity {
     public static DefaultAdapter adapter;
 
     public static Integer pageNumber;
-    public static String query;
 
     InputMethodManager imm;
 
@@ -78,8 +77,9 @@ public class SearchActivity extends AppCompatActivity {
      * Retrofit call to search for word in superheroSearch
      * Make sure to init query variable before calling this
      */
-    public static void searchCall(final Activity activity) {
+    public static void searchCall(final Activity activity, final String query) {
 
+        SharedPrefs.addToSearchHistory(query);
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
         Call<ApiResponse<SearchResult[]>> call = client.search(query, API_KEY, FORMAT, pageNumber);
@@ -89,7 +89,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
                     if (pageNumber == 1) {
-                        adapter = new DefaultAdapter(activity, peekAndPop);
+                        adapter = new DefaultAdapter(activity, peekAndPop, query);
                         recyclerView.setAdapter(adapter);
                         DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
                         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -107,6 +107,72 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d("Ignis", t.toString());
             }
         });
+    }
+
+    // Increments pageNumber and calls searchCall
+    public static void nextPage(Activity activity, String query) {
+        pageNumber++;
+        searchCall(activity, query);
+    }
+
+    public static void plainCall(Activity activity, String query) {
+        pageNumber = 1;
+        searchCall(activity, query);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        if (SettingsActivity.sharedPrefs == null) {
+            SettingsActivity.sharedPrefs = new SharedPrefs(this);
+        }
+
+        SharedPrefs.applyTheme(this);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        Log.d("Ignis", "SearchActivity started");
+        ButterKnife.bind(this);
+
+        init();
+
+        // Handle app link
+        Intent appLinkIntent = getIntent();
+//        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+
+
+        if (appLinkData != null) {
+            searchBox.setText(appLinkData.getLastPathSegment());
+            pageNumber = 1;
+            searchBox.clearFocus();
+            hideKeyboard(null);
+            searchCall(SearchActivity.this, appLinkData.getLastPathSegment());
+        }
+    }
+
+    private void hideKeyboard(View view) {
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            return;
+        }
+
+        // Needed to hide keyboard without focus
+        view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    @OnClick(R.id.search_back)
+    public void onSearchBackPressed(View view) {
+        hideKeyboard(view);
+        onBackPressed();
+    }
+
+    @OnClick(R.id.search_clear)
+    public void onClearClick(View view) {
+        searchBox.setText(null);
     }
 
     private void init() {
@@ -138,8 +204,8 @@ public class SearchActivity extends AppCompatActivity {
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
-        historyRecyclerView.setVisibility(View.VISIBLE);
-        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory());
+        showSuggestions(true);
+        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), this);
         historyRecyclerView.setAdapter(historyAdapter);
         historyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -148,10 +214,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (i == KeyEvent.KEYCODE_ENTER) {
-                    query = searchBox.getText().toString();
                     pageNumber = 1;
-                    SharedPrefs.addToSearchHistory(query);
-                    searchCall(SearchActivity.this);
+                    searchCall(SearchActivity.this, searchBox.getText().toString());
                     searchBox.clearFocus();
                     hideKeyboard(view);
                 }
@@ -184,74 +248,23 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    historyRecyclerView.setVisibility(View.VISIBLE);
+                    showSuggestions(true);
                     historyAdapter.searchHistory = SharedPrefs.getSearchHistory();
                     historyAdapter.notifyDataSetChanged();
-                } else
-                    historyRecyclerView.setVisibility(View.GONE);
+                } else {
+                    showSuggestions(false);
+                }
             }
         });
     }
 
-    @OnClick(R.id.search_back)
-    public void onSearchBackPressed(View view) {
-        hideKeyboard(view);
-        onBackPressed();
-    }
-
-    @OnClick(R.id.search_clear)
-    public void onClearClick(View view) {
-        searchBox.setText(null);
-    }
-
-    // Increments pageNumber and calls searchCall
-    public static void nextPage(Activity activity) {
-        pageNumber++;
-        searchCall(activity);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        if (SettingsActivity.sharedPrefs == null) {
-            SettingsActivity.sharedPrefs = new SharedPrefs(this);
-        }
-
-        SharedPrefs.applyTheme(this);
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        Log.d("Ignis", "SearchActivity started");
-        ButterKnife.bind(this);
-
-        init();
-
-        // Handle app link
-        Intent appLinkIntent = getIntent();
-//        String appLinkAction = appLinkIntent.getAction();
-        Uri appLinkData = appLinkIntent.getData();
-
-
-        if (appLinkData != null) {
-            query = appLinkData.getLastPathSegment();
-            searchBox.setText(query);
-            pageNumber = 1;
-            searchBox.clearFocus();
-            hideKeyboard(null);
-            searchCall(SearchActivity.this);
-        }
-    }
-
-    private void hideKeyboard(View view) {
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            return;
-        }
-
-        // Needed to hide keyboard without focus
-        view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    private void showSuggestions(boolean bool) {
+        if (bool) {
+            historyRecyclerView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            historyRecyclerView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -1,4 +1,4 @@
-![alt text](https://github.com/KunaalKumar/Ignis/blob/master/app/src/main/res/drawable/ic_launcher.png "Ignis")
+[![Ignis icon](https://raw.githubusercontent.com/KunaalKumar/Ignis/master/app/src/main/res/drawable/ic_launcher.png "Ignis")](https://www.kunaalkumar.com/#ignis)
 # Ignis
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f2e93d42d09649b48da05c1e39ef8e7c)](https://app.codacy.com/app/kunaal/Ignis?utm_source=github.com&utm_medium=referral&utm_content=KunaalKumar/Ignis&utm_campaign=badger)
@@ -7,6 +7,7 @@
 
 
 Android app for information about anything comic book related.
+
 
 ## Features
 
@@ -20,9 +21,10 @@ Android app for information about anything comic book related.
 
 * Dark theme
 
+* Search history suggestions
+
 
 ## Credits
-
 * [Glide](https://github.com/bumptech/glide)
 
 * [Peek and Pop](https://github.com/shalskar/PeekAndPop)
@@ -41,6 +43,7 @@ Android app for information about anything comic book related.
 
 * Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [FlatIcon](www.flaticon.com)
 
+
 ## Project Status
 
 * **Working on providing search suggestions based on history**
@@ -56,6 +59,7 @@ Android app for information about anything comic book related.
 * Divide license section and implement app + open source licenses
 
 * Show more information in peek preview
+
 
 ## License 
 ```
@@ -73,6 +77,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
 
 ## Online Presence
 [![Goole Plus Community](https://www.shareicon.net/data/256x256/2016/07/10/119595_plus_512x512.png)](https://plus.google.com/u/0/communities/117230352217222987710)

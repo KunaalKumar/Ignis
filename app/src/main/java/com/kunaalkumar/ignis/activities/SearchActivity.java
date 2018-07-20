@@ -213,11 +213,22 @@ public class SearchActivity extends AppCompatActivity {
             searchBox.setText(query);
             pageNumber = 1;
             searchBox.clearFocus();
+            hideKeyboard(null);
             searchCall(SearchActivity.this);
         }
     }
 
     private void hideKeyboard(View view) {
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            return;
+        }
+
+        // Needed ot hide keyboard without focus
+        view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

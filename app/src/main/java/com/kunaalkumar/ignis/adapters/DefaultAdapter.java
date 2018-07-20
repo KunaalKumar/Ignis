@@ -102,7 +102,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         // Last item loaded, load more if available
         if (position == (getItemCount() - 1)) {
             SearchActivity.nextPage(activity);
-            Toast.makeText(activity, "Last element is visible", Toast.LENGTH_LONG).show();
         }
 
         final SearchResult searchResult = searchResults.get(position);
@@ -232,7 +231,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(activity, "Clicked on " + position, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(activity, CharacterActivity.class);
                     if (searchResult.getImage() != null) {
                         String url = searchResult.getImage().getOriginalUrl();

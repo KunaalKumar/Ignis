@@ -70,35 +70,39 @@ public class SearchActivity extends AppCompatActivity {
 
     public static PeekAndPop peekAndPop;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        if (SettingsActivity.sharedPrefs == null) {
-            SettingsActivity.sharedPrefs = new SharedPrefs(this);
-        }
+    /*
+     * Retrofit call to search for word in superheroSearch
+     * Make sure to init query variable before calling this
+     */
+    public static void searchCall(final Activity activity) {
 
-        SharedPrefs.applyTheme(this);
+        Retrofit retrofit = ClientInstance.getClient();
+        ApiClient client = retrofit.create(ApiClient.class);
+        Call<ApiResponse<SearchResult[]>> call = client.search(query, API_KEY, FORMAT, pageNumber);
+        call.enqueue(new Callback<ApiResponse<SearchResult[]>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<SearchResult[]>> call, Response<ApiResponse<SearchResult[]>> response) {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        Log.d("Ignis", "SearchActivity started");
-        ButterKnife.bind(this);
+                if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
+                    if (pageNumber == 1) {
+                        adapter = new DefaultAdapter(activity, peekAndPop);
+                        recyclerView.setAdapter(adapter);
+                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
+                        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                    } else {
+                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
+                        adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    Toast.makeText(activity, "No more to show", Toast.LENGTH_LONG).show();
+                }
+            }
 
-        init();
-
-        handleAppLink();
-
-    }
-
-    private void handleAppLink() {
-        // ATTENTION: This was auto-generated to handle app links.
-        Intent appLinkIntent = getIntent();
-        String appLinkAction = appLinkIntent.getAction();
-        Uri appLinkData = appLinkIntent.getData();
-
-        if (appLinkData != null) {
-            String query = appLinkData.getLastPathSegment();
-            Toast.makeText(this, "TODO: Search for " + query, Toast.LENGTH_LONG).show();
-        }
+            @Override
+            public void onFailure(Call<ApiResponse<SearchResult[]>> call, Throwable t) {
+                Log.d("Ignis", t.toString());
+            }
+        });
     }
 
     private void init() {
@@ -139,7 +143,6 @@ public class SearchActivity extends AppCompatActivity {
                     searchCall(SearchActivity.this);
                     searchBox.clearFocus();
                     hideKeyboard(view);
-                    Toast.makeText(SearchActivity.this, "Entered " + searchBox.getText(), Toast.LENGTH_LONG).show();
                 }
                 return true;
             }
@@ -184,41 +187,34 @@ public class SearchActivity extends AppCompatActivity {
         searchCall(activity);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        if (SettingsActivity.sharedPrefs == null) {
+            SettingsActivity.sharedPrefs = new SharedPrefs(this);
+        }
 
-    /*
-     * Retrofit call to search for word in superheroSearch
-     * Make sure to init query variable before calling this
-     */
-    public static void searchCall(final Activity activity) {
+        SharedPrefs.applyTheme(this);
 
-        Retrofit retrofit = ClientInstance.getClient();
-        ApiClient client = retrofit.create(ApiClient.class);
-        Call<ApiResponse<SearchResult[]>> call = client.search(query, API_KEY, FORMAT, pageNumber);
-        call.enqueue(new Callback<ApiResponse<SearchResult[]>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<SearchResult[]>> call, Response<ApiResponse<SearchResult[]>> response) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        Log.d("Ignis", "SearchActivity started");
+        ButterKnife.bind(this);
 
-                if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
-                    if (pageNumber == 1) {
-                        adapter = new DefaultAdapter(activity, peekAndPop);
-                        recyclerView.setAdapter(adapter);
-                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
-                        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-                    } else {
-                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
-                        adapter.notifyDataSetChanged();
-                    }
-                } else {
-                    Toast.makeText(activity, "No more", Toast.LENGTH_LONG).show();
-                }
+        init();
 
-            }
+        // Handle app link
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
 
-            @Override
-            public void onFailure(Call<ApiResponse<SearchResult[]>> call, Throwable t) {
-                Log.d("Ignis", t.toString());
-            }
-        });
+
+        if (appLinkData != null) {
+            query = appLinkData.getLastPathSegment();
+            searchBox.setText(query);
+            pageNumber = 1;
+            searchBox.clearFocus();
+            searchCall(SearchActivity.this);
+        }
     }
 
     private void hideKeyboard(View view) {

@@ -26,7 +26,7 @@ public class SharedPrefs {
 
 //        TODO: handle migrating from short list to long list, and vice-versa
         if (maxArraySize <= 0) {
-            maxArraySize = 10;
+            maxArraySize = 4;
             tinyDB.putInt(KEY_SEARCH_HISTORY_SIZE, maxArraySize);
         }
     }

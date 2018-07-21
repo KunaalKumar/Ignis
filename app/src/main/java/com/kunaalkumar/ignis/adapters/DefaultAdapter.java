@@ -71,7 +71,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Toast.makeText(activity, "No image found for " + searchResults.get(position).getName(), Toast.LENGTH_LONG).show();
 
                 } else {
-
                     Glide.with(activity)
                             .load(searchResults.get(position).getImage().getOriginalUrl())
                             .into(peekImageView);

@@ -130,7 +130,7 @@ public class SearchActivity extends AppCompatActivity {
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (i == KeyEvent.KEYCODE_ENTER) {
                     pageNumber = 1;
-                    searchCall(SearchActivity.this, searchBox.getText().toString());
+                    searchCall(SearchActivity.this, searchBox.getText().toString().trim());
                     showSuggestions(false);
                     hideKeyboard(view);
                 }
@@ -186,9 +186,9 @@ public class SearchActivity extends AppCompatActivity {
         Uri appLinkData = appLinkIntent.getData();
 
         if (appLinkData != null) {
-            searchBox.setText(appLinkData.getLastPathSegment());
+            searchBox.setText(appLinkData.getLastPathSegment().trim());
             pageNumber = 1;
-            searchCall(SearchActivity.this, appLinkData.getLastPathSegment());
+            searchCall(SearchActivity.this, appLinkData.getLastPathSegment().trim());
         }
     }
 
@@ -232,14 +232,14 @@ public class SearchActivity extends AppCompatActivity {
     // Increments pageNumber and calls searchCall
     public static void nextPage(Activity activity, String query) {
         pageNumber++;
-        searchCall(activity, query);
+        searchCall(activity, query.trim());
     }
 
     public static void plainCall(Activity activity, String query) {
         pageNumber = 1;
-        searchBox.setText(query);
+        searchBox.setText(query.trim());
         showSuggestions(false);
-        searchCall(activity, query);
+        searchCall(activity, query.trim());
     }
 
     private void hideKeyboard(View view) {

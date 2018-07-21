@@ -3,6 +3,7 @@ package com.kunaalkumar.ignis.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.SettingsActivity;
@@ -39,7 +40,6 @@ public class SharedPrefs {
         return maxArraySize;
     }
 
-
     public void setSearchHistorySize(int size) {
         if(size < searchHistory.size()) {
             reduceList(size);
@@ -59,7 +59,7 @@ public class SharedPrefs {
     }
 
     public static void addToSearchHistory(String search) {
-
+        search = search.trim();
         if (!searchHistory.contains(search)) {
             if (searchHistory.size() >= maxArraySize) {
                 // Remove first element; shift elements up; add new element to the end

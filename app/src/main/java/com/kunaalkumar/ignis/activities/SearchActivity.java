@@ -115,7 +115,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
         // Request focus on searchBox and pull up keyboard
-        searchBox.requestFocus();
+//        searchBox.requestFocus();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
@@ -131,7 +131,7 @@ public class SearchActivity extends AppCompatActivity {
                 if (i == KeyEvent.KEYCODE_ENTER) {
                     pageNumber = 1;
                     searchCall(SearchActivity.this, searchBox.getText().toString());
-                    searchBox.clearFocus();
+                    showSuggestions(false);
                     hideKeyboard(view);
                 }
                 return true;
@@ -172,6 +172,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -187,8 +188,6 @@ public class SearchActivity extends AppCompatActivity {
         if (appLinkData != null) {
             searchBox.setText(appLinkData.getLastPathSegment());
             pageNumber = 1;
-            searchBox.clearFocus();
-            hideKeyboard(null);
             searchCall(SearchActivity.this, appLinkData.getLastPathSegment());
         }
     }
@@ -198,7 +197,8 @@ public class SearchActivity extends AppCompatActivity {
      * Make sure to init query variable before calling this
      */
     public static void searchCall(final Activity activity, final String query) {
-
+        MainActivity.hideKeyboard(activity);
+        recyclerView.requestFocus();
         SharedPrefs.addToSearchHistory(query);
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
@@ -238,6 +238,7 @@ public class SearchActivity extends AppCompatActivity {
     public static void plainCall(Activity activity, String query) {
         pageNumber = 1;
         searchBox.setText(query);
+        showSuggestions(false);
         searchCall(activity, query);
     }
 
@@ -267,7 +268,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    private void showSuggestions(boolean bool) {
+    private static void showSuggestions(boolean bool) {
         if (bool) {
             historyRecyclerView.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);

@@ -18,7 +18,6 @@ import com.kunaalkumar.ignis.utils.SharedPrefs;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.widget.TextViewCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -79,6 +78,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static SharedPrefs sharedPrefs;
 
+    private Integer possibleSize;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (sharedPrefs.getDarkThemeState()) {
@@ -120,6 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
         maxSeekBarVal.setText(SharedPrefs.ABSOLUTE_MAX_SEARCH_HISTORY.toString());
         seekBar.setProgress(sharedPrefs.getSearchHistorySize());
         currentSeekBarVal.setText(sharedPrefs.getSearchHistorySize().toString());
+        possibleSize = sharedPrefs.getSearchHistorySize();
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -127,12 +129,12 @@ public class SettingsActivity extends AppCompatActivity {
                 if(i < 2) {
                     Toast.makeText(SettingsActivity.this, "Minimum value is 2", Toast.LENGTH_LONG).show();
                     seekBar.setProgress(2);
-                    sharedPrefs.setSearchHistorySize(2);
+                    possibleSize = 2;
                 }
                 else {
-                    sharedPrefs.setSearchHistorySize(i);
+                    possibleSize = i;
                 }
-                currentSeekBarVal.setText(sharedPrefs.getSearchHistorySize().toString());
+                currentSeekBarVal.setText(possibleSize.toString());
             }
 
             @Override
@@ -143,6 +145,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 //                Toast.makeText(SettingsActivity.this, "Set to " + seekBar.getProgress(), Toast.LENGTH_LONG).show();
+                sharedPrefs.setSearchHistorySize(possibleSize);
             }
         });
     }

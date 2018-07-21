@@ -30,15 +30,26 @@ public class SharedPrefs {
             maxArraySize = 5;
             tinyDB.putInt(KEY_SEARCH_HISTORY_SIZE, maxArraySize);
         }
+        if(searchHistory.size() > maxArraySize) {
+            reduceList(maxArraySize);
+        }
     }
 
     public Integer getSearchHistorySize() {
         return maxArraySize;
     }
 
+
     public void setSearchHistorySize(int size) {
+        if(size < searchHistory.size()) {
+            reduceList(size);
+        }
         maxArraySize = size;
         tinyDB.putInt(KEY_SEARCH_HISTORY_SIZE, size);
+    }
+
+    private void reduceList(int size) {
+        searchHistory.subList(0, searchHistory.size() - size).clear();
     }
 
     public static void applyTheme(Activity activity) {

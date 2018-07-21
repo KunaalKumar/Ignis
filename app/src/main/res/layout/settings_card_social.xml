@@ -21,6 +21,7 @@
                 android:gravity="start"
                 android:padding="16dp"
                 android:text="@string/social"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="?attr/headingTextColor"
                 android:textSize="21sp"

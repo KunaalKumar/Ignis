@@ -9,45 +9,85 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="8dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="start"
+            android:padding="16dp"
+            android:textStyle="bold"
+            android:text="@string/preferences"
+            android:textAlignment="center"
+            android:textColor="?attr/headingTextColor"
+            android:textSize="21sp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/theme_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:text="@string/title_dark_mode"
+            android:textColor="?attr/headingTextColor" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tittle_max_search_history"
+                android:text="Max Search History"
+                android:textSize="16sp"
+                android:textColor="?attr/headingTextColor"
+                android:fontFamily="@font/roboto_medium"
+                android:padding="16dp"/>
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:layout_below="@id/tittle_max_search_history"
+                android:id="@+id/slider_search_history"
+                android:padding="16dp"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:tooltipText="max search history slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
                 android:gravity="start"
-                android:padding="16dp"
-                android:paddingStart="16dp"
-                android:text="@string/preferences"
-                android:textAlignment="center"
-                android:textColor="?attr/headingTextColor"
-                android:textSize="21sp"
-                app:layout_constraintBottom_toTopOf="@id/theme_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/theme_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="72dp"
-                android:layout_marginBottom="8dp"
+                android:padding="8dp"
                 android:fontFamily="@font/roboto_light"
-                android:padding="16dp"
-                android:paddingBottom="4dp"
-                android:text="@string/dark_mode"
-                android:textColor="?attr/headingTextColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/slider_search_history_current_val"
+                android:paddingStart="32dp"
+                android:tooltipText="@string/current_size"
+                android:layout_marginBottom="16dp"
+                android:textColor="?attr/textColor"
+                android:layout_below="@id/slider_search_history"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_alignEnd="@id/slider_search_history"
+                android:layout_below="@id/slider_search_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="32dp"
+                android:tooltipText="@string/max_size"
+                android:layout_marginBottom="16dp"
+                android:textColor="?attr/textColor"
+                android:id="@+id/slider_search_history_max_val"
+                android:padding="8dp"
+                android:fontFamily="@font/roboto_light" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

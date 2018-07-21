@@ -5,7 +5,7 @@
     <string name="search_shortcut_disabled">Search shortcut is disabled</string>
     <string name="settings">Settings</string>
     <string name="back">Back</string>
-    <string name="dark_mode">Dark mode</string>
+    <string name="title_dark_mode">Dark Mode</string>
     <string name="licenses">Licenses</string>
     <string name="app_copyright">© 2018 Kunaal Kumar</string>
     <string name="version">Version</string>
@@ -22,4 +22,6 @@
     <string name="google_plus_community">Google Plus Community</string>
     <string name="subreddit">r/IgnisAndroid</string>
     <string name="rate_ignis">Rate Ignis</string>
+    <string name="current_size">Current size</string>
+    <string name="max_size">Max size</string>
 </resources>

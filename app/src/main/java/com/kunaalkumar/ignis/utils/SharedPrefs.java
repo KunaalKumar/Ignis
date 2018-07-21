@@ -15,6 +15,7 @@ public class SharedPrefs {
     public static final String KEY_SEARCH_HISTORY = "SearchHistory";
     public static final String KEY_DARK_THEME = "DarkTheme";
     public static final String KEY_SEARCH_HISTORY_SIZE = "SearchHistorySize";
+    public static final Integer ABSOLUTE_MAX_SEARCH_HISTORY = 10;
     public static ArrayList<String> searchHistory;
     private static TinyDB tinyDB;
     private static int maxArraySize;
@@ -26,16 +27,16 @@ public class SharedPrefs {
 
 //        TODO: handle migrating from short list to long list, and vice-versa
         if (maxArraySize <= 0) {
-            maxArraySize = 4;
+            maxArraySize = 5;
             tinyDB.putInt(KEY_SEARCH_HISTORY_SIZE, maxArraySize);
         }
     }
 
-    public static int getSearchHistorySize() {
+    public Integer getSearchHistorySize() {
         return maxArraySize;
     }
 
-    public static void setSearchHistorySize(int size) {
+    public void setSearchHistorySize(int size) {
         maxArraySize = size;
         tinyDB.putInt(KEY_SEARCH_HISTORY_SIZE, size);
     }

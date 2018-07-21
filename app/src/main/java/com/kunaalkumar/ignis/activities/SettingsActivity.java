@@ -8,13 +8,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.widget.TextViewCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,6 +30,16 @@ public class SettingsActivity extends AppCompatActivity {
 
     @BindView(R.id.theme_button)
     SwitchCompat nightMode;
+
+    /*
+    * Seekbar
+    * */
+    @BindView(R.id.slider_search_history)
+    AppCompatSeekBar seekBar;
+    @BindView(R.id.slider_search_history_current_val)
+    TextView currentSeekBarVal;
+    @BindView(R.id.slider_search_history_max_val)
+    TextView maxSeekBarVal;
 
     /*
      * License
@@ -80,6 +94,14 @@ public class SettingsActivity extends AppCompatActivity {
             nightMode.setChecked(true);
         }
 
+        init();
+
+        setVersionName();
+
+        setClickListeners();
+    }
+
+    private void init() {
         nightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -93,9 +115,36 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        setVersionName();
+        // Init seekbar
+        seekBar.setMax(SharedPrefs.ABSOLUTE_MAX_SEARCH_HISTORY);
+        maxSeekBarVal.setText(SharedPrefs.ABSOLUTE_MAX_SEARCH_HISTORY.toString());
+        seekBar.setProgress(sharedPrefs.getSearchHistorySize());
+        currentSeekBarVal.setText(sharedPrefs.getSearchHistorySize().toString());
 
-        setClickListeners();
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if(i < 2) {
+                    Toast.makeText(SettingsActivity.this, "Minimum value is 2", Toast.LENGTH_LONG).show();
+                    seekBar.setProgress(2);
+                    sharedPrefs.setSearchHistorySize(2);
+                }
+                else {
+                    sharedPrefs.setSearchHistorySize(i);
+                }
+                currentSeekBarVal.setText(sharedPrefs.getSearchHistorySize().toString());
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+//                Toast.makeText(SettingsActivity.this, "Started touching ", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+//                Toast.makeText(SettingsActivity.this, "Set to " + seekBar.getProgress(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void setClickListeners() {

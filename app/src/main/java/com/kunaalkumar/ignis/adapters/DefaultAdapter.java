@@ -228,7 +228,12 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         viewHolder.resourceType.setText(searchResult.getResourceType());
 
         if (searchResult.getResourceType().equals("character")) {
-            viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
+            if(searchResult.getPublisher() != null) {
+                viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
+            }
+            else {
+                viewHolder.additionInformation.setText(R.string.error_name_nf);
+            }
 
             viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -280,6 +285,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void populateImageWithError(ImageView imageView) {
         Glide.with(activity)
                 .load(R.drawable.image_not_available)
+                .apply(new RequestOptions()
+                .dontAnimate())
                 .into(imageView);
     }
 
@@ -288,6 +295,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .load(imageUrl)
                 .apply(new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
+                .apply(new RequestOptions()
+                        .dontAnimate())
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -305,6 +314,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         Glide.with(activity)
                 .load(originalImageUrl)
+                .apply(new RequestOptions()
+                        .dontAnimate())
                 .preload();
     }
 

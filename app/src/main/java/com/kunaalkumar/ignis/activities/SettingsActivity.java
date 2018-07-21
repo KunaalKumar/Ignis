@@ -128,6 +128,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if(i < 2) {
                     Toast.makeText(SettingsActivity.this, "Minimum value is 2", Toast.LENGTH_LONG).show();
+
                     seekBar.setProgress(2);
                     possibleSize = 2;
                 }

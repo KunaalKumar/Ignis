@@ -43,7 +43,7 @@
                 android:fontFamily="@font/roboto_light"
                 android:textColor="?attr/textColor"
                 android:layout_marginBottom="8dp"
-                android:text="Not yet implemented."
+                android:text="Coming soon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

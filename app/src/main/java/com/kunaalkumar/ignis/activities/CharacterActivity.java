@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
@@ -57,6 +58,8 @@ public class CharacterActivity extends AppCompatActivity {
 
         Glide.with(this)
                 .load(url)
+                .apply(new RequestOptions()
+                .dontAnimate())
                 .into(characterImage);
     }
 

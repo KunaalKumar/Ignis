@@ -52,8 +52,7 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.search_toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.search_searchBox)
-    EditText searchBox;
+    private static EditText searchBox;
 
     @BindView(R.id.search_back)
     ImageView backButton;
@@ -90,101 +89,9 @@ public class SearchActivity extends AppCompatActivity {
         appLinkCall();
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-        appLinkCall();
-    }
-
-    // Handle app link
-    private void appLinkCall() {
-        Intent appLinkIntent = getIntent();
-        Uri appLinkData = appLinkIntent.getData();
-
-        if (appLinkData != null) {
-            searchBox.setText(appLinkData.getLastPathSegment());
-            pageNumber = 1;
-            searchBox.clearFocus();
-            hideKeyboard(null);
-            searchCall(SearchActivity.this, appLinkData.getLastPathSegment());
-        }
-    }
-
-    /*
-     * Retrofit call to search for word in superheroSearch
-     * Make sure to init query variable before calling this
-     */
-    public static void searchCall(final Activity activity, final String query) {
-
-        SharedPrefs.addToSearchHistory(query);
-        Retrofit retrofit = ClientInstance.getClient();
-        ApiClient client = retrofit.create(ApiClient.class);
-        Call<ApiResponse<SearchResult[]>> call = client.search(query, API_KEY, FORMAT, pageNumber);
-        call.enqueue(new Callback<ApiResponse<SearchResult[]>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<SearchResult[]>> call, Response<ApiResponse<SearchResult[]>> response) {
-
-                if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
-                    if (pageNumber == 1) {
-                        adapter = new DefaultAdapter(activity, peekAndPop, query);
-                        recyclerView.setAdapter(adapter);
-                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
-                        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-                    } else {
-                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
-                        adapter.notifyDataSetChanged();
-                    }
-                } else {
-                    Toast.makeText(activity, "No more to show", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<SearchResult[]>> call, Throwable t) {
-                Log.d("Ignis", t.toString());
-            }
-        });
-    }
-
-    // Increments pageNumber and calls searchCall
-    public static void nextPage(Activity activity, String query) {
-        pageNumber++;
-        searchCall(activity, query);
-    }
-
-    public static void plainCall(Activity activity, String query) {
-        pageNumber = 1;
-        searchCall(activity, query);
-    }
-
-    private void hideKeyboard(View view) {
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            return;
-        }
-
-        // Needed to hide keyboard without focus
-        view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    @OnClick(R.id.search_back)
-    public void onSearchBackPressed(View view) {
-        hideKeyboard(view);
-        onBackPressed();
-    }
-
-    @OnClick(R.id.search_clear)
-    public void onClearClick(View view) {
-        searchBox.setText(null);
-    }
-
     private void init() {
 
+        searchBox = findViewById(R.id.search_searchBox);
         historyRecyclerView = findViewById(R.id.search_recycler_view_history);
 
         recyclerView = findViewById(R.id.search_recycler_view);
@@ -265,6 +172,100 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        appLinkCall();
+    }
+
+    // Handle app link
+    private void appLinkCall() {
+        Intent appLinkIntent = getIntent();
+        Uri appLinkData = appLinkIntent.getData();
+
+        if (appLinkData != null) {
+            searchBox.setText(appLinkData.getLastPathSegment());
+            pageNumber = 1;
+            searchBox.clearFocus();
+            hideKeyboard(null);
+            searchCall(SearchActivity.this, appLinkData.getLastPathSegment());
+        }
+    }
+
+    /*
+     * Retrofit call to search for word in superheroSearch
+     * Make sure to init query variable before calling this
+     */
+    public static void searchCall(final Activity activity, final String query) {
+
+        SharedPrefs.addToSearchHistory(query);
+        Retrofit retrofit = ClientInstance.getClient();
+        ApiClient client = retrofit.create(ApiClient.class);
+        Call<ApiResponse<SearchResult[]>> call = client.search(query, API_KEY, FORMAT, pageNumber);
+        call.enqueue(new Callback<ApiResponse<SearchResult[]>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<SearchResult[]>> call, Response<ApiResponse<SearchResult[]>> response) {
+
+                if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
+                    if (pageNumber == 1) {
+                        adapter = new DefaultAdapter(activity, peekAndPop, query);
+                        recyclerView.setAdapter(adapter);
+                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
+                        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                    } else {
+                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
+                        adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    Toast.makeText(activity, "No more to show", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<SearchResult[]>> call, Throwable t) {
+                Log.d("Ignis", t.toString());
+            }
+        });
+    }
+
+    // Increments pageNumber and calls searchCall
+    public static void nextPage(Activity activity, String query) {
+        pageNumber++;
+        searchCall(activity, query);
+    }
+
+    public static void plainCall(Activity activity, String query) {
+        pageNumber = 1;
+        searchBox.setText(query);
+        searchCall(activity, query);
+    }
+
+    private void hideKeyboard(View view) {
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            return;
+        }
+
+        // Needed to hide keyboard without focus
+        view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    @OnClick(R.id.search_back)
+    public void onSearchBackPressed(View view) {
+        hideKeyboard(view);
+        onBackPressed();
+    }
+
+    @OnClick(R.id.search_clear)
+    public void onClearClick(View view) {
+        searchBox.setText(null);
+    }
+
 
     private void showSuggestions(boolean bool) {
         if (bool) {

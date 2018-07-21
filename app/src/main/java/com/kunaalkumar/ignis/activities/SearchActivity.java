@@ -94,6 +94,8 @@ public class SearchActivity extends AppCompatActivity {
         searchBox = findViewById(R.id.search_searchBox);
         historyRecyclerView = findViewById(R.id.search_recycler_view_history);
 
+        searchBox.requestFocus();
+
         recyclerView = findViewById(R.id.search_recycler_view);
         KeyboardVisibilityEvent.setEventListener(
                 SearchActivity.this,

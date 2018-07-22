@@ -57,6 +57,31 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         searchResults = new ArrayList<>();
 
+        initPeekPreview(peekAndPop);
+
+    }
+
+    /*
+
+
+
+
+    .___              .__
+    |   | ____   ____ |__| ______
+    |   |/ ___\ /    \|  |/  ___/
+    |   / /_/  >   |  \  |\___ \
+    |___\___  /|___|  /__/____  >
+       /_____/      \/        \/
+
+
+                Init Peek and Pop
+
+
+
+
+     */
+
+    private void initPeekPreview(PeekAndPop peekAndPop) {
         View peekView = peekAndPop.getPeekView();
 
         peekImageView = peekView.findViewById(R.id.preview_dialog);
@@ -83,6 +108,39 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 // Called when finger is lifted
             }
         });
+
+        peekAndPop.setOnHoldAndReleaseListener(new PeekAndPop.OnHoldAndReleaseListener() {
+            @Override
+            public void onHold(View view, int i) {
+                // do something on hold
+            }
+
+            @Override
+            public void onLeave(View view, int i) {
+                // do something on leave, without lifting finger
+            }
+
+            @Override
+            public void onRelease(View view, int i) {
+                if (view == activity.findViewById(R.id.peek_view_share)) {
+//                    Snackbar.make(activity.findViewById(android.R.id.content), "Hold and release on " + searchResults.get(i).getSiteDetailUrl(), Snackbar.LENGTH_LONG).show();
+
+                    shareUrlIntent(searchResults.get(i).getName(), searchResults.get(i).getSiteDetailUrl());
+                }
+
+            }
+        });
+
+        peekAndPop.addHoldAndReleaseView(R.id.peek_view_share);
+        peekAndPop.addHoldAndReleaseView(R.id.peek_view_copy);
+    }
+
+    private void shareUrlIntent(String subject, String url) {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_SUBJECT, "Sharing URL");
+        i.putExtra(Intent.EXTRA_TEXT, url);
+        activity.startActivity(Intent.createChooser(i, "Share URL"));
     }
 
     @NonNull
@@ -228,10 +286,9 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         viewHolder.resourceType.setText(searchResult.getResourceType());
 
         if (searchResult.getResourceType().equals("character")) {
-            if(searchResult.getPublisher() != null) {
+            if (searchResult.getPublisher() != null) {
                 viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
-            }
-            else {
+            } else {
                 viewHolder.additionInformation.setText(R.string.error_name_nf);
             }
 
@@ -286,7 +343,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         Glide.with(activity)
                 .load(R.drawable.image_not_available)
                 .apply(new RequestOptions()
-                .dontAnimate())
+                        .dontAnimate())
                 .into(imageView);
     }
 

@@ -109,12 +109,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 });
 
-        // Basic init for peekAndPop
-        peekAndPop = new PeekAndPop.Builder(this)
-                .peekLayout(R.layout.peek_preview)
-                .parentViewGroupToDisallowTouchEvents(recyclerView)
-                .build();
-
+        initPeekAndPop();
 
         // Request focus on searchBox and pull up keyboard
 //        searchBox.requestFocus();
@@ -175,6 +170,14 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    private void initPeekAndPop() {
+        // Basic init for peekAndPop
+        peekAndPop = new PeekAndPop.Builder(this)
+                .peekLayout(R.layout.peek_preview)
+                .parentViewGroupToDisallowTouchEvents(recyclerView)
+                .build();
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -190,6 +193,7 @@ public class SearchActivity extends AppCompatActivity {
         if (appLinkData != null) {
             searchBox.setText(appLinkData.getLastPathSegment().trim());
             pageNumber = 1;
+            showSuggestions(false);
             searchCall(SearchActivity.this, appLinkData.getLastPathSegment().trim());
         }
     }

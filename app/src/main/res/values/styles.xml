@@ -14,7 +14,6 @@
         <item name="backgroundColor">@color/white</item>
         <item name="toolbarColor">@color/white</item>
         <item name="cardBackgroundColor">@color/white</item>
-        <item name="android:navigationBarColor">@color/colorAccent</item>
         <item name="android:statusBarColor">@color/colorAccent</item>
         <item name="disabledColor">@color/gray</item>
     </style>

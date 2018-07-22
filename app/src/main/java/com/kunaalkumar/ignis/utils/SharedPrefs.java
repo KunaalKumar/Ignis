@@ -4,6 +4,7 @@ package com.kunaalkumar.ignis.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.SettingsActivity;
@@ -16,7 +17,7 @@ public class SharedPrefs {
     public static final String KEY_SEARCH_HISTORY = "SearchHistory";
     public static final String KEY_DARK_THEME = "DarkTheme";
     public static final String KEY_SEARCH_HISTORY_SIZE = "SearchHistorySize";
-    public static final Integer ABSOLUTE_MAX_SEARCH_HISTORY = 10;
+    public static final Integer ABSOLUTE_MAX_SEARCH_HISTORY = 50;
     public static ArrayList<String> searchHistory;
     private static TinyDB tinyDB;
     private static int maxArraySize;
@@ -28,10 +29,10 @@ public class SharedPrefs {
 
 //        TODO: handle migrating from short list to long list, and vice-versa
         if (maxArraySize <= 0) {
-            maxArraySize = 5;
+            maxArraySize = 25;
             tinyDB.putInt(KEY_SEARCH_HISTORY_SIZE, maxArraySize);
         }
-        if(searchHistory.size() > maxArraySize) {
+        if (searchHistory.size() > maxArraySize) {
             reduceList(maxArraySize);
         }
     }
@@ -41,7 +42,7 @@ public class SharedPrefs {
     }
 
     public void setSearchHistorySize(int size) {
-        if(size < searchHistory.size()) {
+        if (size < searchHistory.size()) {
             reduceList(size);
         }
         maxArraySize = size;
@@ -74,6 +75,11 @@ public class SharedPrefs {
                 tinyDB.putListString(KEY_SEARCH_HISTORY, searchHistory);
             }
         }
+    }
+
+    public static void removeFromSearchHistory(String search) {
+        searchHistory.remove(search);
+        tinyDB.putListString(KEY_SEARCH_HISTORY, searchHistory);
     }
 
     public static ArrayList<String> getSearchHistory() {

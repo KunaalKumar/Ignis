@@ -3,8 +3,6 @@ package com.kunaalkumar.ignis.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.SettingsActivity;
@@ -75,6 +73,11 @@ public class SharedPrefs {
                 tinyDB.putListString(KEY_SEARCH_HISTORY, searchHistory);
             }
         }
+    }
+
+    public static void replaceSearchHistory(ArrayList<String> newList) {
+        searchHistory = new ArrayList<>(newList);
+        tinyDB.putListString(KEY_SEARCH_HISTORY, searchHistory);
     }
 
     public static void removeFromSearchHistory(String search) {

@@ -51,9 +51,22 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
         holder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                final ArrayList<String> temp = new ArrayList<>(searchHistory);
+
+                Snackbar.make(activity.findViewById(android.R.id.content), "Removed " + searchHistory.get(position), Snackbar.LENGTH_LONG)
+                        .setAction("Undo", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SharedPrefs.replaceSearchHistory(temp);
+                                searchHistory = SharedPrefs.getSearchHistory();
+                                notifyDataSetChanged();
+                            }
+                        }).show();
+
                 SharedPrefs.removeFromSearchHistory(searchHistory.get(position));
-                searchHistory = SharedPrefs.getSearchHistory();
+                searchHistory.remove(searchHistory.get(position));
                 notifyDataSetChanged();
+
                 return true;
             }
         });

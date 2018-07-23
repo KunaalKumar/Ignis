@@ -15,6 +15,7 @@ public class SharedPrefs {
     public static final String KEY_SEARCH_HISTORY = "SearchHistory";
     public static final String KEY_DARK_THEME = "DarkTheme";
     public static final String KEY_SEARCH_HISTORY_SIZE = "SearchHistorySize";
+    public static final String KEY_PEEK_HIGH_RES_IMAGE = "PeekHighResImage";
     public static final Integer ABSOLUTE_MAX_SEARCH_HISTORY = 50;
     public static ArrayList<String> searchHistory;
     private static TinyDB tinyDB;
@@ -99,5 +100,13 @@ public class SharedPrefs {
 
     public void setDarkThemeState(Boolean state) {
         tinyDB.putBoolean(KEY_DARK_THEME, state);
+    }
+
+    public static Boolean getPeekHighResImageState() {
+        return tinyDB.getBoolean(KEY_PEEK_HIGH_RES_IMAGE);
+    }
+
+    public static void setPeekHighResImageState(Boolean state) {
+        tinyDB.putBoolean(KEY_PEEK_HIGH_RES_IMAGE, state);
     }
 }

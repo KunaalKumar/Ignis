@@ -12,6 +12,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
@@ -27,12 +28,15 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.settings_back)
     ImageView backButton;
 
-    @BindView(R.id.theme_button)
+    @BindView(R.id.theme_switch)
     SwitchCompat nightMode;
 
+    @BindView(R.id.peek_image_quality_switch)
+    SwitchCompat previewImageQuality;
+
     /*
-    * Seekbar
-    * */
+     * Seekbar
+     * */
     @BindView(R.id.slider_search_history)
     AppCompatSeekBar seekBar;
     @BindView(R.id.slider_search_history_current_val)
@@ -103,16 +107,22 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void init() {
+        // Init night mode switch
         nightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    sharedPrefs.setDarkThemeState(true);
-                    restartOnThemeChanged();
-                } else {
-                    sharedPrefs.setDarkThemeState(false);
-                    restartOnThemeChanged();
-                }
+                sharedPrefs.setDarkThemeState(isChecked);
+                restartOnThemeChanged();
+            }
+        });
+
+        // Init preview image quality switch
+        previewImageQuality.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                SharedPrefs.setPeekHighResImageState(isChecked);
+                Snackbar.make(findViewById(android.R.id.content), Boolean.toString(isChecked),
+                        Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -126,13 +136,12 @@ public class SettingsActivity extends AppCompatActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if(i < 2) {
+                if (i < 2) {
                     Toast.makeText(SettingsActivity.this, "Minimum value is 2", Toast.LENGTH_LONG).show();
 
                     seekBar.setProgress(2);
                     possibleSize = 2;
-                }
-                else {
+                } else {
                     possibleSize = i;
                 }
                 currentSeekBarVal.setText(possibleSize.toString());

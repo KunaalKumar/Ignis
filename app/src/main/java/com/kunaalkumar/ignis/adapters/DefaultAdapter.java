@@ -20,6 +20,7 @@ import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
+import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -93,7 +94,11 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Toast.makeText(activity, "No image found for " + searchResults.get(position).getName(), Toast.LENGTH_LONG).show();
 
                 } else {
-                    loadImageFromURL(searchResults.get(position).getImage().getOriginalUrl(), peekImageView);
+                    if (SharedPrefs.getPeekHighResImageState()) {
+                        loadImageFromURL(searchResults.get(position).getImage().getOriginalUrl(), peekImageView);
+                    } else {
+                        loadImageFromURL(searchResults.get(position).getImage().getMediumUrl(), peekImageView);
+                    }
 
                 }
 
@@ -277,9 +282,13 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (searchResult.getImage() == null) {
             loadImageFromRes(R.drawable.image_not_available, viewHolder.image);
         } else {
-            loadImageFromUrlFetch(searchResult.getImage().getMediumUrl(),
-                    viewHolder.image,
-                    searchResult.getImage().getOriginalUrl());
+            if (SharedPrefs.getPeekHighResImageState()) {
+                loadImageFromUrlFetch(searchResult.getImage().getMediumUrl(),
+                        viewHolder.image,
+                        searchResult.getImage().getOriginalUrl());
+            } else {
+                loadImageFromURL(searchResult.getImage().getMediumUrl(), viewHolder.image);
+            }
 
         }
 
@@ -316,9 +325,13 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (searchResult.getImage() == null) {
             loadImageFromRes(R.drawable.image_not_available, viewHolder.image);
         } else {
-            loadImageFromUrlFetch(searchResult.getImage().getScreenLargeUrl(),
-                    viewHolder.image,
-                    searchResult.getImage().getOriginalUrl());
+            if (SharedPrefs.getPeekHighResImageState()) {
+                loadImageFromUrlFetch(searchResult.getImage().getScreenLargeUrl(),
+                        viewHolder.image,
+                        searchResult.getImage().getOriginalUrl());
+            }
+            loadImageFromURL(searchResult.getImage().getScreenLargeUrl(),
+                    viewHolder.image);
         }
 
         if (searchResult.getName() != null) {

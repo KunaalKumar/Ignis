@@ -24,4 +24,5 @@
     <string name="rate_ignis">Rate Ignis</string>
     <string name="current_size">Current size</string>
     <string name="max_size">Max size</string>
+    <string name="high_preview_image_quality">High Preview Image Quality</string>
 </resources>

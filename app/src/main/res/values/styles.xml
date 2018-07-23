@@ -17,10 +17,11 @@
         <item name="android:statusBarColor">@color/colorAccent</item>
         <item name="disabledColor">@color/gray</item>
     </style>
+    https://comicvine.gamespot.com/superman/4005-1807/
 
     <style name="LaunchTheme" parent="LightTheme">
         <item name="android:windowBackground">@drawable/launch_background</item>
-        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:statusBarColor">@color/colorAccent</item>
         <item name="android:navigationBarColor">@color/black</item>
     </style>
 

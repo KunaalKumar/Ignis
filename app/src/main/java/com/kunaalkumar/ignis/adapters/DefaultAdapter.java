@@ -1,6 +1,9 @@
 package com.kunaalkumar.ignis.adapters;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -122,10 +125,21 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             @Override
             public void onRelease(View view, int i) {
+
                 if (view == activity.findViewById(R.id.peek_view_share)) {
 //                    Snackbar.make(activity.findViewById(android.R.id.content), "Hold and release on " + searchResults.get(i).getSiteDetailUrl(), Snackbar.LENGTH_LONG).show();
 
                     shareUrlIntent(searchResults.get(i).getName(), searchResults.get(i).getSiteDetailUrl());
+
+                } else if (view == activity.findViewById(R.id.peek_view_copy)) {
+
+                    ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText(searchResults.get(i).getName(),
+                            searchResults.get(i).getSiteDetailUrl());
+
+                    clipboard.setPrimaryClip(clip);
+                    Snackbar.make(activity.findViewById(android.R.id.content), "Copied to clipboard",
+                            Snackbar.LENGTH_SHORT).show();
                 }
 
             }

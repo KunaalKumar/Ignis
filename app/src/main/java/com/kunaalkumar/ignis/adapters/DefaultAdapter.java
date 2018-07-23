@@ -24,6 +24,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.perf.metrics.AddTrace;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
@@ -85,7 +86,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
      */
 
-    private void initPeekPreview(PeekAndPop peekAndPop, final int viewType) {
+    private void initPeekPreview(PeekAndPop peekAndPop) {
         View peekView = peekAndPop.getPeekView();
 
         peekImageView = peekView.findViewById(R.id.preview_dialog);
@@ -140,16 +141,12 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         Snackbar.make(activity.findViewById(android.R.id.content), "Copied to clipboard",
                                 Snackbar.LENGTH_SHORT).show();
                         break;
+
                     case R.id.peek_view_open:
-                        switch (viewType) {
-                            case VIEW_TYPE_BANNER:
-                                bannerOnClick(searchResults.get(i));
-                                break;
-                            case VIEW_TYPE_COVER:
-                                coverOnClick(searchResults.get(i));
-                                break;
-                            default:
-                                break;
+                        if (Arrays.asList(bannerViewTypes).contains(searchResults.get(i).getResourceType())) {
+                            bannerOnClick(searchResults.get(i));
+                        } else {
+                            coverOnClick(searchResults.get(i));
                         }
                         break;
                 }
@@ -200,6 +197,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        initPeekPreview(peekAndPop);
         if (viewType == 0) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_banner, parent, false);
             return new BannerViewHolder(view);
@@ -280,8 +278,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     // Populate for cover view holder
     private void populateCover(CoverViewHolder viewHolder, final int position, final SearchResult searchResult) {
 
-        initPeekPreview(peekAndPop, VIEW_TYPE_COVER);
-
         peekAndPop.addLongClickView(viewHolder.parentLayout, position);
 
         Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
@@ -319,8 +315,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     // Populate for banner view holder
     private void populateBanner(BannerViewHolder viewHolder, final int position, final SearchResult searchResult) {
-
-        initPeekPreview(peekAndPop, VIEW_TYPE_BANNER);
 
         peekAndPop.addLongClickView(viewHolder.parentLayout, position);
 
@@ -410,6 +404,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .into(imageView);
     }
 
+    @AddTrace(name = "populateImageTrace")
     private void populateImage(String imageUrl, String originalImageUrl, final ProgressBar progressBar, ImageView imageView) {
         Glide.with(activity)
                 .load(imageUrl)

@@ -303,6 +303,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                     intent.putExtra(EXTRA_ID, searchResult.getId());
                     intent.putExtra(EXTRA_NAME, searchResult.getName());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     activity.startActivity(intent);
                 }
             });

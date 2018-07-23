@@ -127,27 +127,31 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             @Override
             public void onRelease(View view, int i) {
 
-                if (view == activity.findViewById(R.id.peek_view_share)) {
-//                    Snackbar.make(activity.findViewById(android.R.id.content), "Hold and release on " + searchResults.get(i).getSiteDetailUrl(), Snackbar.LENGTH_LONG).show();
+                switch (view.getId()) {
+                    case R.id.peek_view_share:
+                        shareUrlIntent(searchResults.get(i).getName(), searchResults.get(i).getSiteDetailUrl());
+                        break;
+                    case R.id.peek_view_copy:
+                        ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText(searchResults.get(i).getName(),
+                                searchResults.get(i).getSiteDetailUrl());
 
-                    shareUrlIntent(searchResults.get(i).getName(), searchResults.get(i).getSiteDetailUrl());
-
-                } else if (view == activity.findViewById(R.id.peek_view_copy)) {
-
-                    ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText(searchResults.get(i).getName(),
-                            searchResults.get(i).getSiteDetailUrl());
-
-                    clipboard.setPrimaryClip(clip);
-                    Snackbar.make(activity.findViewById(android.R.id.content), "Copied to clipboard",
-                            Snackbar.LENGTH_SHORT).show();
-                } else if (view == activity.findViewById(R.id.peek_view_open)) {
-                    switch (viewType) {
-                        case VIEW_TYPE_BANNER:
-                            bannerOnClick(searchResults.get(i));
-                        case VIEW_TYPE_COVER:
-                            coverOnClick(searchResults.get(i));
-                    }
+                        clipboard.setPrimaryClip(clip);
+                        Snackbar.make(activity.findViewById(android.R.id.content), "Copied to clipboard",
+                                Snackbar.LENGTH_SHORT).show();
+                        break;
+                    case R.id.peek_view_open:
+                        switch (viewType) {
+                            case VIEW_TYPE_BANNER:
+                                bannerOnClick(searchResults.get(i));
+                                break;
+                            case VIEW_TYPE_COVER:
+                                coverOnClick(searchResults.get(i));
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
                 }
             }
         });
@@ -155,6 +159,34 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         peekAndPop.addHoldAndReleaseView(R.id.peek_view_share);
         peekAndPop.addHoldAndReleaseView(R.id.peek_view_copy);
         peekAndPop.addHoldAndReleaseView(R.id.peek_view_open);
+
+        peekAndPop.setOnLongHoldListener(new PeekAndPop.OnLongHoldListener() {
+            @Override
+            public void onEnter(View view, int i) {
+//                Toast.makeText(activity, "Entered", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongHold(View view, int i) {
+                switch (view.getId()) {
+                    case R.id.peek_view_share:
+                        Toast.makeText(activity, "Share", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.peek_view_copy:
+                        Toast.makeText(activity, "Copy to clipboard", Toast.LENGTH_SHORT).show();
+                    case R.id.peek_view_open:
+                        Toast.makeText(activity, "Open " + searchResults.get(i).getName() + "'s page", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        peekAndPop.addLongHoldView(R.id.peek_view_share, false);
+        peekAndPop.addLongHoldView(R.id.peek_view_copy, false);
+        peekAndPop.addLongHoldView(R.id.peek_view_open, false);
+
     }
 
     private void shareUrlIntent(String subject, String url) {
@@ -281,7 +313,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void coverOnClick(SearchResult searchResult) {
-//        Toast.makeText(activity, "Not implemented yet", Toast.LENGTH_LONG).show();
+        Snackbar.make(activity.findViewById(android.R.id.content), "Cover views aren't implemented yet.",
+                Snackbar.LENGTH_SHORT).show();
     }
 
     // Populate for banner view holder

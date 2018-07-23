@@ -33,7 +33,6 @@
                 android:layout_marginBottom="8dp"
                 android:scaleX="0.5"
                 android:scaleY="0.5"
-                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/cover_card_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

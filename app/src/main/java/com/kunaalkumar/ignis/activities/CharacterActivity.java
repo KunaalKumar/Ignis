@@ -13,7 +13,6 @@ import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
-import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
@@ -27,6 +26,7 @@ import retrofit2.Retrofit;
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_ID;
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_NAME;
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_URL;
+import static com.kunaalkumar.ignis.adapters.DefaultAdapter.loadImageFromURL;
 
 public class CharacterActivity extends AppCompatActivity {
 
@@ -61,9 +61,7 @@ public class CharacterActivity extends AppCompatActivity {
 //                .dontAnimate())
 //                .into(characterImage);
 
-        Picasso.get()
-                .load(url)
-                .into(characterImage);
+        loadImageFromURL(url, characterImage);
     }
 
     @OnClick(R.id.character_back)

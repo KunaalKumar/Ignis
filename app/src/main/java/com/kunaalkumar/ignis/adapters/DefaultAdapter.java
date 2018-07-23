@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.perf.metrics.AddTrace;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
@@ -89,17 +88,13 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             public void onPeek(View view, int position) {
                 if (searchResults.get(position).getImage() == null) {
 
-                    populateImageWithError(peekImageView);
+                    loadImageFromRes(R.drawable.image_not_available, peekImageView);
 
                     Toast.makeText(activity, "No image found for " + searchResults.get(position).getName(), Toast.LENGTH_LONG).show();
 
                 } else {
-                    Picasso.get()
-                            .load(searchResults.get(position).getImage().getOriginalUrl())
-                            .into(peekImageView);
-//                    Glide.with(activity)
-//                            .load(searchResults.get(position).getImage().getOriginalUrl())
-//                            .into(peekImageView);
+                    loadImageFromURL(searchResults.get(position).getImage().getOriginalUrl(), peekImageView);
+
                 }
 
             }
@@ -280,11 +275,12 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
         if (searchResult.getImage() == null) {
-            populateImageWithError(viewHolder.image);
+            loadImageFromRes(R.drawable.image_not_available, viewHolder.image);
         } else {
-            populateImage(searchResult.getImage().getMediumUrl(),
-                    searchResult.getImage().getOriginalUrl(),
-                    viewHolder.progressBar, viewHolder.image);
+            loadImageFromUrlFetch(searchResult.getImage().getMediumUrl(),
+                    viewHolder.image,
+                    searchResult.getImage().getOriginalUrl());
+
         }
 
         if (searchResult.getName() != null) {
@@ -318,11 +314,11 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
         if (searchResult.getImage() == null) {
-            populateImageWithError(viewHolder.image);
+            loadImageFromRes(R.drawable.image_not_available, viewHolder.image);
         } else {
-            populateImage(searchResult.getImage().getScreenLargeUrl(),
-                    searchResult.getImage().getOriginalUrl(),
-                    viewHolder.progressBar, viewHolder.image);
+            loadImageFromUrlFetch(searchResult.getImage().getScreenLargeUrl(),
+                    viewHolder.image,
+                    searchResult.getImage().getOriginalUrl());
         }
 
         if (searchResult.getName() != null) {
@@ -391,50 +387,22 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
      */
 
-    // Populates given image view with error
-    private void populateImageWithError(ImageView imageView) {
-//        Glide.with(activity)
-////                .load(R.drawable.image_not_available)
-////                .apply(new RequestOptions()
-////                        .dontAnimate())
-////                .into(imageView);
-
+    //    Loads given url image into given iamgeview
+    public static void loadImageFromURL(String url, ImageView imageView) {
         Picasso.get()
-                .load(R.drawable.image_not_available)
+                .load(url)
                 .into(imageView);
     }
 
-    @AddTrace(name = "populateImageTrace")
-    private void populateImage(String imageUrl, final String originalImageUrl, final ProgressBar progressBar, ImageView imageView) {
-//        Glide.with(activity)
-//                .load(imageUrl)
-//                .apply(new RequestOptions()
-//                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
-//                .apply(new RequestOptions()
-//                        .dontAnimate())
-//                .listener(new RequestListener<Drawable>() {
-//                    @Override
-//                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                        progressBar.setVisibility(View.GONE);
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                        progressBar.setVisibility(View.GONE);
-//                        return false;
-//                    }
-//                })
-//                .into(imageView);
-
+    // Loads given url image into given imageview and pre-fetches the second given url
+    public static void loadImageFromUrlFetch(String url, ImageView imageView, final String secondUrl) {
         Picasso.get()
-                .load(imageUrl)
+                .load(url)
                 .into(imageView, new Callback() {
-
                     @Override
                     public void onSuccess() {
                         Picasso.get()
-                                .load(originalImageUrl)
+                                .load(secondUrl)
                                 .fetch();
                     }
 
@@ -443,12 +411,13 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         // Failed
                     }
                 });
+    }
 
-//        Glide.with(activity)
-//                .load(originalImageUrl)
-//                .apply(new RequestOptions()
-//                        .dontAnimate())
-//                .preload();
+    //    Loads given res image into given imageview
+    public static void loadImageFromRes(int res, ImageView imageView) {
+        Picasso.get()
+                .load(res)
+                .into(imageView);
     }
 
 

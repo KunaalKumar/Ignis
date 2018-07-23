@@ -59,7 +59,11 @@ dependencies {
     // License information
     implementation 'net.yslibrary.licenseadapter:licenseadapter:2.1.1'
 
+    // Firebase
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+
     // App intro library
 //    implementation 'com.github.apl-devs:appintro:v4.2.3'
 
 }
+apply plugin: 'com.google.gms.google-services'

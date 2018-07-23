@@ -367,6 +367,11 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void bannerOnClick(SearchResult searchResult) {
+        if (!searchResult.getResourceType().equals("character")) {
+            Snackbar.make(activity.findViewById(android.R.id.content), "Additional information for " +
+                    searchResult.getResourceType() + "s hasn't been imnplemented yet.", Snackbar.LENGTH_LONG).show();
+            return;
+        }
         Intent intent = new Intent(activity, CharacterActivity.class);
         if (searchResult.getImage() != null) {
             String url = searchResult.getImage().getOriginalUrl();

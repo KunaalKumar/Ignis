@@ -12,7 +12,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
@@ -121,8 +120,8 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 SharedPrefs.setPeekHighResImageState(isChecked);
-                Snackbar.make(findViewById(android.R.id.content), Boolean.toString(isChecked),
-                        Snackbar.LENGTH_SHORT).show();
+//                Snackbar.make(findViewById(android.R.id.content), Boolean.toString(isChecked),
+//                        Snackbar.LENGTH_SHORT).show();
             }
         });
 

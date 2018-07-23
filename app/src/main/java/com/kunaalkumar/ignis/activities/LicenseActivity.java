@@ -1,12 +1,5 @@
 package com.kunaalkumar.ignis.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +13,13 @@ import net.yslibrary.licenseadapter.Licenses;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LicenseActivity extends AppCompatActivity {
 
@@ -51,11 +51,14 @@ public class LicenseActivity extends AppCompatActivity {
 
     private void populateLibraries() {
         libraries.add(Licenses.fromGitHubApacheV2("square/retrofit"));
+        libraries.add(Licenses.fromGitHubApacheV2("square/picasso"));
         libraries.add(Licenses.noContent("Android SDK", "Google Inc.", "https://developer.android.com/sdk/terms.html"));
+        libraries.add(Licenses.noContent("Crashlytics", "Google Inc.", "https://firebase.google.com/terms/crashlytics/"));
+        libraries.add(Licenses.noContent("Firebase Performance Monitoring", "Google Inc.", "https://developers.google.com/terms/"));
+        libraries.add(Licenses.noContent("Firebase Test Lab", "Google Inc.", "https://cloud.google.com/terms/"));
         libraries.add(Licenses.fromGitHubApacheV2("JakeWharton/butterknife"));
         libraries.add(Licenses.fromGitHubApacheV2("material-components/material-components-android"));
         libraries.add(Licenses.fromGitHubApacheV2("shalskar/PeekAndPop"));
-        libraries.add(Licenses.fromGitHubBSD("bumptech/glide"));
         libraries.add(Licenses.fromGitHubApacheV2("yshrsmz/KeyboardVisibilityEvent"));
         libraries.add(Licenses.fromGitHubApacheV2("yshrsmz/LicenseAdapter"));
     }

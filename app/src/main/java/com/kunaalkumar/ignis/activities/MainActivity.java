@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.fragments.FavoritesFragment;
 import com.kunaalkumar.ignis.fragments.NewsFragment;
@@ -23,6 +24,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     // Request code
     public static final Integer EXIT = 100;
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         if (SettingsActivity.sharedPrefs == null) {
             SettingsActivity.sharedPrefs = new SharedPrefs(this);
@@ -100,6 +105,13 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.settings)
     public void settingsOnClick(View view) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "settings_click");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Open Settings");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
         Intent intent = new Intent(this, SettingsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivityForResult(intent, EXIT);

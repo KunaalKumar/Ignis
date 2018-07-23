@@ -45,6 +45,9 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static final String EXTRA_ID = "com.kunaalkumar.ignis.ID";
     public static final String EXTRA_NAME = "com.kunaalkumar.ignis.NAME";
 
+    private static final int VIEW_TYPE_BANNER = 0;
+    private static final int VIEW_TYPE_COVER = 1;
+
     public static ArrayList<SearchResult> searchResults;
     public String currentQuery;
     private static String[] bannerViewTypes = new String[]{"character", "team", "person"};
@@ -59,8 +62,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.currentQuery = currentQuery;
 
         searchResults = new ArrayList<>();
-
-        initPeekPreview(peekAndPop);
 
     }
 
@@ -84,7 +85,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
      */
 
-    private void initPeekPreview(PeekAndPop peekAndPop) {
+    private void initPeekPreview(PeekAndPop peekAndPop, final int viewType) {
         View peekView = peekAndPop.getPeekView();
 
         peekImageView = peekView.findViewById(R.id.preview_dialog);
@@ -140,13 +141,20 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     clipboard.setPrimaryClip(clip);
                     Snackbar.make(activity.findViewById(android.R.id.content), "Copied to clipboard",
                             Snackbar.LENGTH_SHORT).show();
+                } else if (view == activity.findViewById(R.id.peek_view_open)) {
+                    switch (viewType) {
+                        case VIEW_TYPE_BANNER:
+                            bannerOnClick(searchResults.get(i));
+                        case VIEW_TYPE_COVER:
+                            coverOnClick(searchResults.get(i));
+                    }
                 }
-
             }
         });
 
         peekAndPop.addHoldAndReleaseView(R.id.peek_view_share);
         peekAndPop.addHoldAndReleaseView(R.id.peek_view_copy);
+        peekAndPop.addHoldAndReleaseView(R.id.peek_view_open);
     }
 
     private void shareUrlIntent(String subject, String url) {
@@ -183,14 +191,14 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         switch (holder.getItemViewType()) {
 
             // Case: is Banner View
-            case 0:
+            case VIEW_TYPE_BANNER:
 
                 populateBanner((BannerViewHolder) holder, position, searchResult);
 
                 break;
 
             // Case: is Cover View
-            case 1:
+            case VIEW_TYPE_COVER:
 
                 populateCover((CoverViewHolder) holder, position, searchResult);
 
@@ -240,6 +248,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     // Populate for cover view holder
     private void populateCover(CoverViewHolder viewHolder, final int position, final SearchResult searchResult) {
 
+        initPeekPreview(peekAndPop, VIEW_TYPE_COVER);
+
         peekAndPop.addLongClickView(viewHolder.parentLayout, position);
 
         Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
@@ -265,18 +275,19 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(activity, "Not implemented yet", Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(activity, CharacterActivity.class);
-//                        String url = searchResult.getImage().getOriginalUrl();
-//                        intent.putExtra(EXTRA_URL, url);
-//                        intent.putExtra(EXTRA_ID, searchResult.getId());
-//                        activity.startActivity(intent);
+                coverOnClick(searchResult);
             }
         });
     }
 
+    private void coverOnClick(SearchResult searchResult) {
+//        Toast.makeText(activity, "Not implemented yet", Toast.LENGTH_LONG).show();
+    }
+
     // Populate for banner view holder
     private void populateBanner(BannerViewHolder viewHolder, final int position, final SearchResult searchResult) {
+
+        initPeekPreview(peekAndPop, VIEW_TYPE_BANNER);
 
         peekAndPop.addLongClickView(viewHolder.parentLayout, position);
 
@@ -309,16 +320,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(activity, CharacterActivity.class);
-                    if (searchResult.getImage() != null) {
-                        String url = searchResult.getImage().getOriginalUrl();
-                        intent.putExtra(EXTRA_URL, url);
-                    }
-
-                    intent.putExtra(EXTRA_ID, searchResult.getId());
-                    intent.putExtra(EXTRA_NAME, searchResult.getName());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    activity.startActivity(intent);
+                    bannerOnClick(searchResult);
                 }
             });
         }
@@ -330,6 +332,19 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (searchResult.getResourceType().equals("person")) {
             viewHolder.additionInformation.setText(searchResult.getCountry());
         }
+    }
+
+    private void bannerOnClick(SearchResult searchResult) {
+        Intent intent = new Intent(activity, CharacterActivity.class);
+        if (searchResult.getImage() != null) {
+            String url = searchResult.getImage().getOriginalUrl();
+            intent.putExtra(EXTRA_URL, url);
+        }
+
+        intent.putExtra(EXTRA_ID, searchResult.getId());
+        intent.putExtra(EXTRA_NAME, searchResult.getName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        activity.startActivity(intent);
     }
 
 

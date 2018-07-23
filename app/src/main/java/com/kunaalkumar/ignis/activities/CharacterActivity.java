@@ -1,5 +1,20 @@
 package com.kunaalkumar.ignis.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
+import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
+import com.kunaalkumar.ignis.network.ApiClient;
+import com.kunaalkumar.ignis.network.ClientInstance;
+import com.kunaalkumar.ignis.utils.SharedPrefs;
+import com.squareup.picasso.Picasso;
+
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -8,22 +23,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.utils.SharedPrefs;
-import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
-import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
-import com.kunaalkumar.ignis.network.ApiClient;
-import com.kunaalkumar.ignis.network.ClientInstance;
 
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_ID;
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_NAME;
@@ -56,10 +55,14 @@ public class CharacterActivity extends AppCompatActivity {
 
         searchCall(intent.getIntExtra(EXTRA_ID, -1));
 
-        Glide.with(this)
+//        Glide.with(this)
+//                .load(url)
+//                .apply(new RequestOptions()
+//                .dontAnimate())
+//                .into(characterImage);
+
+        Picasso.get()
                 .load(url)
-                .apply(new RequestOptions()
-                .dontAnimate())
                 .into(characterImage);
     }
 

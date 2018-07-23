@@ -5,7 +5,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.perf.metrics.AddTrace;
 import com.kunaalkumar.ignis.R;
@@ -30,12 +22,13 @@ import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,9 +94,12 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Toast.makeText(activity, "No image found for " + searchResults.get(position).getName(), Toast.LENGTH_LONG).show();
 
                 } else {
-                    Glide.with(activity)
+                    Picasso.get()
                             .load(searchResults.get(position).getImage().getOriginalUrl())
                             .into(peekImageView);
+//                    Glide.with(activity)
+//                            .load(searchResults.get(position).getImage().getOriginalUrl())
+//                            .into(peekImageView);
                 }
 
             }
@@ -397,41 +393,62 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     // Populates given image view with error
     private void populateImageWithError(ImageView imageView) {
-        Glide.with(activity)
+//        Glide.with(activity)
+////                .load(R.drawable.image_not_available)
+////                .apply(new RequestOptions()
+////                        .dontAnimate())
+////                .into(imageView);
+
+        Picasso.get()
                 .load(R.drawable.image_not_available)
-                .apply(new RequestOptions()
-                        .dontAnimate())
                 .into(imageView);
     }
 
     @AddTrace(name = "populateImageTrace")
-    private void populateImage(String imageUrl, String originalImageUrl, final ProgressBar progressBar, ImageView imageView) {
-        Glide.with(activity)
+    private void populateImage(String imageUrl, final String originalImageUrl, final ProgressBar progressBar, ImageView imageView) {
+//        Glide.with(activity)
+//                .load(imageUrl)
+//                .apply(new RequestOptions()
+//                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
+//                .apply(new RequestOptions()
+//                        .dontAnimate())
+//                .listener(new RequestListener<Drawable>() {
+//                    @Override
+//                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+//                        progressBar.setVisibility(View.GONE);
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//                        progressBar.setVisibility(View.GONE);
+//                        return false;
+//                    }
+//                })
+//                .into(imageView);
+
+        Picasso.get()
                 .load(imageUrl)
-                .apply(new RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
-                .apply(new RequestOptions()
-                        .dontAnimate())
-                .listener(new RequestListener<Drawable>() {
+                .into(imageView, new Callback() {
+
                     @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        progressBar.setVisibility(View.GONE);
-                        return false;
+                    public void onSuccess() {
+                        Picasso.get()
+                                .load(originalImageUrl)
+                                .fetch();
                     }
 
                     @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        progressBar.setVisibility(View.GONE);
-                        return false;
+                    public void onError(Exception e) {
+                        // Failed
                     }
-                })
-                .into(imageView);
+                });
 
-        Glide.with(activity)
-                .load(originalImageUrl)
-                .apply(new RequestOptions()
-                        .dontAnimate())
-                .preload();
+//        Glide.with(activity)
+//                .load(originalImageUrl)
+//                .apply(new RequestOptions()
+//                        .dontAnimate())
+//                .preload();
     }
 
 

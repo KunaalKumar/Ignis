@@ -94,9 +94,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        if (sharedPrefs.getDarkThemeState()) {
-            nightMode.setChecked(true);
-        }
+        nightMode.setChecked(sharedPrefs.getDarkThemeState());
+        previewImageQuality.setChecked(SharedPrefs.getPeekHighResImageState());
 
         init();
 

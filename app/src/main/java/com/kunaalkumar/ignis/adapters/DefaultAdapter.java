@@ -1,6 +1,9 @@
 package com.kunaalkumar.ignis.adapters;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -106,76 +109,76 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 // Called when finger is lifted
             }
         });
-//
-//        peekAndPop.setOnHoldAndReleaseListener(new PeekAndPop.OnHoldAndReleaseListener() {
-//            @Override
-//            public void onHold(View view, int i) {
-//                // do something on hold
-//            }
-//
-//            @Override
-//            public void onLeave(View view, int i) {
-//                // do something on leave, without lifting finger
-//            }
-//
-//            @Override
-//            public void onRelease(View view, int i) {
-//
-//                switch (view.getId()) {
-//                    case R.id.peek_view_share:
-//                        shareUrlIntent(searchResults.get(i).getName(), searchResults.get(i).getSiteDetailUrl());
-//                        break;
-//                    case R.id.peek_view_copy:
-//                        ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-//                        ClipData clip = ClipData.newPlainText(searchResults.get(i).getName(),
-//                                searchResults.get(i).getSiteDetailUrl());
-//
-//                        clipboard.setPrimaryClip(clip);
-//                        Snackbar.make(activity.findViewById(android.R.id.content), "Copied to clipboard",
-//                                Snackbar.LENGTH_SHORT).show();
-//                        break;
-//
-//                    case R.id.peek_view_open:
-//                        if (Arrays.asList(bannerViewTypes).contains(searchResults.get(i).getResourceType())) {
-//                            bannerOnClick(searchResults.get(i));
-//                        } else {
-//                            coverOnClick(searchResults.get(i));
-//                        }
-//                        break;
-//                }
-//            }
-//        });
-//
-//        peekAndPop.addHoldAndReleaseView(R.id.peek_view_share);
-//        peekAndPop.addHoldAndReleaseView(R.id.peek_view_copy);
-//        peekAndPop.addHoldAndReleaseView(R.id.peek_view_open);
-//
-//        peekAndPop.setOnLongHoldListener(new PeekAndPop.OnLongHoldListener() {
-//            @Override
-//            public void onEnter(View view, int i) {
-////                Toast.makeText(activity, "Entered", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onLongHold(View view, int i) {
-//                switch (view.getId()) {
-//                    case R.id.peek_view_share:
-//                        Toast.makeText(activity, "Share", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case R.id.peek_view_copy:
-//                        Toast.makeText(activity, "Copy to clipboard", Toast.LENGTH_SHORT).show();
-//                    case R.id.peek_view_open:
-//                        Toast.makeText(activity, "Open " + searchResults.get(i).getName() + "'s page", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
-//
-//        peekAndPop.addLongHoldView(R.id.peek_view_share, false);
-//        peekAndPop.addLongHoldView(R.id.peek_view_copy, false);
-//        peekAndPop.addLongHoldView(R.id.peek_view_open, false);
+
+        peekAndPop.setOnHoldAndReleaseListener(new PeekAndPop.OnHoldAndReleaseListener() {
+            @Override
+            public void onHold(View view, int i) {
+                // do something on hold
+            }
+
+            @Override
+            public void onLeave(View view, int i) {
+                // do something on leave, without lifting finger
+            }
+
+            @Override
+            public void onRelease(View view, int i) {
+
+                switch (view.getId()) {
+                    case R.id.peek_view_share:
+                        shareUrlIntent(searchResults.get(i).getName(), searchResults.get(i).getSiteDetailUrl());
+                        break;
+                    case R.id.peek_view_copy:
+                        ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText(searchResults.get(i).getName(),
+                                searchResults.get(i).getSiteDetailUrl());
+
+                        clipboard.setPrimaryClip(clip);
+                        Snackbar.make(activity.findViewById(android.R.id.content), "Copied to clipboard",
+                                Snackbar.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.peek_view_open:
+                        if (Arrays.asList(bannerViewTypes).contains(searchResults.get(i).getResourceType())) {
+                            bannerOnClick(searchResults.get(i));
+                        } else {
+                            coverOnClick(searchResults.get(i));
+                        }
+                        break;
+                }
+            }
+        });
+
+        peekAndPop.addHoldAndReleaseView(R.id.peek_view_share);
+        peekAndPop.addHoldAndReleaseView(R.id.peek_view_copy);
+        peekAndPop.addHoldAndReleaseView(R.id.peek_view_open);
+
+        peekAndPop.setOnLongHoldListener(new PeekAndPop.OnLongHoldListener() {
+            @Override
+            public void onEnter(View view, int i) {
+//                Toast.makeText(activity, "Entered", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongHold(View view, int i) {
+                switch (view.getId()) {
+                    case R.id.peek_view_share:
+                        Toast.makeText(activity, "Share", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.peek_view_copy:
+                        Toast.makeText(activity, "Copy to clipboard", Toast.LENGTH_SHORT).show();
+                    case R.id.peek_view_open:
+                        Toast.makeText(activity, "Open " + searchResults.get(i).getName() + "'s page", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        peekAndPop.addLongHoldView(R.id.peek_view_share, false);
+        peekAndPop.addLongHoldView(R.id.peek_view_copy, false);
+        peekAndPop.addLongHoldView(R.id.peek_view_open, false);
 
     }
 
@@ -406,7 +409,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static void loadImageFromURL(String url, ImageView imageView) {
         Picasso.get()
                 .load(url)
-                .fit()
                 .into(imageView);
     }
 
@@ -414,7 +416,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static void loadImageFromUrlFetch(String url, final ImageView imageView, final String secondUrl) {
         Picasso.get()
                 .load(url)
-                .fit()
                 .into(imageView, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -422,7 +423,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         if (SharedPrefs.getPeekHighResImageState()) {
                             Picasso.get()
                                     .load(secondUrl)
-                                    .centerInside()
                                     .fetch();
                         }
 
@@ -439,7 +439,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static void loadImageFromRes(int res, ImageView imageView) {
         Picasso.get()
                 .load(res)
-                .fit()
                 .into(imageView);
     }
 

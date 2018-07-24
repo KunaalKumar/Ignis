@@ -21,10 +21,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    @BindView(R.id.settings_parent_layout)
+    CoordinatorLayout coordinatorLayout;
 
     @BindView(R.id.theme_switch)
     SwitchCompat nightMode;
@@ -91,13 +95,16 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (sharedPrefs.getDarkThemeState()) {
-            setTheme(R.style.DarkTheme);
-        } else setTheme(R.style.LightTheme);
+            setTheme(R.style.DarkTheme_Settings);
+        } else setTheme(R.style.LightTheme_Settings);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
         ButterKnife.bind(this);
+
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

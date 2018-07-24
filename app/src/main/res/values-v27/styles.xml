@@ -3,10 +3,10 @@
 
     <style name="LightTheme" parent="LightTheme.Common">
         <!-- Customize your theme here. -->
+        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:statusBarColor">@color/white</item>
-        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <style name="LaunchTheme" parent="LightTheme">

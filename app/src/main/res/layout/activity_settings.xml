@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
+    android:id="@+id/settings_parent_layout"
     tools:context=".activities.SettingsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -29,11 +31,11 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
                 app:contentInsetLeft="8dp"
                 app:contentInsetStart="8dp"
                 app:contentInsetStartWithNavigation="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

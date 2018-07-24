@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/search_parent_layout"
     android:background="?attr/backgroundColor"
+    android:fitsSystemWindows="true"
     tools:context=".activities.SearchActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -45,8 +47,8 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/roboto_light"
                 android:hint="@string/search_box_hint"
-                android:inputType="textCapWords|textAutoCorrect"
                 android:imeOptions="actionSearch"
+                android:inputType="textCapWords|textAutoCorrect"
                 android:padding="8dp"
                 android:textColor="?attr/textColor"
                 android:textColorHint="?attr/textHintColor"

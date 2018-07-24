@@ -18,7 +18,6 @@
         <item name="disabledColor">@color/gray</item>
         <item name="colorControlNormal">@color/colorAccent</item>
     </style>
-    https://comicvine.gamespot.com/superman/4005-1807/
 
     <style name="LaunchTheme" parent="LightTheme">
         <item name="android:windowBackground">@drawable/launch_background</item>
@@ -46,5 +45,16 @@
         <item name="colorControlHighlight">#75ff6e40</item>
         <item name="colorControlNormal">@color/colorAccent</item>
     </style>
+
+    <style name="DarkTheme.Settings" parent="DarkTheme.Common">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="LightTheme.Settings" parent="LightTheme.Common">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
 
 </resources>

@@ -57,7 +57,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
                     temp.add(searchHistory.get(i));
                 }
 
-                Snackbar.make(activity.findViewById(android.R.id.content), "Removed " + searchHistory.get(position), Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Removed " + searchHistory.get(position), Snackbar.LENGTH_LONG)
                         .setAction("Undo", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

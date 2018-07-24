@@ -67,8 +67,9 @@ dependencies {
     // Firebase performance
     implementation 'com.google.firebase:firebase-perf:16.0.0'
 
+    apply plugin: 'com.google.gms.google-services'
+
     // App intro library
     // implementation 'com.github.apl-devs:appintro:v4.2.3'
 
 }
-apply plugin: 'com.google.gms.google-services'

@@ -7,7 +7,7 @@
     android:background="?attr/backgroundColor"
     tools:context=".activities.CharacterActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -58,7 +58,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.appcompat.widget.Toolbar>
+    </Toolbar>
 
     <ImageView
         android:id="@+id/character_image"

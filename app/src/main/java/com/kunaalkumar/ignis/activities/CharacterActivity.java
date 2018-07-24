@@ -55,12 +55,6 @@ public class CharacterActivity extends AppCompatActivity {
 
         searchCall(intent.getIntExtra(EXTRA_ID, -1));
 
-//        Glide.with(this)
-//                .load(url)
-//                .apply(new RequestOptions()
-//                .dontAnimate())
-//                .into(characterImage);
-
         loadImageFromURL(url, characterImage);
     }
 

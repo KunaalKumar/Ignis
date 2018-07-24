@@ -34,15 +34,13 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity
-            android:name=".activities.CharacterActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar" />
+        <activity android:name=".activities.CharacterActivity" />
 
         <activity
             android:name=".activities.SearchActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".activities.MainActivity">
-            <tools:validation testUrl="http://ignis.kunaalkumar.com/search/batman" />
+            <tools:validation testUrl="http://kunaalkumar.com/search/batman" />
 
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -52,8 +50,8 @@
 
                 <data
                     android:host="kunaalkumar.com"
-                    android:scheme="http"
-                    android:pathPrefix="/search/" />
+                    android:pathPrefix="/search/"
+                    android:scheme="http" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -62,9 +60,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="www.kunaalkumar.com"
-                    android:pathPrefix="/search/" />
+                    android:pathPrefix="/search/"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
@@ -76,6 +74,7 @@
             android:name=".utils.MySliceProvider"
             android:authorities="com.kunaalkumar.ignis"
             android:exported="true" />
+
     </application>
 
 </manifest>

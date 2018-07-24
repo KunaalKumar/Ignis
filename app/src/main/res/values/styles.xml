@@ -16,6 +16,7 @@
         <item name="cardBackgroundColor">@color/white</item>
         <item name="android:statusBarColor">@color/colorAccent</item>
         <item name="disabledColor">@color/gray</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
     </style>
     https://comicvine.gamespot.com/superman/4005-1807/
 
@@ -43,6 +44,7 @@
         <item name="cardBackgroundColor">#000</item>
         <item name="disabledColor">@color/white</item>
         <item name="colorControlHighlight">#75ff6e40</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
     </style>
 
 </resources>

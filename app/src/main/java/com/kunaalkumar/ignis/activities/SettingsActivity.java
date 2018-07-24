@@ -3,6 +3,7 @@ package com.kunaalkumar.ignis.activities;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -12,26 +13,30 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class SettingsActivity extends AppCompatActivity {
-
-    @BindView(R.id.settings_back)
-    ImageView backButton;
 
     @BindView(R.id.theme_switch)
     SwitchCompat nightMode;
 
     @BindView(R.id.peek_image_quality_switch)
     SwitchCompat previewImageQuality;
+
+    @BindView(R.id.settings_collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
+    @BindView(R.id.my_toolbar)
+    Toolbar toolbar;
 
     /*
      * Seekbar
@@ -93,6 +98,17 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        collapsingToolbarLayout.setTitleEnabled(true);
+        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
+        if (sharedPrefs.getDarkThemeState()) {
+            collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+        }
 
         nightMode.setChecked(sharedPrefs.getDarkThemeState());
         previewImageQuality.setChecked(SharedPrefs.getPeekHighResImageState());
@@ -198,11 +214,6 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
-    @OnClick(R.id.settings_back)
-    public void onBackButtonPressed(View view) {
-        onBackPressed();
-    }
-
     @Override
     public void onBackPressed() {
         if (MainActivity.CHANGED) {
@@ -212,6 +223,18 @@ public class SettingsActivity extends AppCompatActivity {
             super.onBackPressed();
         }
         finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (MainActivity.CHANGED) {
+            MainActivity.CHANGED = false;
+            startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+        } else {
+            super.onBackPressed();
+        }
+        finish();
+        return true;
     }
 
     /*

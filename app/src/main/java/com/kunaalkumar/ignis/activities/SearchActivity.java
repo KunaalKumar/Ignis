@@ -217,6 +217,13 @@ public class SearchActivity extends AppCompatActivity {
                     if (pageNumber == 1) {
                         adapter = new DefaultAdapter(activity, peekAndPop, query);
                         recyclerView.setAdapter(adapter);
+
+                        // Recyclerview Optimizations
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setItemViewCacheSize(20);
+                        recyclerView.setDrawingCacheEnabled(true);
+                        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
                         DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
                         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
                     } else {

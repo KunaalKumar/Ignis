@@ -60,6 +60,10 @@ public class SharedPrefs {
 
     public static void addToSearchHistory(String search) {
         search = search.trim();
+        if (search.equals("")) {
+            return;
+        }
+
         if (!searchHistory.contains(search)) {
             if (searchHistory.size() >= maxArraySize) {
                 // Remove first element; shift elements up; add new element to the end
@@ -72,6 +76,10 @@ public class SharedPrefs {
             } else {
                 searchHistory.add(search);
                 tinyDB.putListString(KEY_SEARCH_HISTORY, searchHistory);
+            }
+        } else {
+            for (int i = searchHistory.indexOf(search); i < searchHistory.size() - 1; i++) {
+                Collections.swap(searchHistory, i, i + 1);
             }
         }
     }

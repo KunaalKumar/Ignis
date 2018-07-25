@@ -88,7 +88,7 @@ public class CharacterActivity extends AppCompatActivity {
     // TODO: find a better name `-.-`
     private void colorify(Palette p) {
         palette = p;
-        collapsingToolbar.setExpandedTitleColor(p.getVibrantColor(getResources()
+        collapsingToolbar.setExpandedTitleColor(p.getLightVibrantColor(getResources()
                 .getColor(R.color.colorAccent)));
         collapsingToolbar.setCollapsedTitleTextColor(p.getVibrantColor(getResources()
                 .getColor(R.color.colorAccent)));

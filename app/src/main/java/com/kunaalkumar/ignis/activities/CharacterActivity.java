@@ -2,13 +2,14 @@ package com.kunaalkumar.ignis.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
@@ -18,10 +19,10 @@ import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.palette.graphics.Palette;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,11 +37,13 @@ public class CharacterActivity extends AppCompatActivity {
     @BindView(R.id.character_image)
     ImageView characterImage;
 
-    @BindView(R.id.character_back)
-    ImageView characterBack;
+    @BindView(R.id.character_toolbar)
+    Toolbar toolbar;
 
-    @BindView(R.id.character_name)
-    TextView characterName;
+    @BindView(R.id.character_collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+
+    private Palette palette;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,17 @@ public class CharacterActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String url = intent.getStringExtra(EXTRA_URL);
 
-        characterName.setText(intent.getStringExtra(EXTRA_NAME));
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        collapsingToolbar.setTitleEnabled(true);
+        collapsingToolbar.setTitle(intent.getStringExtra(EXTRA_NAME));
+        collapsingToolbar.setExpandedTitleColor(Color.WHITE);
 
         searchCall(intent.getIntExtra(EXTRA_ID, -1));
 
@@ -67,8 +80,7 @@ public class CharacterActivity extends AppCompatActivity {
 
                         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                             public void onGenerated(Palette p) {
-                                characterName.setTextColor(p.getDominantColor(getResources()
-                                        .getColor(R.color.colorAccent)));
+                                colorify(p);
                             }
                         });
                         super.onSuccess();
@@ -77,9 +89,13 @@ public class CharacterActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.character_back)
-    public void onBackClick(View view) {
-        onBackPressed();
+    // TODO: find a better name `-.-`
+    private void colorify(Palette p) {
+        palette = p;
+        collapsingToolbar.setExpandedTitleColor(p.getVibrantColor(getResources()
+                .getColor(R.color.colorAccent)));
+        collapsingToolbar.setCollapsedTitleTextColor(p.getVibrantColor(getResources()
+                .getColor(R.color.colorAccent)));
     }
 
     // Retrofit call to search character for given id
@@ -103,5 +119,11 @@ public class CharacterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        super.onBackPressed();
+        return true;
     }
 }

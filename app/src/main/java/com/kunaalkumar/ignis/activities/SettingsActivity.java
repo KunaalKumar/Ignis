@@ -103,16 +103,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         collapsingToolbarLayout.setTitleEnabled(true);
-        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
         if (sharedPrefs.getDarkThemeState()) {
             collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         }

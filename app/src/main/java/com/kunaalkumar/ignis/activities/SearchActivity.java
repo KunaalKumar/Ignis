@@ -172,6 +172,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initPeekAndPop() {
         // Basic init for peekAndPop
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         peekAndPop = new PeekAndPop.Builder(this)
                 .peekLayout(R.layout.peek_preview)
                 .parentViewGroupToDisallowTouchEvents(recyclerView)
@@ -252,6 +254,10 @@ public class SearchActivity extends AppCompatActivity {
         pageNumber = 1;
         searchBox.setText(query.trim());
         showSuggestions(false);
+        if (DefaultAdapter.searchResults != null) {
+            DefaultAdapter.searchResults.clear();
+            adapter.notifyDataSetChanged();
+        }
         searchCall(activity, query.trim());
     }
 

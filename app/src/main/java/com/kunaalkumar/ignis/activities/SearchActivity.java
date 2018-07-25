@@ -130,8 +130,10 @@ public class SearchActivity extends AppCompatActivity {
                     searchCall(SearchActivity.this, searchBox.getText().toString().trim());
                     showSuggestions(false);
                     hideKeyboard(view);
+                    return true;
+                } else {
+                    return false;
                 }
-                return true;
             }
         });
 

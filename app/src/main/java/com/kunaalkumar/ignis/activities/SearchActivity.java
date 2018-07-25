@@ -112,7 +112,7 @@ public class SearchActivity extends AppCompatActivity {
         initPeekAndPop();
 
         // Request focus on searchBox and pull up keyboard
-//        searchBox.requestFocus();
+        searchBox.requestFocus();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
@@ -172,8 +172,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initPeekAndPop() {
         // Basic init for peekAndPop
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         peekAndPop = new PeekAndPop.Builder(this)
                 .peekLayout(R.layout.peek_preview)
                 .parentViewGroupToDisallowTouchEvents(recyclerView)

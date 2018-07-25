@@ -406,7 +406,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      */
 
     //    Loads given url image into given iamgeview
-    public static void loadImageFromURL(String url, ImageView imageView) {
+    public static void loadImageFromURL(String url, final ImageView imageView) {
+
         Picasso.get()
                 .load(url)
                 .into(imageView);
@@ -425,7 +426,6 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                     .load(secondUrl)
                                     .fetch();
                         }
-
                     }
 
                     @Override

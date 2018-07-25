@@ -1,6 +1,8 @@
 package com.kunaalkumar.ignis.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,8 +15,10 @@ import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
+import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.palette.graphics.Palette;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,7 +30,6 @@ import retrofit2.Retrofit;
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_ID;
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_NAME;
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_URL;
-import static com.kunaalkumar.ignis.adapters.DefaultAdapter.loadImageFromURL;
 
 public class CharacterActivity extends AppCompatActivity {
 
@@ -55,7 +58,23 @@ public class CharacterActivity extends AppCompatActivity {
 
         searchCall(intent.getIntExtra(EXTRA_ID, -1));
 
-        loadImageFromURL(url, characterImage);
+        Picasso.get()
+                .load(url)
+                .into(characterImage, new com.squareup.picasso.Callback.EmptyCallback() {
+                    @Override
+                    public void onSuccess() {
+                        Bitmap bitmap = ((BitmapDrawable) characterImage.getDrawable()).getBitmap();
+
+                        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                            public void onGenerated(Palette p) {
+                                characterName.setTextColor(p.getDominantColor(getResources()
+                                        .getColor(R.color.colorAccent)));
+                            }
+                        });
+                        super.onSuccess();
+                    }
+                });
+
     }
 
     @OnClick(R.id.character_back)

@@ -138,6 +138,15 @@ public class CharacterActivity extends AppCompatActivity {
         fab.setImageDrawable(mDrawable);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Return drawable colors back to default
+        Drawable mDrawable = getResources().getDrawable(R.drawable.ic_share_24dp);
+        mDrawable.setColorFilter(null);
+    }
+
     // Retrofit call to search character for given id
     private void searchCall(Integer id) {
 

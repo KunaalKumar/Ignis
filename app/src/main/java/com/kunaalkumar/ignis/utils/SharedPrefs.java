@@ -89,6 +89,7 @@ public class SharedPrefs {
         } else {
             for (int i = searchHistory.indexOf(search); i < searchHistory.size() - 1; i++) {
                 Collections.swap(searchHistory, i, i + 1);
+                tinyDB.putListString(KEY_SEARCH_HISTORY, searchHistory);
             }
         }
     }

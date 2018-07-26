@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchActivity.plainCall(activity, searchHistory.get(position));
+//                SearchActivity.plainCall(activity, searchHistory.get(position));
                 hideKeyboard(activity);
             }
         });

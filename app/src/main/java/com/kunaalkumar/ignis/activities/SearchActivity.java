@@ -1,6 +1,5 @@
 package com.kunaalkumar.ignis.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,37 +13,23 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.adapters.DefaultAdapter;
-import com.kunaalkumar.ignis.adapters.SearchHistoryAdapter;
-import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
-import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
-import com.kunaalkumar.ignis.network.ApiClient;
-import com.kunaalkumar.ignis.network.ClientInstance;
+import com.kunaalkumar.ignis.adapters.ViewPageAdapter;
+import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
+import com.kunaalkumar.ignis.fragments.search.SearchIssueFragment;
+import com.kunaalkumar.ignis.fragments.search.SearchObjectFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
-
-import java.util.Arrays;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-
-import static com.kunaalkumar.ignis.activities.MainActivity.API_KEY;
-import static com.kunaalkumar.ignis.activities.MainActivity.FORMAT;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -60,17 +45,18 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.search_clear)
     ImageView clearButton;
 
-    public static RecyclerView historyRecyclerView;
-    public static SearchHistoryAdapter historyAdapter;
+    @BindView(R.id.search_tab_layout)
+    TabLayout tabLayout;
 
-    public static RecyclerView recyclerView;
-    public static DefaultAdapter adapter;
+    @BindView(R.id.search_view_pager)
+    ViewPager viewPager;
 
-    public static Integer pageNumber;
+    @BindView(R.id.search_parent_layout)
+    CoordinatorLayout coordinatorLayout;
+
+    private ViewPageAdapter viewPageAdapter;
 
     InputMethodManager imm;
-
-    public static PeekAndPop peekAndPop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +68,15 @@ public class SearchActivity extends AppCompatActivity {
         Log.d("Ignis", "SearchActivity started");
         ButterKnife.bind(this);
 
+        viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
+
+        viewPageAdapter.addFragment(new SearchCharacterFragment(), SearchCharacterFragment.TITLE);
+        viewPageAdapter.addFragment(new SearchIssueFragment(), SearchIssueFragment.TITLE);
+        viewPageAdapter.addFragment(new SearchObjectFragment(), SearchObjectFragment.TITLE);
+
+        viewPager.setAdapter(viewPageAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
         init();
         appLinkCall();
     }
@@ -89,43 +84,22 @@ public class SearchActivity extends AppCompatActivity {
     private void init() {
 
         searchBox = findViewById(R.id.search_searchBox);
-        historyRecyclerView = findViewById(R.id.search_recycler_view_history);
 
         searchBox.requestFocus();
-
-        recyclerView = findViewById(R.id.search_recycler_view);
-        KeyboardVisibilityEvent.setEventListener(
-                SearchActivity.this,
-                new KeyboardVisibilityEventListener() {
-                    @Override
-                    public void onVisibilityChanged(boolean isOpen) {
-                        // closed
-                        if (!isOpen) {
-                            searchBox.clearFocus();
-                        }
-                    }
-                });
-
-        initPeekAndPop();
 
         // Request focus on searchBox and pull up keyboard
         searchBox.requestFocus();
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
-        showSuggestions(true);
-        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), this);
-        historyRecyclerView.setAdapter(historyAdapter);
-        historyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         // Listener for on "enter" pressed
         searchBox.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (i == KeyEvent.KEYCODE_ENTER) {
-                    pageNumber = 1;
-                    searchCall(SearchActivity.this, searchBox.getText().toString().trim());
-                    showSuggestions(false);
+                    SearchCharacterFragment.searchCall(SearchActivity.this,
+                            searchBox.getText().toString().trim(),
+                            true);
                     hideKeyboard(view);
                     return true;
                 } else {
@@ -154,27 +128,6 @@ public class SearchActivity extends AppCompatActivity {
                 // Called right after text is changed
             }
         });
-
-        searchBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    showSuggestions(true);
-                    historyAdapter.searchHistory = SharedPrefs.getSearchHistory();
-                    historyAdapter.notifyDataSetChanged();
-                } else {
-                    showSuggestions(false);
-                }
-            }
-        });
-    }
-
-    private void initPeekAndPop() {
-        // Basic init for peekAndPop
-        peekAndPop = new PeekAndPop.Builder(this)
-                .peekLayout(R.layout.peek_preview)
-                .parentViewGroupToDisallowTouchEvents(recyclerView)
-                .build();
     }
 
     @Override
@@ -191,71 +144,10 @@ public class SearchActivity extends AppCompatActivity {
 
         if (appLinkData != null) {
             searchBox.setText(appLinkData.getLastPathSegment().trim());
-            pageNumber = 1;
-            showSuggestions(false);
-            searchCall(SearchActivity.this, appLinkData.getLastPathSegment().trim());
+            SearchCharacterFragment.searchCall(SearchActivity.this,
+                    appLinkData.getLastPathSegment().trim(),
+                    true);
         }
-    }
-
-    /*
-     * Retrofit call to search for word in superheroSearch
-     * Make sure to init query variable before calling this
-     */
-    public static void searchCall(final Activity activity, final String query) {
-        MainActivity.hideKeyboard(activity);
-        recyclerView.requestFocus();
-        SharedPrefs.addToSearchHistory(query);
-        Retrofit retrofit = ClientInstance.getClient();
-        ApiClient client = retrofit.create(ApiClient.class);
-        Call<ApiResponse<SearchResult[]>> call = client.search(query, API_KEY, FORMAT, pageNumber);
-        call.enqueue(new Callback<ApiResponse<SearchResult[]>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<SearchResult[]>> call, Response<ApiResponse<SearchResult[]>> response) {
-
-                if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
-                    if (pageNumber == 1) {
-                        adapter = new DefaultAdapter(activity, peekAndPop, query);
-                        recyclerView.setAdapter(adapter);
-
-                        // Recyclerview Optimizations
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setItemViewCacheSize(20);
-                        recyclerView.setDrawingCacheEnabled(true);
-                        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
-                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
-                        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-                    } else {
-                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
-                        adapter.notifyDataSetChanged();
-                    }
-                } else {
-                    Toast.makeText(activity, "No more to show", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<SearchResult[]>> call, Throwable t) {
-                Log.d("Ignis", t.toString());
-            }
-        });
-    }
-
-    // Increments pageNumber and calls searchCall
-    public static void nextPage(Activity activity, String query) {
-        pageNumber++;
-        searchCall(activity, query.trim());
-    }
-
-    public static void plainCall(Activity activity, String query) {
-        pageNumber = 1;
-        searchBox.setText(query.trim());
-        showSuggestions(false);
-        if (DefaultAdapter.searchResults != null) {
-            DefaultAdapter.searchResults.clear();
-            adapter.notifyDataSetChanged();
-        }
-        searchCall(activity, query.trim());
     }
 
     private void hideKeyboard(View view) {
@@ -283,14 +175,4 @@ public class SearchActivity extends AppCompatActivity {
         searchBox.setText(null);
     }
 
-
-    private static void showSuggestions(boolean bool) {
-        if (bool) {
-            historyRecyclerView.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            historyRecyclerView.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-    }
 }

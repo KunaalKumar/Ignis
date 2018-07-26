@@ -1,104 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/search_parent_layout"
     android:background="?attr/backgroundColor"
     android:fitsSystemWindows="true"
     tools:context=".activities.SearchActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/search_toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:backgroundTint="?attr/toolbarColor"
-        android:elevation="0dp"
-        android:padding="0dp"
-        android:textColor="?attr/textColor"
-        app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor"
+        app:elevation="0dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/search_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="?attr/actionBarSize"
+            android:backgroundTint="?attr/toolbarColor"
+            android:elevation="0dp"
+            android:padding="0dp"
+            android:textColor="?attr/textColor"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|enterAlways">
 
-            <ImageView
-                android:id="@+id/search_back"
-                android:layout_width="0dp"
-                android:layout_height="?attr/actionBarSize"
-                android:padding="8dp"
-                android:paddingStart="16dp"
-                android:src="@drawable/ic_arrow_back_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/search_searchBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/roboto_light"
-                android:hint="@string/search_box_hint"
-                android:imeOptions="actionSearch"
-                android:inputType="textCapWords|textAutoCorrect"
-                android:padding="8dp"
-                android:textColor="?attr/textColor"
-                android:textColorHint="?attr/textHintColor"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/search_clear"
-                app:layout_constraintStart_toEndOf="@+id/search_back"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                <ImageView
+                    android:id="@+id/search_back"
+                    android:layout_width="0dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:padding="8dp"
+                    android:paddingStart="16dp"
+                    android:src="@drawable/ic_arrow_back_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/search_clear"
-                android:layout_width="0dp"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginRight="10dp"
-                android:padding="8dp"
-                android:paddingEnd="16dp"
-                android:src="@drawable/ic_clear_24dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/search_searchBox"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <EditText
+                    android:id="@+id/search_searchBox"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/roboto_light"
+                    android:hint="@string/search_box_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textCapWords|textAutoCorrect"
+                    android:padding="8dp"
+                    android:textColor="?attr/textColor"
+                    android:textColorHint="?attr/textHintColor"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/search_clear"
+                    app:layout_constraintStart_toEndOf="@+id/search_back"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/search_clear"
+                    android:layout_width="0dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_marginRight="10dp"
+                    android:padding="8dp"
+                    android:paddingEnd="16dp"
+                    android:src="@drawable/ic_clear_24dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/search_searchBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.appcompat.widget.Toolbar>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_recycler_view_history"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scrollbars="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_toolbar"
-        tools:listitem="@layout/view_search_history" />
+    </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_toolbar"
-        tools:listitem="@layout/view_banner" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/search_tab_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/backgroundColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabMode="fixed">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/search_view_pager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_tab_layout">
+
+        </androidx.viewpager.widget.ViewPager>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

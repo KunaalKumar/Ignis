@@ -20,6 +20,7 @@ import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
+import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 import com.squareup.picasso.Callback;
@@ -210,7 +211,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         // Last item loaded, load more if available
         if (position == (getItemCount() - 1)) {
-            SearchActivity.nextPage(activity, currentQuery);
+            SearchCharacterFragment.searchCall(activity, currentQuery, false);
         }
 
         final SearchResult searchResult = searchResults.get(position);

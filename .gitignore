@@ -7,3 +7,5 @@
 /captures
 .externalNativeBuild
 app/src/main/gen/
+/app/google-services.json
+/.gradle/

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.kunaalkumar.ignis.BuildConfig;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.fragments.FavoritesFragment;
 import com.kunaalkumar.ignis.fragments.NewsFragment;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String SHORTCUT_RANDOM = "com.kunaalkumar.ignis.shortcut.random";
 
     // Api key for ComicVine
-    public static final String API_KEY = "9aa1dc67801a2cdc8460790837f94b73057ce351";
+    public static final String API_KEY = BuildConfig.ComicVineApiKey;
 
     // Links
     public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/117230352217222987710";

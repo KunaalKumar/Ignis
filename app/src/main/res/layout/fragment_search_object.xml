@@ -9,6 +9,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Not yet implemented" />
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:text="@string/Search_for_something"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="?attr/headingTextColor" />
 
 </LinearLayout>

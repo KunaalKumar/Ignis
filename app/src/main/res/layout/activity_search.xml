@@ -97,7 +97,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/colorAccent"
-            app:tabMode="fixed">
+            app:tabMode="fixed"
+            app:tabTextColor="?attr/textColor">
 
         </com.google.android.material.tabs.TabLayout>
 

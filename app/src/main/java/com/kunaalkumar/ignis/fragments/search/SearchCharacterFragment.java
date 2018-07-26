@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
@@ -27,6 +29,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,13 +43,20 @@ public class SearchCharacterFragment extends Fragment {
 
     public static final String TITLE = "Character";
 
+    @BindView(R.id.search_character_empty_text)
+    TextView textView;
+
+    @BindView(R.id.search_character_loading)
+    ProgressBar progressBar;
+
+
     public RecyclerView historyRecyclerView;
     public SearchHistoryAdapter historyAdapter;
 
-    public RecyclerView recyclerView;
-    public SearchCharacterAdapter adapter;
+    private RecyclerView recyclerView;
+    private SearchCharacterAdapter adapter;
 
-    public Integer pageNumber;
+    private Integer pageNumber;
 
     public static PeekAndPop peekAndPop;
 
@@ -60,16 +71,19 @@ public class SearchCharacterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search_character, container, false);
 
+        ButterKnife.bind(this, view);
+
 //        historyRecyclerView = view.findViewById(R.id.search_character_history);
 
         recyclerView = view.findViewById(R.id.search_character_recycler_view);
 
+        showLoadingState(false);
 
         initPeekAndPop();
 
 //        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), getActivity());
 //        historyRecyclerView.setAdapter(historyAdapter);
-//        historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        historyRecyclerView.setLayoutManager(new ∂LinearLayoutManager(getContext()));
 
         return view;
     }
@@ -93,6 +107,18 @@ public class SearchCharacterFragment extends Fragment {
                 .build();
     }
 
+
+    private void showLoadingState(boolean state) {
+        if (state) {
+            textView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            textView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+        }
+    }
 
     /*
 
@@ -125,6 +151,8 @@ public class SearchCharacterFragment extends Fragment {
             pageNumber++;
         }
 
+        showLoadingState(true);
+
         MainActivity.hideKeyboard(activity);
         recyclerView.requestFocus();
         SharedPrefs.addToSearchHistory(query);
@@ -134,6 +162,9 @@ public class SearchCharacterFragment extends Fragment {
         call.enqueue(new Callback<ApiResponse<SearchResult[]>>() {
             @Override
             public void onResponse(Call<ApiResponse<SearchResult[]>> call, Response<ApiResponse<SearchResult[]>> response) {
+
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
 
                 if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
                     if (pageNumber == 1) {
@@ -153,7 +184,12 @@ public class SearchCharacterFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 } else {
-                    Toast.makeText(activity, "No more to show", Toast.LENGTH_LONG).show();
+                    if (adapter == null) {
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText("No search results");
+                    }
+
+                    Toast.makeText(getContext(), "No more found", Toast.LENGTH_LONG).show();
                 }
             }
 

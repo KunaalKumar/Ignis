@@ -83,6 +83,9 @@ public class SearchActivity extends AppCompatActivity {
         viewPageAdapter.addFragment(issueFragment, SearchIssueFragment.TITLE);
         viewPageAdapter.addFragment(objectFragment, SearchObjectFragment.TITLE);
 
+        // Keeps all fragments in memory
+        viewPager.setOffscreenPageLimit(viewPageAdapter.getCount());
+
         viewPager.setAdapter(viewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
 

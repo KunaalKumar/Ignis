@@ -10,7 +10,8 @@ import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.MainActivity;
-import com.kunaalkumar.ignis.adapters.DefaultAdapter;
+import com.kunaalkumar.ignis.activities.SearchActivity;
+import com.kunaalkumar.ignis.adapters.SearchCharacterAdapter;
 import com.kunaalkumar.ignis.adapters.SearchHistoryAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
@@ -38,13 +39,13 @@ public class SearchCharacterFragment extends Fragment {
 
     public static final String TITLE = "Character";
 
-    public static RecyclerView historyRecyclerView;
-    public static SearchHistoryAdapter historyAdapter;
+    public RecyclerView historyRecyclerView;
+    public SearchHistoryAdapter historyAdapter;
 
-    public static RecyclerView recyclerView;
-    public static DefaultAdapter adapter;
+    public RecyclerView recyclerView;
+    public SearchCharacterAdapter adapter;
 
-    public static Integer pageNumber;
+    public Integer pageNumber;
 
     public static PeekAndPop peekAndPop;
 
@@ -73,15 +74,15 @@ public class SearchCharacterFragment extends Fragment {
         return view;
     }
 
-    private static void showSuggestions(boolean bool) {
-        if (bool) {
-            historyRecyclerView.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            historyRecyclerView.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-    }
+//    private static void showSuggestions(boolean bool) {
+//        if (bool) {
+//            historyRecyclerView.setVisibility(View.VISIBLE);
+//            recyclerView.setVisibility(View.GONE);
+//        } else {
+//            historyRecyclerView.setVisibility(View.GONE);
+//            recyclerView.setVisibility(View.VISIBLE);
+//        }
+//    }
 
 
     private void initPeekAndPop() {
@@ -117,7 +118,7 @@ public class SearchCharacterFragment extends Fragment {
      * Retrofit call to search for word in superheroSearch
      * Make sure to init query variable before calling this
      */
-    public static void searchCall(final Activity activity, final String query, boolean isNewCall) {
+    public void searchCall(final Activity activity, final String query, boolean isNewCall) {
         if (isNewCall) {
             pageNumber = 1;
         } else {
@@ -136,7 +137,7 @@ public class SearchCharacterFragment extends Fragment {
 
                 if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
                     if (pageNumber == 1) {
-                        adapter = new DefaultAdapter(activity, peekAndPop, query);
+                        adapter = new SearchCharacterAdapter((SearchActivity) getActivity(), peekAndPop, query);
                         recyclerView.setAdapter(adapter);
 
                         // Recyclerview Optimizations
@@ -145,10 +146,10 @@ public class SearchCharacterFragment extends Fragment {
                         recyclerView.setDrawingCacheEnabled(true);
                         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
+                        SearchCharacterAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
                         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
                     } else {
-                        DefaultAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
+                        SearchCharacterAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
                         adapter.notifyDataSetChanged();
                     }
                 } else {

@@ -33,10 +33,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_ID;
-import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_NAME;
-import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_URL_HD;
-import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_URL_STD;
+import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_ID;
+import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_NAME;
+import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_URL_HD;
+import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_URL_STD;
 
 public class CharacterActivity extends AppCompatActivity {
 

@@ -34,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final String EXTRA_URL_HD = "com.kunaalkumar.ignis.URL.HD";
     public static final String EXTRA_URL_STD = "com.kunaalkumar.ignis.URL.Std";
@@ -47,13 +47,13 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static ArrayList<SearchResult> searchResults;
     public String currentQuery;
     private static String[] bannerViewTypes = new String[]{"character", "team", "person"};
-    private Activity activity;
+    private SearchActivity activity;
     private PeekAndPop peekAndPop;
     private ImageView peekImageView;
 
 
-    public DefaultAdapter(Activity context, final PeekAndPop peekAndPop, String currentQuery) {
-        this.activity = context;
+    public SearchCharacterAdapter(SearchActivity activity, final PeekAndPop peekAndPop, String currentQuery) {
+        this.activity = activity;
         this.peekAndPop = peekAndPop;
         this.currentQuery = currentQuery;
 
@@ -211,7 +211,7 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         // Last item loaded, load more if available
         if (position == (getItemCount() - 1)) {
-            SearchCharacterFragment.searchCall(activity, currentQuery, false);
+            ((SearchActivity) activity).characterFragment.searchCall(activity, currentQuery, false);
         }
 
         final SearchResult searchResult = searchResults.get(position);

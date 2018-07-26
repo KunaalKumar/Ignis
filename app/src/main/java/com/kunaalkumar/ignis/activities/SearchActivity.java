@@ -56,6 +56,11 @@ public class SearchActivity extends AppCompatActivity {
 
     private ViewPageAdapter viewPageAdapter;
 
+    // Fragments
+    public SearchCharacterFragment characterFragment;
+    public SearchIssueFragment issueFragment;
+    public SearchObjectFragment objectFragment;
+
     InputMethodManager imm;
 
     @Override
@@ -70,9 +75,13 @@ public class SearchActivity extends AppCompatActivity {
 
         viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
 
-        viewPageAdapter.addFragment(new SearchCharacterFragment(), SearchCharacterFragment.TITLE);
-        viewPageAdapter.addFragment(new SearchIssueFragment(), SearchIssueFragment.TITLE);
-        viewPageAdapter.addFragment(new SearchObjectFragment(), SearchObjectFragment.TITLE);
+        characterFragment = new SearchCharacterFragment();
+        issueFragment = new SearchIssueFragment();
+        objectFragment = new SearchObjectFragment();
+
+        viewPageAdapter.addFragment(characterFragment, SearchCharacterFragment.TITLE);
+        viewPageAdapter.addFragment(issueFragment, SearchIssueFragment.TITLE);
+        viewPageAdapter.addFragment(objectFragment, SearchObjectFragment.TITLE);
 
         viewPager.setAdapter(viewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -97,7 +106,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (i == KeyEvent.KEYCODE_ENTER) {
-                    SearchCharacterFragment.searchCall(SearchActivity.this,
+                    characterFragment.searchCall(SearchActivity.this,
                             searchBox.getText().toString().trim(),
                             true);
                     hideKeyboard(view);
@@ -144,7 +153,7 @@ public class SearchActivity extends AppCompatActivity {
 
         if (appLinkData != null) {
             searchBox.setText(appLinkData.getLastPathSegment().trim());
-            SearchCharacterFragment.searchCall(SearchActivity.this,
+            characterFragment.searchCall(SearchActivity.this,
                     appLinkData.getLastPathSegment().trim(),
                     true);
         }

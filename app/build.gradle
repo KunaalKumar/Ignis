@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
     compileSdkVersion 28
@@ -64,9 +63,6 @@ dependencies {
 
     // Firebase crashlytics
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
-
-    // Firebase performance
-    implementation 'com.google.firebase:firebase-perf:16.0.0'
 
     // Color Palette
     implementation 'com.android.support:palette-v7:28.1.1'

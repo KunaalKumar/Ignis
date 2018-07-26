@@ -62,10 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        if (SettingsActivity.sharedPrefs == null) {
-            SettingsActivity.sharedPrefs = new SharedPrefs(this);
-        }
-
         SharedPrefs.applyTheme(this);
 
         super.onCreate(savedInstanceState);

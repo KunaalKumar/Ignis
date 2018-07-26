@@ -74,9 +74,6 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (SettingsActivity.sharedPrefs == null) {
-            SettingsActivity.sharedPrefs = new SharedPrefs(this);
-        }
 
         SharedPrefs.applyTheme(this);
 

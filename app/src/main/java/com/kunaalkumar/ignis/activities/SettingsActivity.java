@@ -88,7 +88,6 @@ public class SettingsActivity extends AppCompatActivity {
     TextView versionNumber;
 
 
-    public static SharedPrefs sharedPrefs;
 
     private Integer possibleSize;
 
@@ -108,11 +107,11 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         collapsingToolbarLayout.setTitleEnabled(true);
-        if (sharedPrefs.getDarkThemeState()) {
+        if (SharedPrefs.getDarkThemeState()) {
             collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
         }
 
-        nightMode.setChecked(sharedPrefs.getDarkThemeState());
+        nightMode.setChecked(SharedPrefs.getDarkThemeState());
         previewImageQuality.setChecked(SharedPrefs.getPeekHighResImageState());
 
         init();
@@ -127,7 +126,7 @@ public class SettingsActivity extends AppCompatActivity {
         nightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                sharedPrefs.setDarkThemeState(isChecked);
+                SharedPrefs.setDarkThemeState(isChecked);
                 restartOnThemeChanged();
             }
         });
@@ -145,9 +144,9 @@ public class SettingsActivity extends AppCompatActivity {
         // Init seekbar
         seekBar.setMax(SharedPrefs.ABSOLUTE_MAX_SEARCH_HISTORY);
         maxSeekBarVal.setText(SharedPrefs.ABSOLUTE_MAX_SEARCH_HISTORY.toString());
-        seekBar.setProgress(sharedPrefs.getSearchHistorySize());
-        currentSeekBarVal.setText(sharedPrefs.getSearchHistorySize().toString());
-        possibleSize = sharedPrefs.getSearchHistorySize();
+        seekBar.setProgress(SharedPrefs.getSearchHistorySize());
+        currentSeekBarVal.setText(SharedPrefs.getSearchHistorySize().toString());
+        possibleSize = SharedPrefs.getSearchHistorySize();
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -171,7 +170,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 //                Toast.makeText(SettingsActivity.this, "Set to " + seekBar.getProgress(), Toast.LENGTH_LONG).show();
-                sharedPrefs.setSearchHistorySize(possibleSize);
+                SharedPrefs.setSearchHistorySize(possibleSize);
             }
         });
     }

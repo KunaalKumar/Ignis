@@ -12,7 +12,6 @@ import android.os.Bundle;
 
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -20,8 +19,6 @@ public class LaunchActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-        SettingsActivity.sharedPrefs = new SharedPrefs(this);
 
         SharedPrefs.applyTheme(this);
 

@@ -2,7 +2,6 @@ package com.kunaalkumar.ignis.utils;
 
 
 import android.app.Activity;
-import android.content.Context;
 
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
@@ -18,12 +17,13 @@ public class SharedPrefs {
     public static final String KEY_SEARCH_HISTORY_SIZE = "SearchHistorySize";
     public static final String KEY_PEEK_HIGH_RES_IMAGE = "PeekHighResImage";
     public static final Integer ABSOLUTE_MAX_SEARCH_HISTORY = 50;
-    public static ArrayList<String> searchHistory;
+
+    private static ArrayList<String> searchHistory;
     private static TinyDB tinyDB;
     private static int maxArraySize;
 
-    public SharedPrefs(Context context) {
-        tinyDB = new TinyDB(context);
+    static {
+        tinyDB = new TinyDB(Ignis.getAppContext());
         searchHistory = tinyDB.getListString(KEY_SEARCH_HISTORY);
         maxArraySize = tinyDB.getInt(KEY_SEARCH_HISTORY_SIZE);
 
@@ -37,11 +37,11 @@ public class SharedPrefs {
         }
     }
 
-    public Integer getSearchHistorySize() {
+    public static Integer getSearchHistorySize() {
         return maxArraySize;
     }
 
-    public void setSearchHistorySize(int size) {
+    public static void setSearchHistorySize(int size) {
         if (size < searchHistory.size()) {
             reduceList(size);
         }
@@ -49,7 +49,7 @@ public class SharedPrefs {
         tinyDB.putInt(KEY_SEARCH_HISTORY_SIZE, size);
     }
 
-    private void reduceList(int size) {
+    private static void reduceList(int size) {
         searchHistory.subList(0, searchHistory.size() - size).clear();
     }
 
@@ -57,11 +57,11 @@ public class SharedPrefs {
 
         if (activity instanceof SettingsActivity ||
                 activity instanceof CharacterActivity) {
-            if (SettingsActivity.sharedPrefs.getDarkThemeState()) {
+            if (SharedPrefs.getDarkThemeState()) {
                 activity.setTheme(R.style.DarkTheme_Translucent);
             } else activity.setTheme(R.style.LightTheme_Translucent);
         } else {
-            if (SettingsActivity.sharedPrefs.getDarkThemeState()) {
+            if (SharedPrefs.getDarkThemeState()) {
                 activity.setTheme(R.style.DarkTheme);
             } else activity.setTheme(R.style.LightTheme);
         }
@@ -111,11 +111,11 @@ public class SharedPrefs {
         return toReturn;
     }
 
-    public Boolean getDarkThemeState() {
+    public static Boolean getDarkThemeState() {
         return tinyDB.getBoolean(KEY_DARK_THEME);
     }
 
-    public void setDarkThemeState(Boolean state) {
+    public static void setDarkThemeState(Boolean state) {
         tinyDB.putBoolean(KEY_DARK_THEME, state);
     }
 

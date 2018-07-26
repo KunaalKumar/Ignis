@@ -35,7 +35,8 @@ import butterknife.ButterKnife;
 
 public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final String EXTRA_URL = "com.kunaalkumar.ignis.URL";
+    public static final String EXTRA_URL_HD = "com.kunaalkumar.ignis.URL.HD";
+    public static final String EXTRA_URL_STD = "com.kunaalkumar.ignis.URL.Std";
     public static final String EXTRA_ID = "com.kunaalkumar.ignis.ID";
     public static final String EXTRA_NAME = "com.kunaalkumar.ignis.NAME";
 
@@ -374,8 +375,8 @@ public class DefaultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
         Intent intent = new Intent(activity, CharacterActivity.class);
         if (searchResult.getImage() != null) {
-            String url = searchResult.getImage().getOriginalUrl();
-            intent.putExtra(EXTRA_URL, url);
+            intent.putExtra(EXTRA_URL_STD, searchResult.getImage().getMediumUrl());
+            intent.putExtra(EXTRA_URL_HD, searchResult.getImage().getOriginalUrl());
         }
 
         intent.putExtra(EXTRA_ID, searchResult.getId());

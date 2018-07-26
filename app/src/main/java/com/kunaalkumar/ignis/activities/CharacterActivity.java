@@ -6,9 +6,10 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
@@ -30,7 +31,8 @@ import retrofit2.Retrofit;
 
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_ID;
 import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_NAME;
-import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_URL;
+import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_URL_HD;
+import static com.kunaalkumar.ignis.adapters.DefaultAdapter.EXTRA_URL_STD;
 
 public class CharacterActivity extends AppCompatActivity {
 
@@ -40,8 +42,13 @@ public class CharacterActivity extends AppCompatActivity {
     @BindView(R.id.character_toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.character_appbar_layout)
+    AppBarLayout appBarLayout;
+
     @BindView(R.id.character_collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
+    private Character character;
 
     private Palette palette;
 
@@ -54,23 +61,27 @@ public class CharacterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_character);
         ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-        String url = intent.getStringExtra(EXTRA_URL);
+        final Intent intent = getIntent();
+        searchCall(intent.getIntExtra(EXTRA_ID, -1));
+        final String urlStd = intent.getStringExtra(EXTRA_URL_STD);
+        final String urlHD = intent.getStringExtra(EXTRA_URL_HD);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        collapsingToolbar.setTitleEnabled(true);
-        collapsingToolbar.setExpandedTitleGravity(Gravity.END | Gravity.BOTTOM);
-        collapsingToolbar.setTitle(intent.getStringExtra(EXTRA_NAME));
-        collapsingToolbar.setExpandedTitleColor(Color.WHITE);
+        collapsingToolbarLayout.setTitleEnabled(true);
+        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
+        showTitleOnCollapse(intent);
 
-        searchCall(intent.getIntExtra(EXTRA_ID, -1));
+        loadMainImage(urlStd, urlHD);
 
+    }
+
+    private void loadMainImage(final String urlStd, final String urlHD) {
         Picasso.get()
-                .load(url)
+                .load(urlHD)
                 .into(characterImage, new com.squareup.picasso.Callback.EmptyCallback() {
                     @Override
                     public void onSuccess() {
@@ -84,15 +95,37 @@ public class CharacterActivity extends AppCompatActivity {
                         super.onSuccess();
                     }
                 });
+    }
 
+    private void showTitleOnCollapse(final Intent intent) {
+        // Only shows title when toolbar is collapsed
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = true;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle(intent.getStringExtra(EXTRA_NAME));
+                    isShow = true;
+                } else if (isShow) {
+                    // There should a space between double quote otherwise it wont work
+                    collapsingToolbarLayout.setTitle(" ");
+                    isShow = false;
+                }
+            }
+        });
     }
 
     // TODO: find a better name `-.-`
     private void colorify(Palette p) {
         palette = p;
-        collapsingToolbar.setExpandedTitleColor(p.getVibrantColor(getResources()
+        collapsingToolbarLayout.setExpandedTitleColor(p.getVibrantColor(getResources()
                 .getColor(R.color.colorAccent)));
-        collapsingToolbar.setCollapsedTitleTextColor(p.getVibrantColor(getResources()
+        collapsingToolbarLayout.setCollapsedTitleTextColor(p.getVibrantColor(getResources()
                 .getColor(R.color.colorAccent)));
     }
 
@@ -101,17 +134,22 @@ public class CharacterActivity extends AppCompatActivity {
 
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
-        Call<ApiResponse<Character>> call = client.getCharacter(id, MainActivity.API_KEY, MainActivity.FORMAT);
+        Call<ApiResponse<Character>> call = client.getCharacter(id, MainActivity.API_KEY,
+                MainActivity.FORMAT);
 
         call.enqueue(new Callback<ApiResponse<Character>>() {
             @Override
-            public void onResponse(Call<ApiResponse<Character>> call, Response<ApiResponse<Character>> response) {
+            public void onResponse(Call<ApiResponse<Character>> call,
+                                   Response<ApiResponse<Character>> response) {
 //      Do something with this
-//      Character character = response.body().getResults()
+                character = response.body().getResults();
             }
 
             @Override
             public void onFailure(Call<ApiResponse<Character>> call, Throwable t) {
+                Toast.makeText(CharacterActivity.this, "ERROR: Character not found",
+                        Toast.LENGTH_LONG).show();
+
                 Log.d("Ignis", t.toString());
                 t.printStackTrace();
             }

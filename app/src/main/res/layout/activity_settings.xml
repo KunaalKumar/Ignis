@@ -25,6 +25,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:fitsSystemWindows="false"
                 android:scaleType="centerCrop"
                 android:src="@drawable/settings_bg"
                 app:layout_collapseMode="parallax" />

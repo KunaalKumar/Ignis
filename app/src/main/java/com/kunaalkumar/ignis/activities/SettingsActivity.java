@@ -94,9 +94,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (sharedPrefs.getDarkThemeState()) {
-            setTheme(R.style.DarkTheme_Settings);
-        } else setTheme(R.style.LightTheme_Settings);
+
+        SharedPrefs.applyTheme(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);

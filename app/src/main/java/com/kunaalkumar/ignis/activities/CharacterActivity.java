@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.ImageView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -62,6 +63,7 @@ public class CharacterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         collapsingToolbar.setTitleEnabled(true);
+        collapsingToolbar.setExpandedTitleGravity(Gravity.END | Gravity.BOTTOM);
         collapsingToolbar.setTitle(intent.getStringExtra(EXTRA_NAME));
         collapsingToolbar.setExpandedTitleColor(Color.WHITE);
 
@@ -88,7 +90,7 @@ public class CharacterActivity extends AppCompatActivity {
     // TODO: find a better name `-.-`
     private void colorify(Palette p) {
         palette = p;
-        collapsingToolbar.setExpandedTitleColor(p.getLightVibrantColor(getResources()
+        collapsingToolbar.setExpandedTitleColor(p.getVibrantColor(getResources()
                 .getColor(R.color.colorAccent)));
         collapsingToolbar.setCollapsedTitleTextColor(p.getVibrantColor(getResources()
                 .getColor(R.color.colorAccent)));

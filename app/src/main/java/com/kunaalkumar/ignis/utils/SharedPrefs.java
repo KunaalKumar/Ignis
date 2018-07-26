@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.activities.SettingsActivity;
 
 import java.util.ArrayList;
@@ -53,9 +54,17 @@ public class SharedPrefs {
     }
 
     public static void applyTheme(Activity activity) {
-        if (SettingsActivity.sharedPrefs.getDarkThemeState()) {
-            activity.setTheme(R.style.DarkTheme);
-        } else activity.setTheme(R.style.LightTheme);
+
+        if (activity instanceof SettingsActivity ||
+                activity instanceof CharacterActivity) {
+            if (SettingsActivity.sharedPrefs.getDarkThemeState()) {
+                activity.setTheme(R.style.DarkTheme_Translucent);
+            } else activity.setTheme(R.style.LightTheme_Translucent);
+        } else {
+            if (SettingsActivity.sharedPrefs.getDarkThemeState()) {
+                activity.setTheme(R.style.DarkTheme);
+            } else activity.setTheme(R.style.LightTheme);
+        }
     }
 
     public static void addToSearchHistory(String search) {

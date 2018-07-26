@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
@@ -24,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.palette.graphics.Palette;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,9 +52,10 @@ public class CharacterActivity extends AppCompatActivity {
     @BindView(R.id.character_collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
-    private Character character;
+    @BindView(R.id.character_fab)
+    FloatingActionButton fab;
 
-    private Palette palette;
+    private Character character;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +68,10 @@ public class CharacterActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         searchCall(intent.getIntExtra(EXTRA_ID, -1));
+
         final String urlStd = intent.getStringExtra(EXTRA_URL_STD);
         final String urlHD = intent.getStringExtra(EXTRA_URL_HD);
+        loadMainImage(urlStd, urlHD);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -74,8 +81,6 @@ public class CharacterActivity extends AppCompatActivity {
         collapsingToolbarLayout.setTitleEnabled(true);
         collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
         showTitleOnCollapse(intent);
-
-        loadMainImage(urlStd, urlHD);
 
     }
 
@@ -122,11 +127,15 @@ public class CharacterActivity extends AppCompatActivity {
 
     // TODO: find a better name `-.-`
     private void colorify(Palette p) {
-        palette = p;
         collapsingToolbarLayout.setExpandedTitleColor(p.getVibrantColor(getResources()
                 .getColor(R.color.colorAccent)));
         collapsingToolbarLayout.setCollapsedTitleTextColor(p.getVibrantColor(getResources()
                 .getColor(R.color.colorAccent)));
+
+        Drawable mDrawable = getResources().getDrawable(R.drawable.ic_share_24dp);
+        mDrawable.setTint(p.getVibrantColor(getResources().
+                getColor(R.color.colorAccent)));
+        fab.setImageDrawable(mDrawable);
     }
 
     // Retrofit call to search character for given id
@@ -161,5 +170,11 @@ public class CharacterActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         super.onBackPressed();
         return true;
+    }
+
+    @OnClick(R.id.character_fab)
+    public void onClickFab(View view) {
+        Toast.makeText(this, "To Do: Implement sharing",
+                Toast.LENGTH_LONG).show();
     }
 }

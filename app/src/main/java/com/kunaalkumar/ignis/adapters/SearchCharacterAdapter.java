@@ -1,6 +1,5 @@
 package com.kunaalkumar.ignis.adapters;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -19,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
-import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
@@ -27,7 +26,6 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +42,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private static final int VIEW_TYPE_BANNER = 0;
     private static final int VIEW_TYPE_COVER = 1;
 
-    public static ArrayList<SearchResult> searchResults;
+    public ArrayList<CharacterBrief> searchResults;
     public String currentQuery;
     private static String[] bannerViewTypes = new String[]{"character", "team", "person"};
     private SearchActivity activity;
@@ -58,7 +56,6 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.currentQuery = currentQuery;
 
         searchResults = new ArrayList<>();
-
     }
 
     /*
@@ -101,9 +98,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     } else {
                         loadImageFromURL(searchResults.get(position).getImage().getMediumUrl(), peekImageView);
                     }
-
                 }
-
             }
 
             @Override
@@ -141,11 +136,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         break;
 
                     case R.id.peek_view_open:
-                        if (Arrays.asList(bannerViewTypes).contains(searchResults.get(i).getResourceType())) {
-                            bannerOnClick(searchResults.get(i));
-                        } else {
-                            coverOnClick(searchResults.get(i));
-                        }
+                        bannerOnClick(searchResults.get(i));
                         break;
                 }
             }
@@ -200,35 +191,27 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_banner, parent, false);
             return new BannerViewHolder(view);
         }
-
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_cover, parent, false);
-        return new CoverViewHolder(view);
-
+        return null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
 
         // Last item loaded, load more if available
-        if (position == (getItemCount() - 1)) {
+        if (getItemCount() == 10) {
             ((SearchActivity) activity).characterFragment.searchCall(activity, currentQuery, false);
         }
 
-        final SearchResult searchResult = searchResults.get(position);
+        final CharacterBrief searchResult = searchResults.get(position);
 
-        switch (holder.getItemViewType()) {
+        switch (holder.getItemViewType())
+
+        {
 
             // Case: is Banner View
             case VIEW_TYPE_BANNER:
 
                 populateBanner((BannerViewHolder) holder, position, searchResult);
-
-                break;
-
-            // Case: is Cover View
-            case VIEW_TYPE_COVER:
-
-                populateCover((CoverViewHolder) holder, position, searchResult);
 
                 break;
 
@@ -245,11 +228,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemViewType(int position) {
-        if (Arrays.asList(bannerViewTypes).contains(searchResults.get(position).getResourceType())) {
-            return 0;
-        }
-
-        return 1;
+        return 0;
     }
 
     /*
@@ -272,52 +251,10 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
      */
 
-
-    // Populate for cover view holder
-    private void populateCover(CoverViewHolder viewHolder, final int position, final SearchResult searchResult) {
-
-        peekAndPop.addLongClickView(viewHolder.parentLayout, position);
-
-        Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
-
-
-        if (searchResult.getImage() == null) {
-            loadImageFromRes(R.drawable.image_not_available, viewHolder.image);
-        } else {
-            if (SharedPrefs.getPeekHighResImageState()) {
-                loadImageFromUrlFetch(searchResult.getImage().getMediumUrl(),
-                        viewHolder.image,
-                        searchResult.getImage().getOriginalUrl());
-            } else {
-                loadImageFromURL(searchResult.getImage().getMediumUrl(), viewHolder.image);
-            }
-
-        }
-
-        if (searchResult.getName() != null) {
-            viewHolder.name.setText(searchResult.getName());
-        } else {
-            viewHolder.name.setText(R.string.error_name_nf);
-        }
-
-        viewHolder.resourceType.setText(searchResult.getResourceType());
-
-        // TODO: change to call other activity with intent
-        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                coverOnClick(searchResult);
-            }
-        });
-    }
-
-    private void coverOnClick(SearchResult searchResult) {
-        Snackbar.make(activity.findViewById(android.R.id.content), "Cover views aren't implemented yet.",
-                Snackbar.LENGTH_SHORT).show();
-    }
-
     // Populate for banner view holder
-    private void populateBanner(BannerViewHolder viewHolder, final int position, final SearchResult searchResult) {
+    private void populateBanner(BannerViewHolder viewHolder,
+                                final int position,
+                                final CharacterBrief searchResult) {
 
         peekAndPop.addLongClickView(viewHolder.parentLayout, position);
 
@@ -342,38 +279,25 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             viewHolder.name.setText(R.string.error_name_nf);
         }
 
-        viewHolder.resourceType.setText(searchResult.getResourceType());
+        viewHolder.resourceType.setText(searchResult.getName().toString());
 
-        if (searchResult.getResourceType().equals("character")) {
-            if (searchResult.getPublisher() != null) {
-                viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
-            } else {
-                viewHolder.additionInformation.setText(R.string.error_name_nf);
-            }
-
-            viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    bannerOnClick(searchResult);
-                }
-            });
-        }
-
-        if (searchResult.getResourceType().equals("team")) {
+        if (searchResult.getPublisher() != null) {
             viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
+        } else {
+            viewHolder.additionInformation.setText(R.string.error_name_nf);
         }
 
-        if (searchResult.getResourceType().equals("person")) {
-            viewHolder.additionInformation.setText(searchResult.getCountry());
-        }
+        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bannerOnClick(searchResult);
+            }
+        });
+
+
     }
 
-    private void bannerOnClick(SearchResult searchResult) {
-        if (!searchResult.getResourceType().equals("character")) {
-            Snackbar.make(activity.findViewById(android.R.id.content), "Additional information for " +
-                    searchResult.getResourceType() + "s hasn't been imnplemented yet.", Snackbar.LENGTH_LONG).show();
-            return;
-        }
+    private void bannerOnClick(CharacterBrief searchResult) {
         Intent intent = new Intent(activity, CharacterActivity.class);
         if (searchResult.getImage() != null) {
             intent.putExtra(EXTRA_URL_STD, searchResult.getImage().getMediumUrl());
@@ -486,30 +410,6 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         ProgressBar progressBar;
 
         private BannerViewHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
-    public static class CoverViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.cover_image)
-        ImageView image;
-
-        @BindView(R.id.cover_name)
-        TextView name;
-
-        @BindView(R.id.cover_resource_type)
-        TextView resourceType;
-
-        @BindView(R.id.cover_parent_layout)
-        RelativeLayout parentLayout;
-
-        @BindView(R.id.cover_progress)
-        ProgressBar progressBar;
-
-
-        private CoverViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

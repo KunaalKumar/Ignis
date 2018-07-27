@@ -15,6 +15,7 @@ import com.kunaalkumar.ignis.activities.MainActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.adapters.SearchCharacterAdapter;
 import com.kunaalkumar.ignis.adapters.SearchHistoryAdapter;
+import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.network.ApiClient;
@@ -144,9 +145,10 @@ public class SearchCharacterFragment extends Fragment {
      * Retrofit call to search for word in superheroSearch
      * Make sure to init query variable before calling this
      */
-    public void searchCall(final Activity activity, final String query, boolean isNewCall) {
+    public void searchCall(final Activity activity, final String query, final boolean isNewCall) {
         if (isNewCall) {
             pageNumber = 1;
+
         } else {
             pageNumber++;
         }
@@ -158,10 +160,11 @@ public class SearchCharacterFragment extends Fragment {
         SharedPrefs.addToSearchHistory(query);
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
-        Call<ApiResponse<SearchResult[]>> call = client.search(query, API_KEY, FORMAT, pageNumber);
-        call.enqueue(new Callback<ApiResponse<SearchResult[]>>() {
+        String filter = "name:" + query.toString();
+        Call<ApiResponse<CharacterBrief[]>> call = client.searchCharacters(filter, API_KEY, FORMAT, pageNumber);
+        call.enqueue(new Callback<ApiResponse<CharacterBrief[]>>() {
             @Override
-            public void onResponse(Call<ApiResponse<SearchResult[]>> call, Response<ApiResponse<SearchResult[]>> response) {
+            public void onResponse(Call<ApiResponse<CharacterBrief[]>> call, Response<ApiResponse<CharacterBrief[]>> response) {
 
                 progressBar.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
@@ -177,24 +180,27 @@ public class SearchCharacterFragment extends Fragment {
                         recyclerView.setDrawingCacheEnabled(true);
                         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-                        SearchCharacterAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
+
+                        adapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
                         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
                     } else {
-                        SearchCharacterAdapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
+                        adapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
                         adapter.notifyDataSetChanged();
                     }
                 } else {
                     if (adapter == null) {
                         textView.setVisibility(View.VISIBLE);
                         textView.setText("No search results");
+                    } else if (isNewCall) {
+                        recyclerView.setVisibility(View.GONE);
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText("No search results");
                     }
-
-                    Toast.makeText(getContext(), "No more found", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<SearchResult[]>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<CharacterBrief[]>> call, Throwable t) {
                 Log.d("Ignis", t.toString());
             }
         });

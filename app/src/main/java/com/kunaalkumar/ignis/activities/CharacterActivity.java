@@ -1,6 +1,7 @@
 package com.kunaalkumar.ignis.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -37,6 +38,7 @@ import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_ID;
 import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_NAME;
 import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_URL_HD;
 import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_URL_STD;
+import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.shareUrlIntent;
 
 public class CharacterActivity extends AppCompatActivity {
 
@@ -136,6 +138,7 @@ public class CharacterActivity extends AppCompatActivity {
         mDrawable.setTint(p.getVibrantColor(getResources().
                 getColor(R.color.colorAccent)));
         fab.setImageDrawable(mDrawable);
+        fab.setBackgroundTintList(ColorStateList.valueOf(p.getDarkMutedColor(Color.WHITE)));
     }
 
     @Override
@@ -152,20 +155,21 @@ public class CharacterActivity extends AppCompatActivity {
 
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
+        String field_list = "name,site_detail_url,image";
         Call<ApiResponse<Character>> call = client.getCharacter(id, MainActivity.API_KEY,
-                MainActivity.FORMAT);
+                MainActivity.FORMAT, field_list);
 
         call.enqueue(new Callback<ApiResponse<Character>>() {
             @Override
             public void onResponse(Call<ApiResponse<Character>> call,
                                    Response<ApiResponse<Character>> response) {
-//      Do something with this
                 character = response.body().getResults();
+
             }
 
             @Override
             public void onFailure(Call<ApiResponse<Character>> call, Throwable t) {
-                Toast.makeText(CharacterActivity.this, "ERROR: Character not found",
+                Toast.makeText(CharacterActivity.this, "Server failed to respond.",
                         Toast.LENGTH_LONG).show();
 
                 Log.d("Ignis", t.toString());
@@ -183,7 +187,11 @@ public class CharacterActivity extends AppCompatActivity {
 
     @OnClick(R.id.character_fab)
     public void onClickFab(View view) {
-        Toast.makeText(this, "To Do: Implement sharing",
-                Toast.LENGTH_LONG).show();
+        if (character == null) {
+            Toast.makeText(CharacterActivity.this, "Try again in a second",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            shareUrlIntent(this, character.getName(), character.getSiteDetailUrl());
+        }
     }
 }

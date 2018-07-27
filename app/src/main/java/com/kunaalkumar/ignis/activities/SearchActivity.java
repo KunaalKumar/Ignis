@@ -2,6 +2,7 @@ package com.kunaalkumar.ignis.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,9 +11,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.kunaalkumar.ignis.R;
@@ -21,7 +24,6 @@ import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
 import com.kunaalkumar.ignis.fragments.search.SearchIssueFragment;
 import com.kunaalkumar.ignis.fragments.search.SearchObjectFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
-import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -97,22 +99,20 @@ public class SearchActivity extends AppCompatActivity {
 
         searchBox = findViewById(R.id.search_searchBox);
 
-        searchBox.requestFocus();
-
         // Request focus on searchBox and pull up keyboard
         searchBox.requestFocus();
-        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         // Listener for on "enter" pressed
         searchBox.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (i == KeyEvent.KEYCODE_ENTER) {
+                    viewPager.requestFocus();
                     characterFragment.searchCall(SearchActivity.this,
                             searchBox.getText().toString().trim(),
                             true);
-                    hideKeyboard(view);
+                    keyboardState(false, null);
                     return true;
                 } else {
                     return false;
@@ -162,29 +162,35 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void hideKeyboard(View view) {
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            return;
+    private void keyboardState(boolean state, View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (state) {
+            view.requestFocus();
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        } else {
+            imm.hideSoftInputFromWindow(findViewById(R.id.search_parent_layout).getWindowToken(),
+                    0);
         }
 
-        // Needed to hide keyboard without focus
-        view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
     }
 
     @OnClick(R.id.search_back)
     public void onSearchBackPressed(View view) {
-        hideKeyboard(view);
+        keyboardState(false, null);
         onBackPressed();
     }
 
     @OnClick(R.id.search_clear)
     public void onClearClick(View view) {
         searchBox.setText(null);
+        keyboardState(true, searchBox);
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
+            Toast.makeText(this, "keyboard hidden", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

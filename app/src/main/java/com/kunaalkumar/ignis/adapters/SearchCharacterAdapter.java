@@ -1,9 +1,11 @@
 package com.kunaalkumar.ignis.adapters;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,6 @@ import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
-import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 import com.squareup.picasso.Callback;
@@ -123,7 +124,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 switch (view.getId()) {
                     case R.id.peek_view_share:
-                        shareUrlIntent(searchResults.get(i).getName(), searchResults.get(i).getSiteDetailUrl());
+                        shareUrlIntent(activity, searchResults.get(i).getName(), searchResults.get(i).getSiteDetailUrl());
                         break;
                     case R.id.peek_view_copy:
                         ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -175,7 +176,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     }
 
-    private void shareUrlIntent(String subject, String url) {
+    public static void shareUrlIntent(Activity activity, String subject, String url) {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("text/plain");
         i.putExtra(Intent.EXTRA_SUBJECT, "Sharing URL");
@@ -207,7 +208,6 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         switch (holder.getItemViewType())
 
         {
-
             // Case: is Banner View
             case VIEW_TYPE_BANNER:
 
@@ -279,12 +279,17 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             viewHolder.name.setText(R.string.error_name_nf);
         }
 
-        viewHolder.resourceType.setText(searchResult.getName().toString());
-
         if (searchResult.getPublisher() != null) {
             viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
         } else {
-            viewHolder.additionInformation.setText(R.string.error_name_nf);
+            viewHolder.additionInformation.setText(R.string.publisher_not_found);
+        }
+
+        if (searchResult.getRealName() != null) {
+            viewHolder.realName.setText(searchResult.getRealName());
+        } else {
+            viewHolder.realName.setTextColor(Color.RED);
+            viewHolder.realName.setText(R.string.Real_name_not_found);
         }
 
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
@@ -400,8 +405,8 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         @BindView(R.id.banner_additional_info)
         TextView additionInformation;
 
-        @BindView(R.id.banner_resource_type)
-        TextView resourceType;
+        @BindView(R.id.banner_real_name)
+        TextView realName;
 
         @BindView(R.id.banner_parent_layout)
         RelativeLayout parentLayout;

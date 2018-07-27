@@ -161,7 +161,8 @@ public class SearchCharacterFragment extends Fragment {
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
         String filter = "name:" + query.toString();
-        Call<ApiResponse<CharacterBrief[]>> call = client.searchCharacters(filter, API_KEY, FORMAT, pageNumber);
+        String field_list = "name,real_name,publisher,image,id";
+        Call<ApiResponse<CharacterBrief[]>> call = client.searchCharacters(filter, API_KEY, FORMAT, pageNumber, field_list);
         call.enqueue(new Callback<ApiResponse<CharacterBrief[]>>() {
             @Override
             public void onResponse(Call<ApiResponse<CharacterBrief[]>> call, Response<ApiResponse<CharacterBrief[]>> response) {

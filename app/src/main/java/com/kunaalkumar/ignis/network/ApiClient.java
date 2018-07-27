@@ -68,7 +68,8 @@ public interface ApiClient {
     Call<ApiResponse<CharacterBrief[]>> searchCharacters(@Query("filter") String filter,
                                                          @Query("api_key") String apiKey,
                                                          @Query("format") String format,
-                                                         @Query("page") Integer page);
+                                                         @Query("page") Integer page,
+                                                         @Query("field_list") String field_list);
 
     // General origin search
     @GET("origins/")
@@ -151,7 +152,8 @@ public interface ApiClient {
     @GET("character/4005-{character_id}/")
     Call<ApiResponse<Character>> getCharacter(@Path("character_id") Integer characterId,
                                               @Query("api_key") String apiKey,
-                                              @Query("format") String format);
+                                              @Query("format") String format,
+                                              @Query("field_list") String field_list);
 
     // Detailed information about an origin
     @GET("origin/4030-{origin_id}/")

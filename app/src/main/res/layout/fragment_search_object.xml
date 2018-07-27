@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:padding="16dp"
-        android:text="@string/Search_for_something"
+        android:text="@string/coming_soon"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="?attr/headingTextColor" />
 

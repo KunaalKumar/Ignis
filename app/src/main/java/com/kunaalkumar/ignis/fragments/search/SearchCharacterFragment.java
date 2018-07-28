@@ -50,7 +50,6 @@ public class SearchCharacterFragment extends Fragment {
     @BindView(R.id.search_character_loading)
     ProgressBar progressBar;
 
-
     public RecyclerView historyRecyclerView;
     public SearchHistoryAdapter historyAdapter;
 

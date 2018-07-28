@@ -9,22 +9,27 @@ import com.kunaalkumar.ignis.activities.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class SharedPrefs {
 
     public static final String KEY_SEARCH_HISTORY = "SearchHistory";
+    public static final String KEY_FAVORITE_CHARACTERS = "FavoriteCharacters";
     public static final String KEY_DARK_THEME = "DarkTheme";
     public static final String KEY_SEARCH_HISTORY_SIZE = "SearchHistorySize";
     public static final String KEY_PEEK_HIGH_RES_IMAGE = "PeekHighResImage";
     public static final Integer ABSOLUTE_MAX_SEARCH_HISTORY = 50;
 
     private static ArrayList<String> searchHistory;
+    private static ArrayList<Integer> favoriteCharacters;
     private static TinyDB tinyDB;
     private static int maxArraySize;
 
     static {
         tinyDB = new TinyDB(Ignis.getAppContext());
         searchHistory = tinyDB.getListString(KEY_SEARCH_HISTORY);
+        favoriteCharacters = tinyDB.getListInt(KEY_FAVORITE_CHARACTERS);
+
         maxArraySize = tinyDB.getInt(KEY_SEARCH_HISTORY_SIZE);
 
 //        TODO: handle migrating from short list to long list, and vice-versa
@@ -65,6 +70,11 @@ public class SharedPrefs {
                 activity.setTheme(R.style.DarkTheme);
             } else activity.setTheme(R.style.LightTheme);
         }
+    }
+
+    public static void addToFavoriteCharacters(Integer id) {
+        favoriteCharacters.add(id);
+        tinyDB.putListInt(KEY_FAVORITE_CHARACTERS, favoriteCharacters);
     }
 
     public static void addToSearchHistory(String search) {
@@ -110,6 +120,20 @@ public class SharedPrefs {
 
         Collections.reverse(toReturn);
         return toReturn;
+    }
+
+    public static void addFavoriteCharacter(Integer id) {
+        favoriteCharacters.add(id);
+        tinyDB.putListInt(KEY_FAVORITE_CHARACTERS, favoriteCharacters);
+    }
+
+    public static void removeFavoriteCharacter(Integer id) {
+        favoriteCharacters.remove(favoriteCharacters.indexOf(id));
+        tinyDB.putListInt(KEY_FAVORITE_CHARACTERS, favoriteCharacters);
+    }
+
+    public static ArrayList<Integer> getFavoriteCharacters() {
+        return favoriteCharacters;
     }
 
     public static Boolean getDarkThemeState() {

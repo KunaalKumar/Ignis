@@ -205,9 +205,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         {
             // Case: is Banner View
             case VIEW_TYPE_BANNER:
-
-                populateBanner((BannerViewHolder) holder, position, searchResult);
-
+                initBanner((BannerViewHolder) holder, position, searchResult);
                 break;
 
             default:
@@ -247,15 +245,22 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
      */
 
     // Populate for banner view holder
-    private void populateBanner(BannerViewHolder viewHolder,
-                                final int position,
-                                final CharacterBrief searchResult) {
+    private void initBanner(final BannerViewHolder viewHolder,
+                            final int position,
+                            final CharacterBrief searchResult) {
 
         peekAndPop.addLongClickView(viewHolder.parentLayout, position);
 
         Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
 
+        // Set favorite state
+        if (SharedPrefs.getFavoriteCharacters().contains(searchResult.getId())) {
+            viewHolder.setFavoriteState(true);
+        } else {
+            viewHolder.setFavoriteState(false);
+        }
 
+        // Populate image
         if (searchResult.getImage() == null) {
             loadImageFromRes(R.drawable.image_not_available, viewHolder.image);
         } else {
@@ -268,18 +273,21 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.image);
         }
 
+        // Populate name
         if (searchResult.getName() != null) {
             viewHolder.name.setText(searchResult.getName());
         } else {
             viewHolder.name.setText(R.string.error_name_nf);
         }
 
+        // Populate publisher
         if (searchResult.getPublisher() != null) {
             viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
         } else {
             viewHolder.additionInformation.setText(R.string.publisher_not_found);
         }
 
+        // Populate real name
         if (searchResult.getRealName() != null) {
             viewHolder.realName.setText(searchResult.getRealName());
         } else {
@@ -287,6 +295,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             viewHolder.realName.setText(R.string.Real_name_not_found);
         }
 
+        // Parent OnClick
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -294,6 +303,21 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
         });
 
+        // Favorite OnClick
+        viewHolder.favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (viewHolder.favoriteState) {
+                    // Remove from favorites
+                    SharedPrefs.removeFavoriteCharacter(searchResult.getId());
+                } else {
+                    // Add to favorites
+                    SharedPrefs.addFavoriteCharacter(searchResult.getId());
+                }
+                viewHolder.setFavoriteState(!viewHolder.favoriteState);
+                System.console();
+            }
+        });
 
     }
 
@@ -409,9 +433,24 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         @BindView(R.id.banner_progress)
         ProgressBar progressBar;
 
+        @BindView(R.id.banner_favorite)
+        ImageView favorite;
+
+        boolean favoriteState;
+
         private BannerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            favoriteState = false;
+        }
+
+        public void setFavoriteState(boolean state) {
+            favoriteState = state;
+
+            if (state)
+                favorite.setBackgroundResource(R.drawable.ic_favorite_filled_24dp);
+            else
+                favorite.setBackgroundResource(R.drawable.ic_favorite_unfilled_24dp);
         }
     }
 }

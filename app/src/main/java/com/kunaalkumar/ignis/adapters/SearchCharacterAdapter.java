@@ -198,11 +198,6 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
 
-        // Last item loaded, load more if available
-        if (getItemCount() == 10) {
-            ((SearchActivity) activity).characterFragment.searchCall(activity, currentQuery, false);
-        }
-
         final CharacterBrief searchResult = searchResults.get(position);
 
         switch (holder.getItemViewType())

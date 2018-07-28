@@ -107,16 +107,18 @@ public class SearchActivity extends AppCompatActivity {
         searchBox.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (i == KeyEvent.KEYCODE_ENTER) {
-                    viewPager.requestFocus();
-                    characterFragment.searchCall(SearchActivity.this,
-                            searchBox.getText().toString().trim(),
-                            true);
-                    keyboardState(false, null);
+                if (keyEvent.getAction() != KeyEvent.ACTION_DOWN)
                     return true;
-                } else {
-                    return false;
+                switch (i) {
+                    case KeyEvent.KEYCODE_ENTER:
+                        characterFragment.searchCall(SearchActivity.this,
+                                searchBox.getText().toString().trim(),
+                                true);
+                        keyboardState(false, null);
+                        viewPager.requestFocus();
+                        break;
                 }
+                return true;
             }
         });
 

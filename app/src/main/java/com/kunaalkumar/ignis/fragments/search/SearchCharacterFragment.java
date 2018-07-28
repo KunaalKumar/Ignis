@@ -117,7 +117,6 @@ public class SearchCharacterFragment extends Fragment {
         } else {
             textView.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.GONE);
         }
     }
 
@@ -148,21 +147,25 @@ public class SearchCharacterFragment extends Fragment {
     public void searchCall(final Activity activity, final String query, final boolean isNewCall) {
         if (isNewCall) {
             pageNumber = 1;
-
         } else {
             pageNumber++;
         }
 
         showLoadingState(true);
 
-        MainActivity.hideKeyboard(activity);
         recyclerView.requestFocus();
         SharedPrefs.addToSearchHistory(query);
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
         String filter = "name:" + query.toString();
         String field_list = "name,real_name,publisher,image,id";
-        Call<ApiResponse<CharacterBrief[]>> call = client.searchCharacters(filter, API_KEY, FORMAT, pageNumber, field_list);
+        Call<ApiResponse<CharacterBrief[]>> call = client.searchCharacters(filter,
+                API_KEY,
+                FORMAT,
+                pageNumber,
+                field_list,
+                10);
+
         call.enqueue(new Callback<ApiResponse<CharacterBrief[]>>() {
             @Override
             public void onResponse(Call<ApiResponse<CharacterBrief[]>> call, Response<ApiResponse<CharacterBrief[]>> response) {
@@ -181,9 +184,9 @@ public class SearchCharacterFragment extends Fragment {
                         recyclerView.setDrawingCacheEnabled(true);
                         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-
                         adapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
                         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+
                     } else {
                         adapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
                         adapter.notifyDataSetChanged();
@@ -203,6 +206,20 @@ public class SearchCharacterFragment extends Fragment {
             @Override
             public void onFailure(Call<ApiResponse<CharacterBrief[]>> call, Throwable t) {
                 Log.d("Ignis", t.toString());
+            }
+        });
+    }
+
+    private void attachOnScrollListener(final String query) {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    Toast.makeText(getActivity(), "Last item", Toast.LENGTH_LONG).show();
+                    searchCall(getActivity(), query, false);
+                }
             }
         });
     }

@@ -11,12 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.activities.MainActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.adapters.SearchCharacterAdapter;
 import com.kunaalkumar.ignis.adapters.SearchHistoryAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
-import com.kunaalkumar.ignis.comicvine_objects.brief_description.SearchResult;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
@@ -50,9 +48,6 @@ public class SearchCharacterFragment extends Fragment {
     @BindView(R.id.search_character_loading)
     ProgressBar progressBar;
 
-    public RecyclerView historyRecyclerView;
-    public SearchHistoryAdapter historyAdapter;
-
     private RecyclerView recyclerView;
     private SearchCharacterAdapter adapter;
 
@@ -73,30 +68,14 @@ public class SearchCharacterFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-//        historyRecyclerView = view.findViewById(R.id.search_character_history);
-
         recyclerView = view.findViewById(R.id.search_character_recycler_view);
 
         showLoadingState(false);
 
         initPeekAndPop();
 
-//        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), getActivity());
-//        historyRecyclerView.setAdapter(historyAdapter);
-//        historyRecyclerView.setLayoutManager(new ∂LinearLayoutManager(getContext()));
-
         return view;
     }
-
-//    private static void showSuggestions(boolean bool) {
-//        if (bool) {
-//            historyRecyclerView.setVisibility(View.VISIBLE);
-//            recyclerView.setVisibility(View.GONE);
-//        } else {
-//            historyRecyclerView.setVisibility(View.GONE);
-//            recyclerView.setVisibility(View.VISIBLE);
-//        }
-//    }
 
 
     private void initPeekAndPop() {
@@ -110,12 +89,16 @@ public class SearchCharacterFragment extends Fragment {
 
     private void showLoadingState(boolean state) {
         if (state) {
-            textView.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
+            if (textView != null && progressBar != null && recyclerView != null) {
+                textView.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
         } else {
-            textView.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
+            if (textView != null && progressBar != null) {
+                textView.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -152,7 +135,10 @@ public class SearchCharacterFragment extends Fragment {
 
         showLoadingState(true);
 
-        recyclerView.requestFocus();
+        if (recyclerView != null) {
+            recyclerView.requestFocus();
+        }
+
         SharedPrefs.addToSearchHistory(query);
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
@@ -169,8 +155,10 @@ public class SearchCharacterFragment extends Fragment {
             @Override
             public void onResponse(Call<ApiResponse<CharacterBrief[]>> call, Response<ApiResponse<CharacterBrief[]>> response) {
 
-                progressBar.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+                if (progressBar != null && recyclerView != null) {
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
 
                 if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
                     if (pageNumber == 1) {

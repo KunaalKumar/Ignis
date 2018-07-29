@@ -334,7 +334,6 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         activity.startActivity(intent);
     }
 
-
     /*
 
 

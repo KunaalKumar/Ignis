@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -93,6 +94,23 @@ public class SearchActivity extends AppCompatActivity {
 
         init();
         appLinkCall();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        // Save character fragment instance
+        getSupportFragmentManager().putFragment(outState, "characterFragment", characterFragment);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore character fragment instance
+        characterFragment = (SearchCharacterFragment) getSupportFragmentManager().
+                getFragment(savedInstanceState, "characterFragment");
     }
 
     private void init() {

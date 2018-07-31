@@ -1,4 +1,4 @@
-package com.kunaalkumar.ignis.activities;
+package com.kunaalkumar.ignis.activities.main;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kunaalkumar.ignis.BuildConfig;
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.activities.SearchActivity;
+import com.kunaalkumar.ignis.activities.SettingsActivity;
 import com.kunaalkumar.ignis.fragments.FavoritesFragment;
 import com.kunaalkumar.ignis.fragments.NewsFragment;
 import com.kunaalkumar.ignis.fragments.RandomFragment;
@@ -24,7 +26,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Displays main screen with news, favorites and random fragments
+ */
+public class MainActivity extends AppCompatActivity implements MainContract.MvpView {
 
     public static FirebaseAnalytics mFirebaseAnalytics;
 
@@ -43,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String REDDIT_URL = "https://www.reddit.com/r/ignisandroid";
     public static final String PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.kunaalkumar.ignis";
 
+    // Tells the Settings Activity whether or not to change thme
     public static boolean CHANGED = false;
+
+    private MainPresenter mainPresenter;
 
     private NewsFragment newsFragment = new NewsFragment();
     private FavoritesFragment favoritesFragment = new FavoritesFragment();
@@ -66,9 +74,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPrefs.applyTheme(this);
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mainPresenter = new MainPresenter(this);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -170,5 +179,4 @@ public class MainActivity extends AppCompatActivity {
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
 }

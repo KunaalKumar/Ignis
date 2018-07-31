@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.adapters.SearchCharacterAdapter;
-import com.kunaalkumar.ignis.adapters.SearchHistoryAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.network.ApiClient;
@@ -35,8 +34,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static com.kunaalkumar.ignis.activities.MainActivity.API_KEY;
-import static com.kunaalkumar.ignis.activities.MainActivity.FORMAT;
+import static com.kunaalkumar.ignis.activities.main.MainActivity.API_KEY;
+import static com.kunaalkumar.ignis.activities.main.MainActivity.FORMAT;
 
 public class SearchCharacterFragment extends Fragment {
 

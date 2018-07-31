@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.kunaalkumar.ignis.activities.MainActivity.hideKeyboard;
+import static com.kunaalkumar.ignis.activities.main.MainActivity.hideKeyboard;
 
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryViewHolder> {
 

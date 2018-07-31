@@ -1,17 +1,12 @@
 package com.kunaalkumar.ignis.activities.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.kunaalkumar.ignis.BuildConfig;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.activities.SettingsActivity;
@@ -33,9 +28,6 @@ import static com.kunaalkumar.ignis.activities.main.MainPresenter.mFirebaseAnaly
  * Displays main screen with news, favorites and random fragments
  */
 public class MainActivity extends AppCompatActivity implements MainContract.MvpView {
-
-    public static final String SHORTCUT_FAV = "com.kunaalkumar.ignis.shortcut.favorite";
-    public static final String SHORTCUT_RANDOM = "com.kunaalkumar.ignis.shortcut.random";
 
     private MainPresenter mainPresenter;
 
@@ -68,60 +60,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.MvpV
                 .replace(R.id.frame_fragmentholder, newsFragment)
                 .commit();
 
-        initBottomNav();
+        mainPresenter.initBottomNavigationBar(bottomNavigationView);
 
-        if (SHORTCUT_FAV.equals(getIntent().getAction())) {
-            changeBottom(R.id.bottom_navigation_favorites, favoritesFragment);
-        }
-
-        if (SHORTCUT_RANDOM.equals(getIntent().getAction())) {
-            changeBottom(R.id.bottom_navigation_random, randomFragment);
-        }
-    }
-
-    // handle bottom navigation events
-    private void initBottomNav() {
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-
-                    case R.id.bottom_navigation_news:
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.frame_fragmentholder, newsFragment)
-                                .commit();
-                        return true;
-
-                    case R.id.bottom_navigation_favorites:
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.frame_fragmentholder, favoritesFragment)
-                                .commit();
-                        return true;
-
-                    case R.id.bottom_navigation_random:
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.frame_fragmentholder, randomFragment)
-                                .commit();
-                        return true;
-
-                    default:
-                        Toast.makeText(MainActivity.this, "Something went terribly wrong", Toast.LENGTH_LONG).show();
-                        return false;
-                }
-            }
-        });
-    }
-
-    private void changeBottom(int id, Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_fragmentholder, fragment)
-                .commit();
-
-        bottomNavigationView.setSelectedItemId(id);
+        mainPresenter.handleIntent(getIntent());
     }
 
     @OnClick(R.id.search)
@@ -146,5 +87,54 @@ public class MainActivity extends AppCompatActivity implements MainContract.MvpV
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mainPresenter.handleChangeTheme(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void openNews() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_fragmentholder, newsFragment)
+                .commit();
+    }
+
+    @Override
+    public void openFavorite() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_fragmentholder, favoritesFragment)
+                .commit();
+    }
+
+    @Override
+    public void openRandom() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_fragmentholder, randomFragment)
+                .commit();
+    }
+
+    @Override
+    public void changeFragment(int id, Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_fragmentholder, fragment)
+                .commit();
+
+        bottomNavigationView.setSelectedItemId(id);
+    }
+
+    @Override
+    public FavoritesFragment getFavoriteFragment() {
+        return favoritesFragment;
+    }
+
+    @Override
+    public RandomFragment getRandomFragment() {
+        return randomFragment;
+    }
+
+    @Override
+    public NewsFragment getNewsFragment() {
+        return newsFragment;
     }
 }

@@ -2,9 +2,13 @@ package com.kunaalkumar.ignis.activities.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kunaalkumar.ignis.BuildConfig;
+import com.kunaalkumar.ignis.R;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -21,6 +25,12 @@ public class MainPresenter implements MainContract.Presenter {
 
     // Api key for ComicVine
     public static final String API_KEY = BuildConfig.ComicVineApiKey;
+
+
+    // App shortcut
+    public static final String SHORTCUT_FAV = "com.kunaalkumar.ignis.shortcut.favorite";
+    public static final String SHORTCUT_RANDOM = "com.kunaalkumar.ignis.shortcut.random";
+
 
     // Links
     public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/117230352217222987710";
@@ -44,6 +54,44 @@ public class MainPresenter implements MainContract.Presenter {
             if (resultCode == RESULT_OK) {
                 ((Activity) view).finish();
             }
+        }
+    }
+
+    @Override
+    public void initBottomNavigationBar(BottomNavigationView bottomNavigationView) {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.
+                OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+
+                    case R.id.bottom_navigation_news:
+                        view.openNews();
+                        return true;
+
+                    case R.id.bottom_navigation_favorites:
+                        view.openFavorite();
+                        return true;
+
+                    case R.id.bottom_navigation_random:
+                        view.openRandom();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void handleIntent(Intent intent) {
+        if (SHORTCUT_FAV.equals(intent.getAction())) {
+            view.changeFragment(R.id.bottom_navigation_favorites, view.getFavoriteFragment());
+        }
+
+        if (SHORTCUT_RANDOM.equals(intent.getAction())) {
+            view.changeFragment(R.id.bottom_navigation_random, view.getRandomFragment());
         }
     }
 }

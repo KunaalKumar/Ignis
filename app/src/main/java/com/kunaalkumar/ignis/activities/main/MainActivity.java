@@ -26,30 +26,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.kunaalkumar.ignis.activities.main.MainPresenter.EXIT;
+import static com.kunaalkumar.ignis.activities.main.MainPresenter.mFirebaseAnalytics;
+
 /**
  * Displays main screen with news, favorites and random fragments
  */
 public class MainActivity extends AppCompatActivity implements MainContract.MvpView {
 
-    public static FirebaseAnalytics mFirebaseAnalytics;
-
-    // Request code
-    public static final Integer EXIT = 100;
-    public static final String FORMAT = "json";
-
     public static final String SHORTCUT_FAV = "com.kunaalkumar.ignis.shortcut.favorite";
     public static final String SHORTCUT_RANDOM = "com.kunaalkumar.ignis.shortcut.random";
-
-    // Api key for ComicVine
-    public static final String API_KEY = BuildConfig.ComicVineApiKey;
-
-    // Links
-    public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/117230352217222987710";
-    public static final String REDDIT_URL = "https://www.reddit.com/r/ignisandroid";
-    public static final String PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.kunaalkumar.ignis";
-
-    // Tells the Settings Activity whether or not to change thme
-    public static boolean CHANGED = false;
 
     private MainPresenter mainPresenter;
 
@@ -68,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.MvpV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         SharedPrefs.applyTheme(this);
 
@@ -92,43 +76,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.MvpV
 
         if (SHORTCUT_RANDOM.equals(getIntent().getAction())) {
             changeBottom(R.id.bottom_navigation_random, randomFragment);
-        }
-    }
-
-    private void changeBottom(int id, Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_fragmentholder, fragment)
-                .commit();
-
-        bottomNavigationView.setSelectedItemId(id);
-    }
-
-    @OnClick(R.id.search)
-    public void searchOnClick(View view) {
-        startActivity(new Intent(this, SearchActivity.class));
-    }
-
-    @OnClick(R.id.settings)
-    public void settingsOnClick(View view) {
-
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "settings_click");
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Open Settings");
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-        Intent intent = new Intent(this, SettingsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivityForResult(intent, EXIT);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == EXIT) {
-            if (resultCode == RESULT_OK) {
-                this.finish();
-            }
         }
     }
 
@@ -168,15 +115,36 @@ public class MainActivity extends AppCompatActivity implements MainContract.MvpV
         });
     }
 
-    // Helper to hide keyboard; given activity
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    private void changeBottom(int id, Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_fragmentholder, fragment)
+                .commit();
+
+        bottomNavigationView.setSelectedItemId(id);
+    }
+
+    @OnClick(R.id.search)
+    public void searchOnClick(View view) {
+        startActivity(new Intent(this, SearchActivity.class));
+    }
+
+    @OnClick(R.id.settings)
+    public void settingsOnClick(View view) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "settings_click");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Open Settings");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+        Intent intent = new Intent(this, SettingsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivityForResult(intent, EXIT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mainPresenter.handleChangeTheme(requestCode, resultCode, data);
     }
 }

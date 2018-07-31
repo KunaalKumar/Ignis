@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.kunaalkumar.ignis.activities.main.MainActivity.hideKeyboard;
+import static net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard;
 
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryViewHolder> {
 
@@ -47,6 +47,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
                 hideKeyboard(activity);
             }
         });
+
         holder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {

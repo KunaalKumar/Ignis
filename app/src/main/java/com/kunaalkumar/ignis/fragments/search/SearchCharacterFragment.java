@@ -34,8 +34,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static com.kunaalkumar.ignis.activities.main.MainActivity.API_KEY;
-import static com.kunaalkumar.ignis.activities.main.MainActivity.FORMAT;
+import static com.kunaalkumar.ignis.activities.main.MainPresenter.API_KEY;
+import static com.kunaalkumar.ignis.activities.main.MainPresenter.FORMAT;
+
 
 public class SearchCharacterFragment extends Fragment {
 

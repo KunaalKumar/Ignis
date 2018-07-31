@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.kunaalkumar.ignis.activities.main.MainActivity;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
@@ -35,6 +34,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.kunaalkumar.ignis.activities.main.MainPresenter.API_KEY;
+import static com.kunaalkumar.ignis.activities.main.MainPresenter.FORMAT;
 import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_ID;
 import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_NAME;
 import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.EXTRA_URL_HD;
@@ -157,8 +158,8 @@ public class CharacterActivity extends AppCompatActivity {
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
         String field_list = "name,site_detail_url,image";
-        Call<ApiResponse<Character>> call = client.getCharacter(id, MainActivity.API_KEY,
-                MainActivity.FORMAT, field_list);
+        Call<ApiResponse<Character>> call = client.getCharacter(id, API_KEY,
+                FORMAT, field_list);
 
         call.enqueue(new Callback<ApiResponse<Character>>() {
             @Override

@@ -26,6 +26,11 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.kunaalkumar.ignis.activities.main.MainPresenter.CHANGED;
+import static com.kunaalkumar.ignis.activities.main.MainPresenter.GOOGLE_PLUS_URL;
+import static com.kunaalkumar.ignis.activities.main.MainPresenter.PLAY_STORE_URL;
+import static com.kunaalkumar.ignis.activities.main.MainPresenter.REDDIT_URL;
+
 public class SettingsActivity extends AppCompatActivity {
 
     @BindView(R.id.settings_parent_layout)
@@ -87,7 +92,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     @BindView(R.id.version_number)
     TextView versionNumber;
-
 
 
     private Integer possibleSize;
@@ -210,7 +214,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void restartOnThemeChanged() {
-        MainActivity.CHANGED = true;
+        CHANGED = true;
         setResult(RESULT_OK, null);
         finish();
         startActivity(new Intent(this, SettingsActivity.class));
@@ -218,8 +222,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (MainActivity.CHANGED) {
-            MainActivity.CHANGED = false;
+        if (CHANGED) {
+            CHANGED = false;
             startActivity(new Intent(SettingsActivity.this, MainActivity.class));
         } else {
             super.onBackPressed();
@@ -229,8 +233,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        if (MainActivity.CHANGED) {
-            MainActivity.CHANGED = false;
+        if (CHANGED) {
+            CHANGED = false;
             startActivity(new Intent(SettingsActivity.this, MainActivity.class));
         } else {
             super.onBackPressed();
@@ -275,7 +279,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(MainActivity.GOOGLE_PLUS_URL));
+                i.setData(Uri.parse(GOOGLE_PLUS_URL));
                 startActivity(i);
             }
         };
@@ -287,7 +291,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(MainActivity.REDDIT_URL));
+                i.setData(Uri.parse(REDDIT_URL));
                 startActivity(i);
             }
         };
@@ -299,7 +303,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(MainActivity.PLAY_STORE_URL));
+                i.setData(Uri.parse(PLAY_STORE_URL));
                 startActivity(i);
             }
         };

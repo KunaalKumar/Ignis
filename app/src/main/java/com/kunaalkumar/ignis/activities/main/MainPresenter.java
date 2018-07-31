@@ -3,7 +3,6 @@ package com.kunaalkumar.ignis.activities.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;

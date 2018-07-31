@@ -5,11 +5,10 @@ import android.app.Activity;
 
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.CharacterActivity;
-import com.kunaalkumar.ignis.activities.SettingsActivity;
+import com.kunaalkumar.ignis.activities.settings.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class SharedPrefs {
 

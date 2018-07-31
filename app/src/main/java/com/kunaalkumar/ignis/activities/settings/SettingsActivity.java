@@ -1,4 +1,4 @@
-package com.kunaalkumar.ignis.activities;
+package com.kunaalkumar.ignis.activities.settings;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.kunaalkumar.ignis.activities.LicenseActivity;
 import com.kunaalkumar.ignis.activities.main.MainActivity;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
@@ -31,7 +32,7 @@ import static com.kunaalkumar.ignis.activities.main.MainPresenter.GOOGLE_PLUS_UR
 import static com.kunaalkumar.ignis.activities.main.MainPresenter.PLAY_STORE_URL;
 import static com.kunaalkumar.ignis.activities.main.MainPresenter.REDDIT_URL;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements SettingsContract.MvpView {
 
     @BindView(R.id.settings_parent_layout)
     CoordinatorLayout coordinatorLayout;

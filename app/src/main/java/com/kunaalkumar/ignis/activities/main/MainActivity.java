@@ -9,7 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.SearchActivity;
-import com.kunaalkumar.ignis.activities.SettingsActivity;
+import com.kunaalkumar.ignis.activities.settings.SettingsActivity;
 import com.kunaalkumar.ignis.fragments.FavoritesFragment;
 import com.kunaalkumar.ignis.fragments.NewsFragment;
 import com.kunaalkumar.ignis.fragments.RandomFragment;

@@ -1,21 +1,12 @@
 package com.kunaalkumar.ignis.activities.settings;
 
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.kunaalkumar.ignis.activities.LicenseActivity;
-import com.kunaalkumar.ignis.activities.main.MainActivity;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
@@ -27,10 +18,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.kunaalkumar.ignis.activities.main.MainPresenter.CHANGED;
-import static com.kunaalkumar.ignis.activities.main.MainPresenter.GOOGLE_PLUS_URL;
-import static com.kunaalkumar.ignis.activities.main.MainPresenter.PLAY_STORE_URL;
-import static com.kunaalkumar.ignis.activities.main.MainPresenter.REDDIT_URL;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsContract.MvpView {
 
@@ -94,8 +81,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
     @BindView(R.id.version_number)
     TextView versionNumber;
 
-
-    private Integer possibleSize;
+    private SettingsPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,65 +93,43 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
 
         ButterKnife.bind(this);
 
+        presenter = new SettingsPresenter(this);
+
+        presenter.setState();
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        collapsingToolbarLayout.setTitleEnabled(true);
-        if (SharedPrefs.getDarkThemeState()) {
-            collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
-        }
+        presenter.initSeekbar();
+        presenter.setVersionNumber();
+        setListeners();
 
-        nightMode.setChecked(SharedPrefs.getDarkThemeState());
-        previewImageQuality.setChecked(SharedPrefs.getPeekHighResImageState());
-
-        init();
-
-        setVersionName();
-
-        setClickListeners();
     }
 
-    private void init() {
-        // Init night mode switch
+    private void setListeners() {
+        // Night mode switch listener
         nightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                SharedPrefs.setDarkThemeState(isChecked);
-                restartOnThemeChanged();
+                presenter.setDarkThemeState(isChecked);
             }
         });
 
-        // Init preview image quality switch
+        // Preview image quality switch listener
         previewImageQuality.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                SharedPrefs.setPeekHighResImageState(isChecked);
-//                Snackbar.make(findViewById(android.R.id.content), Boolean.toString(isChecked),
-//                        Snackbar.LENGTH_SHORT).show();
+                presenter.setPeekHighResImageState(isChecked);
             }
         });
 
-        // Init seekbar
-        seekBar.setMax(SharedPrefs.ABSOLUTE_MAX_SEARCH_HISTORY);
-        maxSeekBarVal.setText(SharedPrefs.ABSOLUTE_MAX_SEARCH_HISTORY.toString());
-        seekBar.setProgress(SharedPrefs.getSearchHistorySize());
-        currentSeekBarVal.setText(SharedPrefs.getSearchHistorySize().toString());
-        possibleSize = SharedPrefs.getSearchHistorySize();
-
+        // Seekbar change listener
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (i < 2) {
-                    Toast.makeText(SettingsActivity.this, "Minimum value is 2", Toast.LENGTH_LONG).show();
-
-                    seekBar.setProgress(2);
-                    possibleSize = 2;
-                } else {
-                    possibleSize = i;
-                }
-                currentSeekBarVal.setText(possibleSize.toString());
+                presenter.onSeekBarProgressChange(i);
             }
 
             @Override
@@ -175,138 +139,74 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-//                Toast.makeText(SettingsActivity.this, "Set to " + seekBar.getProgress(), Toast.LENGTH_LONG).show();
-                SharedPrefs.setSearchHistorySize(possibleSize);
+                presenter.setSearchHistorySize();
             }
         });
-    }
-
-    private void setClickListeners() {
 
         // License
-        licenseImage.setOnClickListener(licenseOnClick());
-        licenseText.setOnClickListener(licenseOnClick());
+        licenseImage.setOnClickListener(presenter.onClickLicense(this));
+        licenseText.setOnClickListener(presenter.onClickLicense(this));
 
         // Google plus
-        googlePlusImage.setOnClickListener(googlePlusOnClick());
-        googlePlusText.setOnClickListener(googlePlusOnClick());
+        googlePlusImage.setOnClickListener(presenter.onClickGooglePlus(this));
+        googlePlusText.setOnClickListener(presenter.onClickGooglePlus(this));
 
         // Reddit
-        redditImage.setOnClickListener(redditOnClick());
-        redditText.setOnClickListener(redditOnClick());
+        redditImage.setOnClickListener(presenter.onClickReddit(this));
+        redditText.setOnClickListener(presenter.onClickReddit(this));
 
         // Play store
-        playStoreImage.setOnClickListener(playStoreOnClick());
-        playStoreText.setOnClickListener(playStoreOnClick());
-
-    }
-
-    // Return version name from app.gradle
-    private void setVersionName() {
-        try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            versionNumber.setText(pInfo.versionName);
-            return;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        versionNumber.setText(R.string.error_name_nf);
-    }
-
-    private void restartOnThemeChanged() {
-        CHANGED = true;
-        setResult(RESULT_OK, null);
-        finish();
-        startActivity(new Intent(this, SettingsActivity.class));
+        playStoreImage.setOnClickListener(presenter.onClickPlayStore(this));
+        playStoreText.setOnClickListener(presenter.onClickPlayStore(this));
     }
 
     @Override
     public void onBackPressed() {
-        if (CHANGED) {
-            CHANGED = false;
-            startActivity(new Intent(SettingsActivity.this, MainActivity.class));
-        } else {
+        if (!presenter.returnBack()) {
             super.onBackPressed();
         }
-        finish();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        if (CHANGED) {
-            CHANGED = false;
-            startActivity(new Intent(SettingsActivity.this, MainActivity.class));
-        } else {
+        if (!presenter.returnBack()) {
             super.onBackPressed();
         }
-        finish();
         return true;
     }
 
-    /*
-
-
-
-
-    .___              .__
-    |   | ____   ____ |__| ______
-    |   |/ ___\ /    \|  |/  ___/
-    |   / /_/  >   |  \  |\___ \
-    |___\___  /|___|  /__/____  >
-       /_____/      \/        \/
-
-
-                onClick listeners
-
-
-
-
-     */
-
-    // Returns onClick listener for license
-    private View.OnClickListener licenseOnClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(SettingsActivity.this, LicenseActivity.class));
-            }
-        };
+    @Override
+    public CollapsingToolbarLayout getCollapsingToolbar() {
+        return collapsingToolbarLayout;
     }
 
-    // Returns onClick listener for google plus
-    private View.OnClickListener googlePlusOnClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(GOOGLE_PLUS_URL));
-                startActivity(i);
-            }
-        };
+    @Override
+    public SwitchCompat getNightModeSwitch() {
+        return nightMode;
     }
 
-    // Returns onClick listener for reddit
-    private View.OnClickListener redditOnClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(REDDIT_URL));
-                startActivity(i);
-            }
-        };
+    @Override
+    public SwitchCompat getPreviewImageQualitySwitch() {
+        return previewImageQuality;
     }
 
-    // Returns onClick listener for play store
-    private View.OnClickListener playStoreOnClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(PLAY_STORE_URL));
-                startActivity(i);
-            }
-        };
+    @Override
+    public SeekBar getSeekBar() {
+        return seekBar;
+    }
+
+    @Override
+    public TextView getSeekBarMaxView() {
+        return maxSeekBarVal;
+    }
+
+    @Override
+    public TextView getSeekBarCurrentView() {
+        return currentSeekBarVal;
+    }
+
+    @Override
+    public TextView getVersionNumberView() {
+        return versionNumber;
     }
 }

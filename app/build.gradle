@@ -7,8 +7,8 @@ android {
         applicationId "com.kunaalkumar.ignis"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 8
-        versionName "0.6.0-alpha"
+        versionCode 9
+        versionName "0.7.0-alpha"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

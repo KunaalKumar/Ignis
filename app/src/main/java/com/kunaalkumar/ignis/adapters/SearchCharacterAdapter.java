@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.activities.CharacterActivity;
+import com.kunaalkumar.ignis.activities.character.CharacterActivity;
 import com.kunaalkumar.ignis.activities.SearchActivity;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.utils.SharedPrefs;

@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/launcher_background_color"
-        android:drawable="@color/black" />
+        android:drawable="?attr/backgroundColor" />
 
     <item>
         <bitmap

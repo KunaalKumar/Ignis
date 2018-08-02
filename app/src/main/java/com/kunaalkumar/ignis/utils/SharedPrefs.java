@@ -4,7 +4,7 @@ package com.kunaalkumar.ignis.utils;
 import android.app.Activity;
 
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.activities.CharacterActivity;
+import com.kunaalkumar.ignis.activities.character.CharacterActivity;
 import com.kunaalkumar.ignis.activities.settings.SettingsActivity;
 
 import java.util.ArrayList;

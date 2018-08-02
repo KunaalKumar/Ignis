@@ -36,7 +36,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".activities.CharacterActivity" />
+        <activity android:name=".activities.character.CharacterActivity" />
 
         <activity
             android:name=".activities.SearchActivity"

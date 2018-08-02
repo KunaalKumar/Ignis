@@ -39,7 +39,7 @@
         <activity android:name=".activities.character.CharacterActivity" />
 
         <activity
-            android:name=".activities.SearchActivity"
+            android:name=".activities.search.SearchActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".activities.main.MainActivity">
             <tools:validation testUrl="http://kunaalkumar.com/search/batman" />

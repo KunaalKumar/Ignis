@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.activities.SearchActivity;
+import com.kunaalkumar.ignis.activities.search.SearchActivity;
 import com.kunaalkumar.ignis.activities.settings.SettingsActivity;
 import com.kunaalkumar.ignis.fragments.FavoritesFragment;
 import com.kunaalkumar.ignis.fragments.NewsFragment;

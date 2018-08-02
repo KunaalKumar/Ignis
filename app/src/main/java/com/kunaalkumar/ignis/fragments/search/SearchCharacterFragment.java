@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.activities.SearchActivity;
+import com.kunaalkumar.ignis.activities.search.SearchActivity;
 import com.kunaalkumar.ignis.adapters.SearchCharacterAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;

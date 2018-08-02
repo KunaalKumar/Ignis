@@ -1,11 +1,10 @@
-package com.kunaalkumar.ignis.activities;
+package com.kunaalkumar.ignis.activities.search;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.adapters.ViewPageAdapter;
 import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
 import com.kunaalkumar.ignis.fragments.search.SearchIssueFragment;
 import com.kunaalkumar.ignis.fragments.search.SearchObjectFragment;
@@ -34,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements SearchContract.MvpView {
 
 
     @BindView(R.id.search_toolbar)
@@ -57,14 +55,7 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.search_parent_layout)
     CoordinatorLayout coordinatorLayout;
 
-    private ViewPageAdapter viewPageAdapter;
-
-    // Fragments
-    public SearchCharacterFragment characterFragment;
-    public SearchIssueFragment issueFragment;
-    public SearchObjectFragment objectFragment;
-
-    InputMethodManager imm;
+    private SearchPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,21 +67,9 @@ public class SearchActivity extends AppCompatActivity {
         Log.d("Ignis", "SearchActivity started");
         ButterKnife.bind(this);
 
-        viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager());
+        presenter = new SearchPresenter(this);
 
-        characterFragment = new SearchCharacterFragment();
-        issueFragment = new SearchIssueFragment();
-        objectFragment = new SearchObjectFragment();
-
-        viewPageAdapter.addFragment(characterFragment, SearchCharacterFragment.TITLE);
-        viewPageAdapter.addFragment(issueFragment, SearchIssueFragment.TITLE);
-        viewPageAdapter.addFragment(objectFragment, SearchObjectFragment.TITLE);
-
-        // Keeps all fragments in memory
-        viewPager.setOffscreenPageLimit(viewPageAdapter.getCount());
-
-        viewPager.setAdapter(viewPageAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        presenter.setUpViewPageAdapter(getSupportFragmentManager());
 
         init();
         appLinkCall();
@@ -212,5 +191,15 @@ public class SearchActivity extends AppCompatActivity {
         if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
             Toast.makeText(this, "keyboard hidden", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
+
+    @Override
+    public TabLayout getTabLayout() {
+        return tabLayout;
     }
 }

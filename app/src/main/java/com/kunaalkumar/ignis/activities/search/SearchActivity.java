@@ -24,6 +24,8 @@ import com.kunaalkumar.ignis.fragments.search.SearchIssueFragment;
 import com.kunaalkumar.ignis.fragments.search.SearchObjectFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -38,7 +40,7 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     @BindView(R.id.search_toolbar)
     Toolbar toolbar;
 
-    private static EditText searchBox;
+    private EditText searchBox;
 
     @BindView(R.id.search_back)
     ImageView backButton;
@@ -71,118 +73,43 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
 
         presenter.setUpViewPageAdapter(getSupportFragmentManager());
 
-        init();
-        appLinkCall();
+
+        searchBox = findViewById(R.id.search_searchBox);
+        presenter.initSearchBox();
+
+        presenter.handleIntent(getIntent());
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
         // Save character fragment instance
-        getSupportFragmentManager().putFragment(outState, "characterFragment", characterFragment);
+        presenter.saveState(getSupportFragmentManager(), outState);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
-        // Restore character fragment instance
-        characterFragment = (SearchCharacterFragment) getSupportFragmentManager().
-                getFragment(savedInstanceState, "characterFragment");
-    }
-
-    private void init() {
-
-        searchBox = findViewById(R.id.search_searchBox);
-
-        // Request focus on searchBox and pull up keyboard
-        searchBox.requestFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
-        // Listener for on "enter" pressed
-        searchBox.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() != KeyEvent.ACTION_DOWN)
-                    return true;
-                switch (i) {
-                    case KeyEvent.KEYCODE_ENTER:
-                        characterFragment.searchCall(SearchActivity.this,
-                                searchBox.getText().toString().trim(),
-                                true);
-                        keyboardState(false, null);
-                        viewPager.requestFocus();
-                        break;
-                }
-                return true;
-            }
-        });
-
-        searchBox.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // Called right before text is changed
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!TextUtils.isEmpty(searchBox.getText())) {
-                    clearButton.setVisibility(View.VISIBLE);
-                } else {
-                    clearButton.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                // Called right after text is changed
-            }
-        });
+        presenter.restoreState(getSupportFragmentManager(), savedInstanceState);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        appLinkCall();
-    }
-
-    // Handle app link
-    private void appLinkCall() {
-        Intent appLinkIntent = getIntent();
-        Uri appLinkData = appLinkIntent.getData();
-
-        if (appLinkData != null) {
-            searchBox.setText(appLinkData.getLastPathSegment().trim());
-            characterFragment.searchCall(SearchActivity.this,
-                    appLinkData.getLastPathSegment().trim(),
-                    true);
-        }
-    }
-
-    private void keyboardState(boolean state, View view) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (state) {
-            view.requestFocus();
-            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-        } else {
-            imm.hideSoftInputFromWindow(findViewById(R.id.search_parent_layout).getWindowToken(),
-                    0);
-        }
-
+        presenter.handleIntent(intent);
     }
 
     @OnClick(R.id.search_back)
     public void onSearchBackPressed(View view) {
-        keyboardState(false, null);
+        UIUtil.hideKeyboard(this);
         onBackPressed();
     }
 
     @OnClick(R.id.search_clear)
     public void onClearClick(View view) {
         searchBox.setText(null);
-        keyboardState(true, searchBox);
+        UIUtil.showKeyboard(view.getContext(), searchBox);
     }
 
     @Override
@@ -201,5 +128,15 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     @Override
     public TabLayout getTabLayout() {
         return tabLayout;
+    }
+
+    @Override
+    public ImageView getClearButton() {
+        return clearButton;
+    }
+
+    @Override
+    public EditText getSearchBox() {
+        return searchBox;
     }
 }

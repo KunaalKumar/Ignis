@@ -3,10 +3,11 @@ package com.kunaalkumar.ignis.activities.character;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
@@ -16,8 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.kunaalkumar.ignis.adapters.SearchCharacterAdapter.shareUrlIntent;
 
 public class CharacterActivity extends AppCompatActivity implements CharacterContract.MvpView {
 
@@ -35,6 +34,15 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
 
     @BindView(R.id.character_fab)
     FloatingActionButton fab;
+
+    @BindView(R.id.character_deck_text)
+    TextView deckText;
+
+    @BindView(R.id.character_deck_parent)
+    MaterialCardView deckParentLayout;
+
+    @BindView(R.id.character_deck_info)
+    ImageView deckInfoIcon;
 
     private CharacterPresenter presenter;
 
@@ -98,5 +106,20 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public ImageView getCharacterImage() {
         return characterImage;
+    }
+
+    @Override
+    public TextView getCharacterDeck() {
+        return deckText;
+    }
+
+    @Override
+    public MaterialCardView getCharacterDeckParentLayout() {
+        return deckParentLayout;
+    }
+
+    @Override
+    public ImageView getCharacterDeckInfo() {
+        return deckInfoIcon;
     }
 }

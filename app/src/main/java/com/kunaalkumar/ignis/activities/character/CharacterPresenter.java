@@ -38,6 +38,13 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     Activity activity;
     Intent intent;
 
+    // Drawables
+    Drawable shareDrawable;
+    Drawable infoDrawable;
+
+    // Information t0 be fetched from API
+    private String field_list = "name,site_detail_url,image,deck";
+
     private Character character;
 
 
@@ -49,6 +56,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
         view.getCollapsingToolbarLayout().setTitleEnabled(true);
         view.getCollapsingToolbarLayout().setExpandedTitleColor(Color.WHITE);
+
+        shareDrawable = activity.getResources().getDrawable(R.drawable.ic_share_24dp);
+        infoDrawable = activity.getResources().getDrawable(R.drawable.ic_info_24dp);
 
         showTitleOnCollapse();
     }
@@ -65,7 +75,6 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
-        String field_list = "name,site_detail_url,image";
         Call<ApiResponse<Character>> call = client.getCharacter(id, API_KEY,
                 FORMAT, field_list);
 
@@ -74,7 +83,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
             public void onResponse(Call<ApiResponse<Character>> call,
                                    Response<ApiResponse<Character>> response) {
                 character = response.body().getResults();
-
+                view.getCharacterDeck().setText(character.getDeck());
             }
 
             @Override
@@ -93,8 +102,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     @Override
     public void resetDrawableColors() {
-        Drawable mDrawable = activity.getResources().getDrawable(R.drawable.ic_share_24dp);
-        mDrawable.setColorFilter(null);
+        shareDrawable.setColorFilter(null);
+        infoDrawable.setColorFilter(null);
     }
 
     @Override
@@ -131,24 +140,40 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      * TODO: find a better name `-.-`
      */
     private void colorify(Palette p) {
+
+        // Title colors
         view.getCollapsingToolbarLayout().setExpandedTitleColor(
-                p
-                        .getVibrantColor(activity.getResources()
-                                .getColor(R.color.colorAccent)));
+                p.getVibrantColor(activity.getResources()
+                        .getColor(R.color.colorAccent)));
 
         view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(
-                p
-                        .getVibrantColor(activity.getResources()
-                                .getColor(R.color.colorAccent)));
+                p.getVibrantColor(activity.getResources()
+                        .getColor(R.color.colorAccent)));
 
-        Drawable mDrawable = activity.getResources().getDrawable(R.drawable.ic_share_24dp);
-        mDrawable.setTint(
-                p
-                        .getVibrantColor(activity.getResources()
-                                .getColor(R.color.colorAccent)));
+        // Fab colors
+        shareDrawable.setTint(
+                p.getVibrantColor(activity.getResources()
+                        .getColor(R.color.colorAccent)));
 
-        view.getFab().setImageDrawable(mDrawable);
+        view.getFab().setImageDrawable(shareDrawable);
         view.getFab().setBackgroundTintList(ColorStateList.valueOf(p.getDarkMutedColor(Color.WHITE)));
+
+        // Deck colors
+        view.getCharacterDeckParentLayout().setBackgroundColor(
+                p.getMutedColor(Color.WHITE));
+
+        view.getCharacterDeck().setTextColor(
+                p.getLightMutedColor(activity.getResources()
+                        .getColor(R.color.colorAccent)));
+        view.getCharacterDeck().setBackgroundColor(
+                p.getMutedColor(Color.WHITE));
+
+        infoDrawable.setTint(
+                p.getVibrantColor(activity.getResources()
+                        .getColor(R.color.colorAccent))
+        );
+
+        view.getCharacterDeckInfo().setImageDrawable(infoDrawable);
     }
 
     /**

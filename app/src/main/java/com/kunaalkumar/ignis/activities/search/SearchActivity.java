@@ -113,14 +113,6 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (newConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_YES) {
-            Toast.makeText(this, "keyboard hidden", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
     public ViewPager getViewPager() {
         return viewPager;
     }

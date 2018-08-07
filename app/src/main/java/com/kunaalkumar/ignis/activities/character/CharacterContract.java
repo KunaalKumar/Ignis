@@ -2,6 +2,7 @@ package com.kunaalkumar.ignis.activities.character;
 
 import android.content.Intent;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
@@ -10,6 +11,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 public interface CharacterContract {
 
@@ -31,6 +33,10 @@ public interface CharacterContract {
         TextView getCharacterDeck();
 
         ImageView getCharacterDeckInfo();
+
+        LinearLayout getCharacterInfoParent();
+
+        CoordinatorLayout getCharacterParent();
 
     }
 

@@ -3,6 +3,7 @@ package com.kunaalkumar.ignis.activities.character;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
@@ -14,6 +15,7 @@ import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,6 +45,12 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
 
     @BindView(R.id.character_deck_info)
     ImageView deckInfoIcon;
+
+    @BindView(R.id.character_info_parent)
+    LinearLayout infoParent;
+
+    @BindView(R.id.character_parent_layout)
+    CoordinatorLayout coordinatorLayout;
 
     private CharacterPresenter presenter;
 
@@ -121,5 +129,15 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public ImageView getCharacterDeckInfo() {
         return deckInfoIcon;
+    }
+
+    @Override
+    public LinearLayout getCharacterInfoParent() {
+        return infoParent;
+    }
+
+    @Override
+    public CoordinatorLayout getCharacterParent() {
+        return coordinatorLayout;
     }
 }

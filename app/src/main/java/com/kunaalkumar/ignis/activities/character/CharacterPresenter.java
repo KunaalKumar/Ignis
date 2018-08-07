@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     // Drawables
     Drawable shareDrawable;
     Drawable infoDrawable;
+    Drawable backDrawable;
 
     // Information t0 be fetched from API
     private String field_list = "name,site_detail_url,image,deck";
@@ -59,6 +61,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
         shareDrawable = activity.getResources().getDrawable(R.drawable.ic_share_24dp);
         infoDrawable = activity.getResources().getDrawable(R.drawable.ic_info_24dp);
+        backDrawable = activity.getResources().getDrawable(R.drawable.ic_arrow_back_24dp);
 
         showTitleOnCollapse();
     }
@@ -104,6 +107,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     public void resetDrawableColors() {
         shareDrawable.setColorFilter(null);
         infoDrawable.setColorFilter(null);
+        backDrawable.setColorFilter(null);
     }
 
     @Override
@@ -141,19 +145,26 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void colorify(Palette p) {
 
-        // Title colors
-        view.getCollapsingToolbarLayout().setExpandedTitleColor(
-                p.getVibrantColor(activity.getResources()
-                        .getColor(R.color.colorAccent)));
+        // Background color
+        view.getCharacterParent().setBackgroundColor(
+                p.getDarkMutedColor(Color.WHITE));
 
+        view.getCharacterInfoParent().setBackgroundColor(
+                p.getDarkMutedColor(Color.WHITE));
+
+        // Title colors
         view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(
                 p.getVibrantColor(activity.getResources()
                         .getColor(R.color.colorAccent)));
 
-        // Fab colors
-        shareDrawable.setTint(
+        backDrawable.setColorFilter(
                 p.getVibrantColor(activity.getResources()
-                        .getColor(R.color.colorAccent)));
+                        .getColor(R.color.colorAccent)), PorterDuff.Mode.SRC_ATOP);
+
+        // Fab colors
+        shareDrawable.setColorFilter(
+                p.getVibrantColor(activity.getResources()
+                        .getColor(R.color.colorAccent)), PorterDuff.Mode.SRC_ATOP);
 
         view.getFab().setImageDrawable(shareDrawable);
         view.getFab().setBackgroundTintList(ColorStateList.valueOf(p.getDarkMutedColor(Color.WHITE)));
@@ -168,10 +179,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         view.getCharacterDeck().setBackgroundColor(
                 p.getMutedColor(Color.WHITE));
 
-        infoDrawable.setTint(
+        infoDrawable.setColorFilter(
                 p.getVibrantColor(activity.getResources()
-                        .getColor(R.color.colorAccent))
-        );
+                        .getColor(R.color.colorAccent)), PorterDuff.Mode.SRC_ATOP);
 
         view.getCharacterDeckInfo().setImageDrawable(infoDrawable);
     }

@@ -24,6 +24,7 @@
         <item name="android:statusBarColor">@color/colorAccent</item>
         <item name="disabledColor">@color/gray</item>
         <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_24dp</item>
     </style>
 
     <style name="LightTheme.Translucent" parent="LightTheme.Common">
@@ -50,6 +51,7 @@
         <item name="disabledColor">@color/white</item>
         <item name="colorControlHighlight">#75ff6e40</item>
         <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_24dp</item>
     </style>
 
     <style name="DarkTheme.Translucent" parent="DarkTheme.Common">

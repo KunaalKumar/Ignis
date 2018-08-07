@@ -21,22 +21,42 @@ public interface CharacterContract {
 
         AppBarLayout getAppBarLayout();
 
-        CollapsingToolbarLayout getCollapsingToolbarLayout();
-
         FloatingActionButton getFab();
 
-        ImageView getCharacterImage();
+        ImageView getCharacterImageView();
 
-        // Deck
+        TextView getGeneralInformationTitle();
+
+        /**
+         * Layouts
+         */
+        CollapsingToolbarLayout getCollapsingToolbarLayout();
+
+        LinearLayout getCharacterInfoParentLayout();
+
+        CoordinatorLayout getCharacterParentLayout();
         MaterialCardView getCharacterDeckParentLayout();
 
-        TextView getCharacterDeck();
+        MaterialCardView getCharacterGeneralInformationParentLayout();
 
-        ImageView getCharacterDeckInfo();
+        /**
+         * Deck
+         */
+        TextView getDeckTitleView();
 
-        LinearLayout getCharacterInfoParent();
+        TextView getCharacterDeckView();
 
-        CoordinatorLayout getCharacterParent();
+        ImageView getCharacterDeckInfoView();
+
+
+        /**
+         * Real name
+         *
+         * @return
+         */
+        TextView getRealNameTitleView();
+
+        TextView getRealNameView();
 
     }
 

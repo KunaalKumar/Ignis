@@ -75,6 +75,8 @@
 
             <include layout="@layout/character_card_deck" />
 
+            <include layout="@layout/character_general_info" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

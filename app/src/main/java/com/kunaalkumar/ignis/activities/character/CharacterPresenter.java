@@ -45,7 +45,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     Drawable backDrawable;
 
     // Information t0 be fetched from API
-    private String field_list = "name,site_detail_url,image,deck";
+    private String field_list = "name,site_detail_url,image,deck,real_name";
 
     private Character character;
 
@@ -86,7 +86,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
             public void onResponse(Call<ApiResponse<Character>> call,
                                    Response<ApiResponse<Character>> response) {
                 character = response.body().getResults();
-                view.getCharacterDeck().setText(character.getDeck());
+
+                view.getCharacterDeckView().setText(character.getDeck());
+                view.getRealNameView().setText(character.getRealName());
             }
 
             @Override
@@ -123,14 +125,14 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     private void loadMainImage(final String urlStd, final String urlHD) {
         Picasso.get()
                 .load(urlHD)
-                .into(view.getCharacterImage(), new com.squareup.picasso.Callback.EmptyCallback() {
+                .into(view.getCharacterImageView(), new com.squareup.picasso.Callback.EmptyCallback() {
                     @Override
                     public void onSuccess() {
-                        Bitmap bitmap = ((BitmapDrawable) view.getCharacterImage().getDrawable()).getBitmap();
+                        Bitmap bitmap = ((BitmapDrawable) view.getCharacterImageView().getDrawable()).getBitmap();
 
                         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                             public void onGenerated(Palette p) {
-                                colorify(p);
+                                setViewColors(p);
                             }
                         });
 
@@ -141,16 +143,21 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
     /**
      * Add colors to entire UI
-     * TODO: find a better name `-.-`
      */
-    private void colorify(Palette p) {
+    private void setViewColors(Palette p) {
 
-        // Background color
-        view.getCharacterParent().setBackgroundColor(
+        // Background colors
+        view.getCharacterParentLayout().setBackgroundColor(
                 p.getDarkMutedColor(Color.WHITE));
 
-        view.getCharacterInfoParent().setBackgroundColor(
+        view.getCharacterInfoParentLayout().setBackgroundColor(
                 p.getDarkMutedColor(Color.WHITE));
+
+        view.getCharacterDeckParentLayout().setBackgroundColor(
+                p.getMutedColor(Color.WHITE));
+
+        view.getCharacterGeneralInformationParentLayout().setBackgroundColor(
+                p.getMutedColor(Color.WHITE));
 
         // Title colors
         view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(
@@ -161,6 +168,10 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 p.getVibrantColor(activity.getResources()
                         .getColor(R.color.colorAccent)), PorterDuff.Mode.SRC_ATOP);
 
+        view.getGeneralInformationTitle().setTextColor(
+                p.getLightMutedColor(activity.getResources()
+                        .getColor(R.color.colorAccent)));
+
         // Fab colors
         shareDrawable.setColorFilter(
                 p.getVibrantColor(activity.getResources()
@@ -170,20 +181,30 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         view.getFab().setBackgroundTintList(ColorStateList.valueOf(p.getDarkMutedColor(Color.WHITE)));
 
         // Deck colors
-        view.getCharacterDeckParentLayout().setBackgroundColor(
-                p.getMutedColor(Color.WHITE));
-
-        view.getCharacterDeck().setTextColor(
+        view.getDeckTitleView().setTextColor(
                 p.getLightMutedColor(activity.getResources()
                         .getColor(R.color.colorAccent)));
-        view.getCharacterDeck().setBackgroundColor(
+
+        view.getCharacterDeckView().setTextColor(
+                p.getLightMutedColor(activity.getResources()
+                        .getColor(R.color.colorAccent)));
+        view.getCharacterDeckView().setBackgroundColor(
                 p.getMutedColor(Color.WHITE));
 
         infoDrawable.setColorFilter(
                 p.getVibrantColor(activity.getResources()
                         .getColor(R.color.colorAccent)), PorterDuff.Mode.SRC_ATOP);
 
-        view.getCharacterDeckInfo().setImageDrawable(infoDrawable);
+        view.getCharacterDeckInfoView().setImageDrawable(infoDrawable);
+
+        // Real name colors
+        view.getRealNameTitleView().setTextColor(
+                p.getLightMutedColor(activity.getResources()
+                        .getColor(R.color.colorAccent)));
+
+        view.getRealNameView().setTextColor(
+                p.getLightMutedColor(activity.getResources()
+                        .getColor(R.color.colorAccent)));
     }
 
     /**

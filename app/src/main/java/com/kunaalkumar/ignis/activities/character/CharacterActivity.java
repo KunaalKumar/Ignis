@@ -22,35 +22,49 @@ import butterknife.OnClick;
 
 public class CharacterActivity extends AppCompatActivity implements CharacterContract.MvpView {
 
-    @BindView(R.id.character_image)
-    ImageView characterImage;
-
     @BindView(R.id.character_toolbar)
     Toolbar toolbar;
-
-    @BindView(R.id.character_appbar_layout)
-    AppBarLayout appBarLayout;
-
-    @BindView(R.id.character_collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbarLayout;
 
     @BindView(R.id.character_fab)
     FloatingActionButton fab;
 
-    @BindView(R.id.character_deck_text)
-    TextView deckText;
-
+    /**
+     * Layouts
+     */
+    @BindView(R.id.character_appbar_layout)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.character_collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.character_deck_parent)
     MaterialCardView deckParentLayout;
-
-    @BindView(R.id.character_deck_info)
-    ImageView deckInfoIcon;
-
-    @BindView(R.id.character_info_parent)
-    LinearLayout infoParent;
-
     @BindView(R.id.character_parent_layout)
     CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.character_info_parent)
+    LinearLayout infoParent;
+    @BindView(R.id.character_general_info_parent)
+    MaterialCardView generalInformationParentLayout;
+
+    /**
+     * Titles
+     */
+    @BindView(R.id.character_deck_title)
+    TextView deckTitle;
+    @BindView(R.id.character_gi_real_name_title)
+    TextView realNameTitle;
+    @BindView(R.id.character_gi_title)
+    TextView generalInfoTitle;
+
+    /**
+     * Information (to be populated)
+     */
+    @BindView(R.id.character_image)
+    ImageView characterImage;
+    @BindView(R.id.character_deck_text)
+    TextView deckText;
+    @BindView(R.id.character_deck_info)
+    ImageView deckInfoIcon;
+    @BindView(R.id.character_gi_real_name)
+    TextView realName;
 
     private CharacterPresenter presenter;
 
@@ -112,12 +126,12 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     }
 
     @Override
-    public ImageView getCharacterImage() {
+    public ImageView getCharacterImageView() {
         return characterImage;
     }
 
     @Override
-    public TextView getCharacterDeck() {
+    public TextView getCharacterDeckView() {
         return deckText;
     }
 
@@ -127,17 +141,42 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     }
 
     @Override
-    public ImageView getCharacterDeckInfo() {
+    public ImageView getCharacterDeckInfoView() {
         return deckInfoIcon;
     }
 
     @Override
-    public LinearLayout getCharacterInfoParent() {
+    public LinearLayout getCharacterInfoParentLayout() {
         return infoParent;
     }
 
     @Override
-    public CoordinatorLayout getCharacterParent() {
+    public CoordinatorLayout getCharacterParentLayout() {
         return coordinatorLayout;
+    }
+
+    @Override
+    public TextView getDeckTitleView() {
+        return deckTitle;
+    }
+
+    @Override
+    public TextView getRealNameTitleView() {
+        return realNameTitle;
+    }
+
+    @Override
+    public TextView getRealNameView() {
+        return realName;
+    }
+
+    @Override
+    public MaterialCardView getCharacterGeneralInformationParentLayout() {
+        return generalInformationParentLayout;
+    }
+
+    @Override
+    public TextView getGeneralInformationTitle() {
+        return generalInfoTitle;
     }
 }

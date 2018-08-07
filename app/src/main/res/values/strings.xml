@@ -29,4 +29,7 @@
     <string name="publisher_not_found">Publisher not found</string>
     <string name="Real_name_not_found">Real name not found</string>
     <string name="coming_soon">Coming soon...</string>
+    <string name="Deck">Deck</string>
+    <string name="General_Information">General Information</string>
+    <string name="Real_Name">Real Name</string>
 </resources>

@@ -148,16 +148,16 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
         // Background colors
         view.getCharacterParentLayout().setBackgroundColor(
-                p.getDarkMutedColor(Color.WHITE));
+                p.getMutedColor(Color.WHITE));
 
         view.getCharacterInfoParentLayout().setBackgroundColor(
-                p.getDarkMutedColor(Color.WHITE));
+                p.getMutedColor(Color.WHITE));
 
         view.getCharacterDeckParentLayout().setBackgroundColor(
-                p.getMutedColor(Color.WHITE));
+                p.getDarkMutedColor(Color.WHITE));
 
         view.getCharacterGeneralInformationParentLayout().setBackgroundColor(
-                p.getMutedColor(Color.WHITE));
+                p.getDarkMutedColor(Color.WHITE));
 
         // Title colors
         view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(
@@ -178,7 +178,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                         .getColor(R.color.colorAccent)), PorterDuff.Mode.SRC_ATOP);
 
         view.getFab().setImageDrawable(shareDrawable);
-        view.getFab().setBackgroundTintList(ColorStateList.valueOf(p.getDarkMutedColor(Color.WHITE)));
+        view.getFab().setBackgroundTintList(ColorStateList.valueOf(p.getDarkVibrantColor(Color.WHITE)));
 
         // Deck colors
         view.getDeckTitleView().setTextColor(
@@ -189,7 +189,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 p.getLightMutedColor(activity.getResources()
                         .getColor(R.color.colorAccent)));
         view.getCharacterDeckView().setBackgroundColor(
-                p.getMutedColor(Color.WHITE));
+                p.getDarkMutedColor(Color.WHITE));
 
         infoDrawable.setColorFilter(
                 p.getVibrantColor(activity.getResources()

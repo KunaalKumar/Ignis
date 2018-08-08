@@ -35,6 +35,7 @@ public interface CharacterContract {
         LinearLayout getCharacterInfoParentLayout();
 
         CoordinatorLayout getCharacterParentLayout();
+
         MaterialCardView getCharacterDeckParentLayout();
 
         MaterialCardView getCharacterGeneralInformationParentLayout();
@@ -48,15 +49,20 @@ public interface CharacterContract {
 
         ImageView getCharacterDeckInfoView();
 
-
         /**
          * Real name
-         *
-         * @return
          */
         TextView getRealNameTitleView();
 
         TextView getRealNameView();
+
+        /**
+         * Aliases
+         */
+        TextView getAliasesTitleView();
+
+        TextView getAliasesView();
+
 
     }
 

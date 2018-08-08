@@ -53,6 +53,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView realNameTitle;
     @BindView(R.id.character_gi_title)
     TextView generalInfoTitle;
+    @BindView(R.id.character_gi_aliases_title)
+    TextView aliasesTitle;
 
     /**
      * Information (to be populated)
@@ -65,6 +67,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     ImageView deckInfoIcon;
     @BindView(R.id.character_gi_real_name)
     TextView realName;
+    @BindView(R.id.character_gi_aliases)
+    TextView aliases;
 
     private CharacterPresenter presenter;
 
@@ -178,5 +182,15 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public TextView getGeneralInformationTitle() {
         return generalInfoTitle;
+    }
+
+    @Override
+    public TextView getAliasesTitleView() {
+        return aliasesTitle;
+    }
+
+    @Override
+    public TextView getAliasesView() {
+        return aliases;
     }
 }

@@ -45,7 +45,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     Drawable backDrawable;
 
     // Information t0 be fetched from API
-    private String field_list = "name,site_detail_url,image,deck,real_name";
+    private String field_list = "name,site_detail_url,image,deck,real_name,aliases";
 
     private Character character;
 
@@ -89,6 +89,16 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
                 view.getCharacterDeckView().setText(character.getDeck());
                 view.getRealNameView().setText(character.getRealName());
+
+                String[] aliases = character.getAliases().split("\\r?\\n");
+                if (aliases.length != 0) {
+                    view.getAliasesView().setText(null);
+                    for (String alias : aliases
+                            ) {
+                        view.getAliasesView().append(alias + "\n");
+
+                    }
+                }
             }
 
             @Override
@@ -203,6 +213,15 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                         .getColor(R.color.colorAccent)));
 
         view.getRealNameView().setTextColor(
+                p.getLightMutedColor(activity.getResources()
+                        .getColor(R.color.colorAccent)));
+
+        // Aliases
+        view.getAliasesTitleView().setTextColor(
+                p.getLightMutedColor(activity.getResources()
+                        .getColor(R.color.colorAccent)));
+
+        view.getAliasesView().setTextColor(
                 p.getLightMutedColor(activity.getResources()
                         .getColor(R.color.colorAccent)));
     }

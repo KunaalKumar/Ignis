@@ -32,4 +32,6 @@
     <string name="Deck">Deck</string>
     <string name="General_Information">General Information</string>
     <string name="Real_Name">Real Name</string>
+    <string name="Aliases">Aliases</string>
+    <string name="no_aliases">No aliases</string>
 </resources>

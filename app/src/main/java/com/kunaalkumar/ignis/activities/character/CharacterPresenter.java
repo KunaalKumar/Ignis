@@ -9,6 +9,8 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
@@ -145,7 +147,6 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                                 setViewColors(p);
                             }
                         });
-
                         super.onSuccess();
                     }
                 });
@@ -156,74 +157,80 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void setViewColors(Palette p) {
 
-        // Background colors
-        view.getCharacterParentLayout().setBackgroundColor(
-                p.getMutedColor(Color.WHITE));
 
-        view.getCharacterInfoParentLayout().setBackgroundColor(
-                p.getMutedColor(Color.WHITE));
+        // Card backgrounds
+        applyColorToLayoutBackgrounds(p.getDarkMutedColor(Color.WHITE), new View[]{
+                view.getCharacterGeneralInformationParentLayout(),
+                view.getCharacterDeckParentLayout()});
 
-        view.getCharacterDeckParentLayout().setBackgroundColor(
-                p.getDarkMutedColor(Color.WHITE));
+        // Parent backgrounds
+        applyColorToLayoutBackgrounds(p.getMutedColor(Color.WHITE), new View[]{
+                view.getCharacterParentLayout(),
+                view.getCharacterInfoParentLayout()
+        });
 
-        view.getCharacterGeneralInformationParentLayout().setBackgroundColor(
-                p.getDarkMutedColor(Color.WHITE));
+        // Drawables color filter
+        applyColorFilterToDrawables(p.getVibrantColor(activity.getResources()
+                .getColor(R.color.colorAccent)), new Drawable[]{
+                backDrawable,
+                shareDrawable,
+                infoDrawable
+        });
+
+        // Text colors
+        applyTextColorToTextViews(p.getLightMutedColor(Color.BLACK), new TextView[]{
+                view.getGeneralInformationTitle(),
+                view.getDeckTitleView(),
+                view.getCharacterDeckView(),
+                view.getRealNameTitleView(),
+                view.getRealNameView(),
+                view.getAliasesTitleView(),
+                view.getAliasesView()
+        });
 
         // Title colors
         view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(
                 p.getVibrantColor(activity.getResources()
                         .getColor(R.color.colorAccent)));
 
-        backDrawable.setColorFilter(
-                p.getVibrantColor(activity.getResources()
-                        .getColor(R.color.colorAccent)), PorterDuff.Mode.SRC_ATOP);
-
-        view.getGeneralInformationTitle().setTextColor(
-                p.getLightMutedColor(activity.getResources()
-                        .getColor(R.color.colorAccent)));
-
-        // Fab colors
-        shareDrawable.setColorFilter(
-                p.getVibrantColor(activity.getResources()
-                        .getColor(R.color.colorAccent)), PorterDuff.Mode.SRC_ATOP);
-
+        // Set drawables
         view.getFab().setImageDrawable(shareDrawable);
-        view.getFab().setBackgroundTintList(ColorStateList.valueOf(p.getDarkVibrantColor(Color.WHITE)));
-
-        // Deck colors
-        view.getDeckTitleView().setTextColor(
-                p.getLightMutedColor(activity.getResources()
-                        .getColor(R.color.colorAccent)));
-
-        view.getCharacterDeckView().setTextColor(
-                p.getLightMutedColor(activity.getResources()
-                        .getColor(R.color.colorAccent)));
-        view.getCharacterDeckView().setBackgroundColor(
-                p.getDarkMutedColor(Color.WHITE));
-
-        infoDrawable.setColorFilter(
-                p.getVibrantColor(activity.getResources()
-                        .getColor(R.color.colorAccent)), PorterDuff.Mode.SRC_ATOP);
-
         view.getCharacterDeckInfoView().setImageDrawable(infoDrawable);
 
-        // Real name colors
-        view.getRealNameTitleView().setTextColor(
-                p.getLightMutedColor(activity.getResources()
-                        .getColor(R.color.colorAccent)));
+        view.getFab().setBackgroundTintList(ColorStateList.valueOf(p.getDarkVibrantColor(Color.WHITE)));
 
-        view.getRealNameView().setTextColor(
-                p.getLightMutedColor(activity.getResources()
-                        .getColor(R.color.colorAccent)));
+    }
 
-        // Aliases
-        view.getAliasesTitleView().setTextColor(
-                p.getLightMutedColor(activity.getResources()
-                        .getColor(R.color.colorAccent)));
+    /**
+     * Apply given color to the background of layouts in the array
+     */
+    private void applyColorToLayoutBackgrounds(int color, View[] layouts) {
+        for (View layout : layouts
+                ) {
+            layout.setBackgroundColor(color);
+        }
+    }
 
-        view.getAliasesView().setTextColor(
-                p.getLightMutedColor(activity.getResources()
-                        .getColor(R.color.colorAccent)));
+    /**
+     * Apply given color to drawables in array
+     */
+    private void applyColorFilterToDrawables(int color, Drawable[] drawables) {
+        for (Drawable drawable : drawables
+                ) {
+            drawable.setColorFilter(
+                    color, PorterDuff.Mode.SRC_ATOP);
+
+        }
+    }
+
+    /**
+     * Apply given color to the text color of TextViews in the array
+     */
+    private void applyTextColorToTextViews(int color, TextView[] textViews) {
+        for (TextView textView : textViews
+                ) {
+            textView.setTextColor(color);
+        }
     }
 
     /**

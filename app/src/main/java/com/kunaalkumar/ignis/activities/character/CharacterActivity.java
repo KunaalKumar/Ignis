@@ -5,10 +5,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
@@ -55,6 +57,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView generalInfoTitle;
     @BindView(R.id.character_gi_aliases_title)
     TextView aliasesTitle;
+    @BindView(R.id.character_gi_publisher_title)
+    TextView publisherTitle;
 
     /**
      * Information (to be populated)
@@ -69,6 +73,9 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView realName;
     @BindView(R.id.character_gi_aliases)
     TextView aliases;
+    @BindView(R.id.character_gi_publisher)
+    Chip publisher;
+
 
     private CharacterPresenter presenter;
 
@@ -102,6 +109,11 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     public boolean onSupportNavigateUp() {
         super.onBackPressed();
         return true;
+    }
+
+    @OnClick(R.id.character_gi_publisher)
+    public void onClickPublisher(View view) {
+        Toast.makeText(this, "Publisher info coming later", Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.character_fab)
@@ -192,5 +204,15 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public TextView getAliasesView() {
         return aliases;
+    }
+
+    @Override
+    public TextView getPublisherTitleView() {
+        return publisherTitle;
+    }
+
+    @Override
+    public Chip getPublisherView() {
+        return publisher;
     }
 }

@@ -34,4 +34,6 @@
     <string name="Real_Name">Real Name</string>
     <string name="Aliases">Aliases</string>
     <string name="no_aliases">No aliases</string>
+    <string name="publisher">publisher</string>
+    <string name="Publisher">Publisher</string>
 </resources>

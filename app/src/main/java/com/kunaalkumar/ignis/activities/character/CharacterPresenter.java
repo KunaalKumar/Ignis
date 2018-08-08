@@ -47,7 +47,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     Drawable backDrawable;
 
     // Information t0 be fetched from API
-    private String field_list = "name,site_detail_url,image,deck,real_name,aliases";
+    private String field_list = "name,site_detail_url,image,deck,real_name,aliases,publisher";
 
     private Character character;
 
@@ -89,18 +89,33 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                                    Response<ApiResponse<Character>> response) {
                 character = response.body().getResults();
 
-                view.getCharacterDeckView().setText(character.getDeck());
-                view.getRealNameView().setText(character.getRealName());
+                // Init deck
+                if (character.getDeck() != null) {
+                    view.getCharacterDeckView().setText(null);
+                    view.getCharacterDeckView().setText(character.getDeck());
+                }
 
-                String[] aliases = character.getAliases().split("\\r?\\n");
-                if (aliases.length != 0) {
+                // Init real name
+                if (character.getRealName() != null) {
+                    view.getRealNameView().setText(character.getRealName());
+                }
+
+                // Init aliases
+                if (character.getAliases() != null) {
+                    String[] aliases = character.getAliases().split("\\r?\\n");
+
                     view.getAliasesView().setText(null);
                     for (String alias : aliases
-                            ) {
+                    ) {
                         view.getAliasesView().append(alias + "\n");
-
                     }
                 }
+
+                // Init publisher
+                if (character.getPublisher() != null) {
+                    view.getPublisherView().setText(character.getPublisher().getName());
+                }
+
             }
 
             @Override
@@ -177,6 +192,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 infoDrawable
         });
 
+        view.getPublisherView().setChipBackgroundColor(
+                ColorStateList.valueOf(p.getDarkVibrantColor(Color.WHITE)));
+
         // Text colors
         applyTextColorToTextViews(p.getLightMutedColor(Color.BLACK), new TextView[]{
                 view.getGeneralInformationTitle(),
@@ -185,7 +203,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 view.getRealNameTitleView(),
                 view.getRealNameView(),
                 view.getAliasesTitleView(),
-                view.getAliasesView()
+                view.getAliasesView(),
+                view.getPublisherTitleView(),
+                view.getPublisherView()
         });
 
         // Title colors
@@ -197,7 +217,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         view.getFab().setImageDrawable(shareDrawable);
         view.getCharacterDeckInfoView().setImageDrawable(infoDrawable);
 
-        view.getFab().setBackgroundTintList(ColorStateList.valueOf(p.getDarkVibrantColor(Color.WHITE)));
+        view.getFab().setBackgroundTintList(
+                ColorStateList.valueOf(p.getDarkVibrantColor(Color.WHITE)));
 
     }
 
@@ -206,7 +227,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void applyColorToLayoutBackgrounds(int color, View[] layouts) {
         for (View layout : layouts
-                ) {
+        ) {
             layout.setBackgroundColor(color);
         }
     }
@@ -216,7 +237,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void applyColorFilterToDrawables(int color, Drawable[] drawables) {
         for (Drawable drawable : drawables
-                ) {
+        ) {
             drawable.setColorFilter(
                     color, PorterDuff.Mode.SRC_ATOP);
 
@@ -228,7 +249,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void applyTextColorToTextViews(int color, TextView[] textViews) {
         for (TextView textView : textViews
-                ) {
+        ) {
             textView.setTextColor(color);
         }
     }

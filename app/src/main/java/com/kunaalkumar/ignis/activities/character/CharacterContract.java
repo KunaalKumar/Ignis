@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.widget.Toolbar;
@@ -62,6 +63,13 @@ public interface CharacterContract {
         TextView getAliasesTitleView();
 
         TextView getAliasesView();
+
+        /**
+         * Publisher
+         */
+        TextView getPublisherTitleView();
+
+        Chip getPublisherView();
 
 
     }

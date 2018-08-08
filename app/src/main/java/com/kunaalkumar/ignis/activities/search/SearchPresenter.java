@@ -89,6 +89,7 @@ public class SearchPresenter implements SearchContract.Presenter {
                         characterFragment.searchCall(activity,
                                 view.getSearchBox().getText().toString().trim(),
                                 true);
+                        view.getSearchBox().clearFocus();
                         view.getViewPager().requestFocus();
                         break;
                 }

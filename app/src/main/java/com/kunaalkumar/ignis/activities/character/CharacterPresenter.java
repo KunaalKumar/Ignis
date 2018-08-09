@@ -172,6 +172,10 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void setViewColors(Palette p) {
 
+        // Collapsed header and status bar color
+        activity.getWindow().setStatusBarColor(p.getDarkMutedColor(R.attr.backgroundColor));
+        view.getCollapsingToolbarLayout().setContentScrimColor(p.getDarkMutedColor(Color.WHITE));
+
         // Card backgrounds
         applyColorToLayoutBackgrounds(p.getDarkMutedColor(Color.WHITE), new View[]{
                 view.getCharacterGeneralInformationParentLayout(),
@@ -195,7 +199,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 ColorStateList.valueOf(p.getDarkVibrantColor(Color.WHITE)));
 
         // Text colors
-        applyTextColorToTextViews(p.getLightMutedColor(Color.BLACK), new TextView[]{
+        applyTextColorToTextViews(p.getLightVibrantColor(Color.BLACK), new TextView[]{
                 view.getGeneralInformationTitle(),
                 view.getDeckTitleView(),
                 view.getCharacterDeckView(),
@@ -209,7 +213,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
         // Title colors
         view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(
-                p.getVibrantColor(activity.getResources()
+                p.getLightVibrantColor(activity.getResources()
                         .getColor(R.color.colorAccent)));
 
         // Set drawables
@@ -272,6 +276,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                         if (scrollRange + verticalOffset == 0) {
                             view.getCollapsingToolbarLayout().setTitle(
                                     intent.getStringExtra(EXTRA_NAME));
+
                             isShow = true;
                         } else if (isShow) {
                             // There should a space between double quote otherwise it wont work

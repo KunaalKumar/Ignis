@@ -1,27 +1,14 @@
 package com.kunaalkumar.ignis.activities.search;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
-import com.kunaalkumar.ignis.fragments.search.SearchIssueFragment;
-import com.kunaalkumar.ignis.fragments.search.SearchObjectFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
@@ -72,7 +59,6 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
         presenter = new SearchPresenter(this);
 
         presenter.setUpViewPageAdapter(getSupportFragmentManager());
-
 
         searchBox = findViewById(R.id.search_searchBox);
         presenter.initSearchBox();

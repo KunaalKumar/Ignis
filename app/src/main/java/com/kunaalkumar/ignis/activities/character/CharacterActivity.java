@@ -93,6 +93,7 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
         presenter.searchCall(getIntent());
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

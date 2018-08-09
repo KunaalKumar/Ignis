@@ -19,7 +19,7 @@
             android:id="@+id/character_collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/backgroundColor"
+            android:backgroundTint="@color/colorAccent"
             app:expandedTitleTextAppearance="@style/Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 

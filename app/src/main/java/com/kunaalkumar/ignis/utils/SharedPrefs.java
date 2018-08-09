@@ -59,16 +59,10 @@ public class SharedPrefs {
 
     public static void applyTheme(Activity activity) {
 
-        if (activity instanceof SettingsActivity ||
-                activity instanceof CharacterActivity) {
-            if (SharedPrefs.getDarkThemeState()) {
-                activity.setTheme(R.style.DarkTheme_Translucent);
-            } else activity.setTheme(R.style.LightTheme_Translucent);
-        } else {
-            if (SharedPrefs.getDarkThemeState()) {
-                activity.setTheme(R.style.DarkTheme);
-            } else activity.setTheme(R.style.LightTheme);
-        }
+        if (SharedPrefs.getDarkThemeState()) {
+            activity.setTheme(R.style.DarkTheme);
+        } else activity.setTheme(R.style.LightTheme);
+
     }
 
     public static void addToFavoriteCharacters(Integer id) {

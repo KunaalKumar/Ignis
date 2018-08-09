@@ -172,7 +172,6 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void setViewColors(Palette p) {
 
-
         // Card backgrounds
         applyColorToLayoutBackgrounds(p.getDarkMutedColor(Color.WHITE), new View[]{
                 view.getCharacterGeneralInformationParentLayout(),

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
+    android:fitsSystemWindows="true"
+    app:layout_optimizationLevel="standard"
     tools:context=".activities.main.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
         android:layout_margin="0dp"
         android:backgroundTint="?attr/toolbarColor"
         android:elevation="0dp"
@@ -19,80 +21,67 @@
         app:contentInsetEnd="0dp"
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:contentInsetStart="0dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="top|center">
 
             <ImageView
                 android:id="@+id/search"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="?attr/actionBarSize"
-                android:padding="8dp"
-                android:paddingStart="16dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="16dp"
                 android:src="@drawable/ic_search_24dp"
-                android:tooltipText="search"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:tooltipText="search" />
 
             <ImageView
                 android:id="@+id/app_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:cropToPadding="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
                 android:padding="10dp"
                 android:src="@drawable/ic_launcher"
-                android:tooltipText="Ignis"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:tooltipText="Ignis" />
 
             <ImageView
                 android:id="@+id/settings"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:contentDescription="settings"
-                android:padding="8dp"
-                android:paddingEnd="16dp"
+                android:padding="16dp"
                 android:src="@drawable/ic_settings_24dp"
-                android:tooltipText="settings"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:tooltipText="settings" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/frame_fragmentholder"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/main_bottom_navigation"
+        android:layout_below="@id/my_toolbar"
+        android:layout_centerInParent="true" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_bottom_navigation"
         style="@style/Widget.MaterialComponents.BottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:background="?attr/backgroundColor"
-        android:clickable="true"
         app:elevation="8dp"
         app:itemIconTint="@xml/bottom_navigation_colors"
         app:itemTextColor="@xml/bottom_navigation_colors"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

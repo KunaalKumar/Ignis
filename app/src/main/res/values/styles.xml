@@ -27,11 +27,6 @@
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_24dp</item>
     </style>
 
-    <style name="LightTheme.Translucent" parent="LightTheme.Common">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-    </style>
-
     <!-- Dark application theme. -->
     <style name="DarkTheme" parent="DarkTheme.Common" />
 
@@ -52,11 +47,6 @@
         <item name="colorControlHighlight">#75ff6e40</item>
         <item name="colorControlNormal">@color/colorAccent</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_24dp</item>
-    </style>
-
-    <style name="DarkTheme.Translucent" parent="DarkTheme.Common">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="Title" parent="TextAppearance.AppCompat.Title">

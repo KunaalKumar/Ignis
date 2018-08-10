@@ -111,19 +111,23 @@
             android:textAlignment="center"
             android:textStyle="bold" />
 
-        <com.google.android.material.chip.Chip
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/character_gi_publisher"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/character_gi_aliases"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="63dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="43dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="16dp"
+            android:padding="8dp"
+            android:insetLeft="10dp"
+            android:insetRight="10dp"
             android:layout_toEndOf="@+id/character_gi_publisher_title"
+            android:clickable="true"
             android:fontFamily="@font/open_sans"
             android:text="@string/publisher_not_found"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            app:cornerRadius="15dp" />
 
 
     </RelativeLayout>

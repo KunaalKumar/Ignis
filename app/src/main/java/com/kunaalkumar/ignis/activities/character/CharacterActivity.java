@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -74,7 +75,7 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @BindView(R.id.character_gi_aliases)
     TextView aliases;
     @BindView(R.id.character_gi_publisher)
-    Chip publisher;
+    MaterialButton publisher;
 
 
     private CharacterPresenter presenter;
@@ -98,6 +99,13 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+    }
+
+    @Override
+    protected void onPause() {
+        getWindow().getDecorView().
+                setSystemUiVisibility(0);
+        super.onPause();
     }
 
     @Override
@@ -213,7 +221,7 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     }
 
     @Override
-    public Chip getPublisherView() {
+    public MaterialButton getPublisherView() {
         return publisher;
     }
 }

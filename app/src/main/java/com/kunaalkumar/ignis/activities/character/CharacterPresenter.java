@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         backDrawable = activity.getResources().getDrawable(R.drawable.ic_arrow_back_24dp);
 
         showTitleOnCollapse();
+
+        activity.getWindow().getDecorView().
+                setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     // Retrofit call to search character for given id
@@ -160,6 +164,10 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                             public void onGenerated(Palette p) {
                                 setViewColors(p);
+
+                                // Set drawables
+                                view.getFab().setImageDrawable(shareDrawable);
+                                view.getCharacterDeckInfoView().setImageDrawable(infoDrawable);
                             }
                         });
                         super.onSuccess();
@@ -173,34 +181,31 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     private void setViewColors(Palette p) {
 
         // Collapsed header and status bar color
-        activity.getWindow().setStatusBarColor(p.getDarkMutedColor(R.attr.backgroundColor));
-        view.getCollapsingToolbarLayout().setContentScrimColor(p.getDarkMutedColor(Color.WHITE));
+        activity.getWindow().setStatusBarColor(p.getLightVibrantColor(R.attr.backgroundColor));
+        activity.getWindow().setNavigationBarColor(p.getLightVibrantColor(R.attr.backgroundColor));
+        view.getCollapsingToolbarLayout().setContentScrimColor(p.getLightVibrantColor(Color.WHITE));
 
         // Card backgrounds
-        applyColorToLayoutBackgrounds(p.getDarkMutedColor(Color.WHITE), new View[]{
+        applyColorToLayoutBackgrounds(p.getDarkMutedColor(Color.BLACK), new View[]{
                 view.getCharacterGeneralInformationParentLayout(),
                 view.getCharacterDeckParentLayout()});
 
         // Parent backgrounds
-        applyColorToLayoutBackgrounds(p.getMutedColor(Color.WHITE), new View[]{
+        applyColorToLayoutBackgrounds(p.getMutedColor(Color.BLACK), new View[]{
                 view.getCharacterParentLayout(),
                 view.getCharacterInfoParentLayout()
         });
 
         // Drawables color filter
-        applyColorFilterToDrawables(p.getVibrantColor(activity.getResources()
+        applyColorFilterToDrawables(p.getDarkMutedColor(activity.getResources()
                 .getColor(R.color.white)), new Drawable[]{
                 backDrawable,
                 shareDrawable,
                 infoDrawable
         });
 
-        // Chip
-        view.getPublisherView().setChipBackgroundColor(
-                ColorStateList.valueOf(p.getDarkVibrantColor(Color.WHITE)));
-
         // Text colors
-        applyTextColorToTextViews(p.getLightVibrantColor(Color.BLACK), new TextView[]{
+        applyTextColorToTextViews(p.getLightMutedColor(Color.WHITE), new TextView[]{
                 view.getGeneralInformationTitle(),
                 view.getDeckTitleView(),
                 view.getCharacterDeckView(),
@@ -214,16 +219,19 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
         // Title colors
         view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(
-                p.getLightVibrantColor(activity.getResources()
+                p.getDarkMutedColor(activity.getResources()
                         .getColor(R.color.colorAccent)));
 
-        // Set drawables
-        view.getFab().setImageDrawable(shareDrawable);
-        view.getCharacterDeckInfoView().setImageDrawable(infoDrawable);
+        // Button backgrounds
+        applyBackgroundColorToButtons(p.getLightVibrantColor(Color.WHITE), new View[]{
+                view.getFab(),
+                view.getPublisherView()
+        });
 
-        view.getFab().setBackgroundTintList(
-                ColorStateList.valueOf(p.getDarkVibrantColor(Color.WHITE)));
-
+        // Button text color
+        applyTextColorToButtons(p.getDarkMutedColor(Color.WHITE), new Button[]{
+                view.getPublisherView()
+        });
     }
 
     /**
@@ -255,6 +263,28 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         for (TextView textView : textViews
         ) {
             textView.setTextColor(color);
+        }
+    }
+
+    /**
+     * Apply given color to the background of views in the array
+     */
+    private void applyBackgroundColorToButtons(int color, View[] views) {
+        for (View view : views
+        ) {
+            view.setBackgroundTintList(
+                    ColorStateList.valueOf(color));
+        }
+    }
+
+    /**
+     * Apply given color to the text of buttons in the array
+     */
+    private void applyTextColorToButtons(int color, Button[] buttons) {
+        for (Button button : buttons
+        ) {
+            button.setTextColor(
+                    ColorStateList.valueOf(color));
         }
     }
 

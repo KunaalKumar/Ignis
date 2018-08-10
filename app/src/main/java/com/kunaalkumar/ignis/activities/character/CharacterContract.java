@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -69,7 +70,7 @@ public interface CharacterContract {
          */
         TextView getPublisherTitleView();
 
-        Chip getPublisherView();
+        MaterialButton getPublisherView();
 
 
     }

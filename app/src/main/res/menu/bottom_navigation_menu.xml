@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bottom_navigation_news"
-        android:icon="@drawable/ic_news_24dp"
+        android:icon="@drawable/ic_whatshot_blue_grey_900_24dp"
         android:title="News" />
 
     <item
         android:id="@+id/bottom_navigation_favorites"
-        android:icon="@drawable/ic_favorite_24dp"
+        android:icon="@drawable/ic_favorite_border_blue_grey_900_24dp"
         android:title="Favorites" />
 
     <item
         android:id="@+id/bottom_navigation_random"
-        android:icon="@drawable/ic_explore_24dp"
+        android:icon="@drawable/ic_explore_blue_grey_900_24dp"
         android:title="Random" />
 </menu>

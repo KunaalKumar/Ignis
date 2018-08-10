@@ -189,12 +189,13 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
         // Drawables color filter
         applyColorFilterToDrawables(p.getVibrantColor(activity.getResources()
-                .getColor(R.color.colorAccent)), new Drawable[]{
+                .getColor(R.color.white)), new Drawable[]{
                 backDrawable,
                 shareDrawable,
                 infoDrawable
         });
 
+        // Chip
         view.getPublisherView().setChipBackgroundColor(
                 ColorStateList.valueOf(p.getDarkVibrantColor(Color.WHITE)));
 

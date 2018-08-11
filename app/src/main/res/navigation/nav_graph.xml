@@ -8,5 +8,22 @@
         android:id="@+id/mainFragment"
         android:name="com.kunaalkumar.ignis.activities.main.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/toSettings"
+            app:destination="@id/settingsActivity" />
+        <action
+            android:id="@+id/toSearch"
+            app:destination="@id/searchActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.kunaalkumar.ignis.activities.settings.SettingsActivity"
+        android:label="activity_settings"
+        tools:layout="@layout/activity_settings" />
+    <activity
+        android:id="@+id/searchActivity"
+        android:name="com.kunaalkumar.ignis.activities.search.SearchActivity"
+        android:label="activity_search"
+        tools:layout="@layout/activity_search" />
 </navigation>

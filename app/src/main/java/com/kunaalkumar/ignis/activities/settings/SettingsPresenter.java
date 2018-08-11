@@ -92,7 +92,6 @@ public class SettingsPresenter implements SettingsContract.Presenter {
      */
     private void restartOnThemeChanged() {
         CHANGED = true;
-        ((Activity) view).setResult(RESULT_OK, null);
         ((Activity) view).finish();
         ((Activity) view).startActivity(new Intent((Activity) view, SettingsActivity.class));
     }

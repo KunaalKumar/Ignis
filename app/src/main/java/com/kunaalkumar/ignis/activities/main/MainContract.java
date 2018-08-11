@@ -34,8 +34,6 @@ public interface MainContract {
 
     interface Presenter {
 
-        void handleChangeTheme(int requestCode, int resultCode, Intent data);
-
         void initBottomNavigationBar(BottomNavigationView bottomNavigationView);
 
         void handleIntent(Intent intent);

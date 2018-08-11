@@ -1,15 +1,12 @@
 package com.kunaalkumar.ignis.activities.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kunaalkumar.ignis.BuildConfig;
 import com.kunaalkumar.ignis.R;
 
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Responsible for handling actions from the view and updating the UI as required
@@ -36,15 +33,6 @@ public class MainPresenter implements MainContract.Presenter {
 
     public MainPresenter(MainContract.MvpView view) {
         this.view = view;
-    }
-
-    @Override
-    public void handleChangeTheme(int requestCode, int resultCode, Intent data) {
-        if (requestCode == EXIT) {
-            if (resultCode == RESULT_OK) {
-                ((Activity) view).finish();
-            }
-        }
     }
 
     @Override

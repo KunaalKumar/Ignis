@@ -16,7 +16,6 @@ import static android.app.Activity.RESULT_OK;
  */
 public class MainPresenter implements MainContract.Presenter {
 
-    public static FirebaseAnalytics mFirebaseAnalytics;
 
     // Request code
     public static final Integer EXIT = 100;
@@ -37,8 +36,6 @@ public class MainPresenter implements MainContract.Presenter {
 
     public MainPresenter(MainContract.MvpView view) {
         this.view = view;
-
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance((Activity) view);
     }
 
     @Override

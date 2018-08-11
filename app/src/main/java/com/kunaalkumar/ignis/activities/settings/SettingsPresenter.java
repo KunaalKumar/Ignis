@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.LicenseActivity;
-import com.kunaalkumar.ignis.activities.main.MainActivity;
+import com.kunaalkumar.ignis.MainActivity;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 import static android.app.Activity.RESULT_OK;

@@ -20,7 +20,7 @@
         android:shortcutShortLabel="@string/favorite">
         <intent
             android:action="com.kunaalkumar.ignis.shortcut.favorite"
-            android:targetClass="com.kunaalkumar.ignis.activities.main.MainActivity"
+            android:targetClass="com.kunaalkumar.ignis.MainActivity"
             android:targetPackage="com.kunaalkumar.ignis" />
     </shortcut>
 
@@ -32,7 +32,7 @@
         android:shortcutShortLabel="@string/random">
         <intent
             android:action="com.kunaalkumar.ignis.shortcut.random"
-            android:targetClass="com.kunaalkumar.ignis.activities.main.MainActivity"
+            android:targetClass="com.kunaalkumar.ignis.MainActivity"
             android:targetPackage="com.kunaalkumar.ignis" />
     </shortcut>
 

@@ -3,6 +3,7 @@ package com.kunaalkumar.ignis.activities.main;
 import android.content.Intent;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.kunaalkumar.ignis.MainActivity;
 import com.kunaalkumar.ignis.fragments.FavoritesFragment;
 import com.kunaalkumar.ignis.fragments.NewsFragment;
 import com.kunaalkumar.ignis.fragments.RandomFragment;

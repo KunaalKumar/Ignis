@@ -30,7 +30,7 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
-        <activity android:name=".activities.main.MainActivity" />
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -41,7 +41,7 @@
         <activity
             android:name=".activities.search.SearchActivity"
             android:launchMode="singleTask"
-            android:parentActivityName=".activities.main.MainActivity">
+            android:parentActivityName=".MainActivity">
             <tools:validation testUrl="http://kunaalkumar.com/search/batman" />
 
             <intent-filter android:autoVerify="true">

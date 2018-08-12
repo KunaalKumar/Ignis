@@ -249,8 +249,10 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         });
 
         // Apply colors to relations
+
         applyColorToRelations(p.getLightVibrantColor(Color.WHITE), p.getDarkMutedColor(Color.GRAY),
                 creatorAdapter.buttons);
+
     }
 
     /**

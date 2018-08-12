@@ -24,7 +24,12 @@ public class RelationAdapter extends
     public ArrayList<Button> buttons;
 
     public RelationAdapter(Relation[] creators) {
-        this.creators = creators;
+        if (creators.length == 0) {
+            this.creators = new Relation[]{
+                    new Relation("Unknown", 0, "Unknown", "Unknown")};
+        } else {
+            this.creators = creators;
+        }
         buttons = new ArrayList<>();
     }
 
@@ -36,7 +41,7 @@ public class RelationAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RelationViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RelationViewHolder holder, final int position) {
 
         // Add button to list
         buttons.add(holder.button);
@@ -46,9 +51,15 @@ public class RelationAdapter extends
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),
-                        "Creator info coming later",
-                        Toast.LENGTH_LONG).show();
+                if (creators[position].getName().equals("Unknown")) {
+                    Toast.makeText(v.getContext(),
+                            "Unknown",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(v.getContext(),
+                            "Info coming later",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

@@ -19,6 +19,7 @@ import com.kunaalkumar.ignis.utils.SharedPrefs;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -58,6 +59,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView aliasesTitle;
     @BindView(R.id.character_gi_publisher_title)
     TextView publisherTitle;
+    @BindView(R.id.character_gi_creators_title)
+    TextView creatorsTitle;
 
     /**
      * Information (to be populated)
@@ -74,6 +77,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView aliases;
     @BindView(R.id.character_gi_publisher)
     MaterialButton publisher;
+    @BindView(R.id.character_gi_creators)
+    RecyclerView creators;
 
 
     private CharacterPresenter presenter;
@@ -216,5 +221,15 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public MaterialButton getPublisherView() {
         return publisher;
+    }
+
+    @Override
+    public TextView getCreatorsTitleView() {
+        return creatorsTitle;
+    }
+
+    @Override
+    public RecyclerView getCreatorsRecyclerView() {
+        return creators;
     }
 }

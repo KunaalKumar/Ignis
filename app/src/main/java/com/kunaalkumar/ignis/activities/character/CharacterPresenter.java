@@ -16,13 +16,20 @@ import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.adapters.CharacterCreatorAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
+import com.kunaalkumar.ignis.comicvine_objects.misc.Relation;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import androidx.palette.graphics.Palette;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,9 +55,12 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     Drawable backDrawable;
 
     // Information t0 be fetched from API
-    private String field_list = "name,site_detail_url,image,deck,real_name,aliases,publisher";
+    private String field_list = "name,site_detail_url,image,deck,real_name,aliases,publisher,creators";
 
     private Character character;
+
+    private RecyclerView creatorRecylerView;
+    private CharacterCreatorAdapter creatorAdapter;
 
 
     public CharacterPresenter(CharacterContract.MvpView view, Intent intent) {
@@ -118,6 +128,14 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 // Init publisher
                 if (character.getPublisher() != null) {
                     view.getPublisherView().setText(character.getPublisher().getName());
+                }
+
+                // Init creator
+                if (character.getCreators() != null) {
+                    creatorAdapter = new CharacterCreatorAdapter(character.getCreators());
+                    creatorRecylerView = view.getCreatorsRecyclerView();
+                    creatorRecylerView.setAdapter(creatorAdapter);
+                    creatorRecylerView.setLayoutManager(new LinearLayoutManager(activity));
                 }
 
             }
@@ -213,7 +231,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 view.getAliasesTitleView(),
                 view.getAliasesView(),
                 view.getPublisherTitleView(),
-                view.getPublisherView()
+                view.getPublisherView(),
+                view.getCreatorsTitleView()
         });
 
         // Title colors

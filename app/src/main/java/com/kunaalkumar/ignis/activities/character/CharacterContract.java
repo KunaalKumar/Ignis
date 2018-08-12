@@ -14,6 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 public interface CharacterContract {
 
@@ -69,6 +70,12 @@ public interface CharacterContract {
         TextView getPublisherTitleView();
 
         MaterialButton getPublisherView();
+
+        /**
+         * Creators
+         */
+        TextView getCreatorsTitleView();
+        RecyclerView getCreatorsRecyclerView();
 
 
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/character_general_info_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -128,15 +129,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/character_gi_publisher"
-            android:layout_alignBaseline="@id/character_gi_creators_title"
             android:layout_alignStart="@id/character_gi_publisher"
             android:layout_alignEnd="@id/character_gi_publisher"
-            android:clickable="true"
-            android:fontFamily="@font/open_sans"
-            android:padding="8dp"
             android:text="@string/publisher_not_found"
-            android:textAlignment="center"
-            app:cornerRadius="15dp" />
+            tools:listitem="@layout/view_character_creators" />
 
 
     </RelativeLayout>

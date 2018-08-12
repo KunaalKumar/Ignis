@@ -16,16 +16,14 @@ import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.adapters.CharacterCreatorAdapter;
+import com.kunaalkumar.ignis.adapters.RelationAdapter;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
-import com.kunaalkumar.ignis.comicvine_objects.misc.Relation;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,7 +58,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     private Character character;
 
     private RecyclerView creatorRecylerView;
-    private CharacterCreatorAdapter creatorAdapter;
+    private RelationAdapter creatorAdapter;
 
 
     public CharacterPresenter(CharacterContract.MvpView view, Intent intent) {
@@ -132,7 +130,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
                 // Init creator
                 if (character.getCreators() != null) {
-                    creatorAdapter = new CharacterCreatorAdapter(character.getCreators());
+                    creatorAdapter = new RelationAdapter(character.getCreators());
                     creatorRecylerView = view.getCreatorsRecyclerView();
                     creatorRecylerView.setAdapter(creatorAdapter);
                     creatorRecylerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -223,7 +221,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         });
 
         // Text colors
-        applyTextColorToTextViews(p.getLightMutedColor(Color.WHITE), new TextView[]{
+        applyTextColorToTextViews(p.getLightMutedColor(Color.GRAY), new TextView[]{
                 view.getDeckTitleView(),
                 view.getCharacterDeckView(),
                 view.getRealNameTitleView(),
@@ -243,13 +241,16 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         // Button backgrounds
         applyBackgroundColorToButtons(p.getLightVibrantColor(Color.WHITE), new View[]{
                 view.getFab(),
+                view.getPublisherView()});
+
+        // Button text color
+        applyTextColorToButtons(p.getDarkMutedColor(Color.GRAY), new Button[]{
                 view.getPublisherView()
         });
 
-        // Button text color
-        applyTextColorToButtons(p.getDarkMutedColor(Color.WHITE), new Button[]{
-                view.getPublisherView()
-        });
+        // Apply colors to relations
+        applyColorToRelations(p.getLightVibrantColor(Color.WHITE), p.getDarkMutedColor(Color.GRAY),
+                creatorAdapter.buttons);
     }
 
     /**
@@ -287,10 +288,10 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     /**
      * Apply given color to the background of views in the array
      */
-    private void applyBackgroundColorToButtons(int color, View[] views) {
-        for (View view : views
+    private void applyBackgroundColorToButtons(int color, Object[] views) {
+        for (Object view : views
         ) {
-            view.setBackgroundTintList(
+            ((View) view).setBackgroundTintList(
                     ColorStateList.valueOf(color));
         }
     }
@@ -303,6 +304,18 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         ) {
             button.setTextColor(
                     ColorStateList.valueOf(color));
+        }
+    }
+
+    /**
+     * Apply given colors to the text and background of each relation button
+     */
+    private void applyColorToRelations(int bgColor, int textColor, ArrayList<Button> buttons) {
+        for (Button button : buttons
+        ) {
+            button.setBackgroundTintList(
+                    ColorStateList.valueOf(bgColor));
+            button.setTextColor(textColor);
         }
     }
 

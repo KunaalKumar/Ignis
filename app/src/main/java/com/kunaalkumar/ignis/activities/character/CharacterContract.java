@@ -27,8 +27,6 @@ public interface CharacterContract {
 
         ImageView getCharacterImageView();
 
-        TextView getGeneralInformationTitle();
-
         /**
          * Layouts
          */

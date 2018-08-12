@@ -54,8 +54,6 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView deckTitle;
     @BindView(R.id.character_gi_real_name_title)
     TextView realNameTitle;
-    @BindView(R.id.character_gi_title)
-    TextView generalInfoTitle;
     @BindView(R.id.character_gi_aliases_title)
     TextView aliasesTitle;
     @BindView(R.id.character_gi_publisher_title)
@@ -198,11 +196,6 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public MaterialCardView getCharacterGeneralInformationParentLayout() {
         return generalInformationParentLayout;
-    }
-
-    @Override
-    public TextView getGeneralInformationTitle() {
-        return generalInfoTitle;
     }
 
     @Override

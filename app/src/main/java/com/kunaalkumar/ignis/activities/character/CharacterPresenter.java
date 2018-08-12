@@ -206,7 +206,6 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
         // Text colors
         applyTextColorToTextViews(p.getLightMutedColor(Color.WHITE), new TextView[]{
-                view.getGeneralInformationTitle(),
                 view.getDeckTitleView(),
                 view.getCharacterDeckView(),
                 view.getRealNameTitleView(),

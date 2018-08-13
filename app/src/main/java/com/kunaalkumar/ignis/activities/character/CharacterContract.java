@@ -14,6 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public interface CharacterContract {
@@ -27,6 +28,8 @@ public interface CharacterContract {
         FloatingActionButton getFab();
 
         ImageView getCharacterImageView();
+
+        NestedScrollView getNestedScrollView();
 
         /**
          * Layouts

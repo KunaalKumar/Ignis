@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.kunaalkumar.ignis.R;
@@ -16,6 +17,7 @@ import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +46,12 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     @BindView(R.id.search_parent_layout)
     CoordinatorLayout coordinatorLayout;
 
+    @BindView(R.id.search_history_view)
+    RecyclerView searchHistory;
+
+    @BindView(R.id.search_results_view)
+    RelativeLayout searchResults;
+
     private SearchPresenter presenter;
 
     @Override
@@ -64,6 +72,13 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
         presenter.initSearchBox();
 
         presenter.handleIntent(getIntent());
+
+        searchBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                presenter.handleSearchBoxFocus(v, hasFocus);
+            }
+        });
     }
 
     @Override
@@ -116,5 +131,15 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     @Override
     public EditText getSearchBox() {
         return searchBox;
+    }
+
+    @Override
+    public RecyclerView getSearchHistoryView() {
+        return searchHistory;
+    }
+
+    @Override
+    public RelativeLayout getSearchResultsView() {
+        return searchResults;
     }
 }

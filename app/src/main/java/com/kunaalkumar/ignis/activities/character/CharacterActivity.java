@@ -19,6 +19,7 @@ import com.kunaalkumar.ignis.utils.SharedPrefs;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +32,9 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
 
     @BindView(R.id.character_fab)
     FloatingActionButton fab;
+
+    @BindView(R.id.character_nestedScrollView)
+    NestedScrollView nestedScrollView;
 
     /**
      * Layouts
@@ -270,5 +274,10 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public TextView getGenderView() {
         return gender;
+    }
+
+    @Override
+    public NestedScrollView getNestedScrollView() {
+        return nestedScrollView;
     }
 }

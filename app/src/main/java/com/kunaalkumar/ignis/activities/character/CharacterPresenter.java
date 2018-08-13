@@ -138,6 +138,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 // Init gender
                 view.getGenderView().setText(character.getGender());
 
+                // Show character information now that it's loaded
+                view.getNestedScrollView().setVisibility(View.VISIBLE);
+
                 loadMainImage(urlStd, urlHD);
 
             }

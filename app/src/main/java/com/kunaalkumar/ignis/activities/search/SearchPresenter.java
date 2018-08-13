@@ -11,14 +11,17 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.kunaalkumar.ignis.adapters.SearchHistoryAdapter;
 import com.kunaalkumar.ignis.adapters.ViewPageAdapter;
 import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
 import com.kunaalkumar.ignis.fragments.search.SearchIssueFragment;
 import com.kunaalkumar.ignis.fragments.search.SearchObjectFragment;
+import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class SearchPresenter implements SearchContract.Presenter {
 
@@ -32,11 +35,19 @@ public class SearchPresenter implements SearchContract.Presenter {
     private SearchIssueFragment issueFragment;
     private SearchObjectFragment objectFragment;
 
+    private SearchHistoryAdapter historyAdapter;
+
     ViewPageAdapter viewPageAdapter;
 
     public SearchPresenter(SearchContract.MvpView view) {
         this.view = view;
         this.activity = (Activity) view;
+
+        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), activity);
+        view.getSearchHistoryView().setAdapter(historyAdapter);
+        view.getSearchHistoryView().setLayoutManager(new LinearLayoutManager(activity));
+
+        showHistory(true);
     }
 
     public void setUpViewPageAdapter(FragmentManager fragmentManager) {
@@ -130,6 +141,24 @@ public class SearchPresenter implements SearchContract.Presenter {
                     appLinkData.getLastPathSegment().trim(),
                     true);
         }
+    }
 
+    @Override
+    public void handleSearchBoxFocus(View v, boolean hasFocus) {
+        if (hasFocus) {
+            showHistory(true);
+        } else {
+            showHistory(false);
+        }
+    }
+
+    private void showHistory(boolean show) {
+        if (show) {
+            view.getSearchHistoryView().setVisibility(View.VISIBLE);
+            view.getSearchResultsView().setVisibility(View.GONE);
+        } else {
+            view.getSearchHistoryView().setVisibility(View.GONE);
+            view.getSearchResultsView().setVisibility(View.VISIBLE);
+        }
     }
 }

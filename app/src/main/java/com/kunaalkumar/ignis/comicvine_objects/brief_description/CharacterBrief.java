@@ -47,8 +47,8 @@ public class CharacterBrief extends Brief {
         return firstAppearedInIssue;
     }
 
-    public Integer getGender() {
-        return gender;
+    public String getGender() {
+        return gender == 1 ? "Male" : "Female";
     }
 
     public OriginBrief getOriginBrief() {

@@ -53,7 +53,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     Drawable backDrawable;
 
     // Information t0 be fetched from API
-    private String field_list = "name,site_detail_url,image,deck,real_name,aliases,publisher,creators";
+    private String field_list = "name,site_detail_url,image,deck,real_name,aliases,publisher,creators,gender";
 
     private Character character;
 
@@ -134,6 +134,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                     creatorRecylerView.setAdapter(creatorAdapter);
                     creatorRecylerView.setLayoutManager(new LinearLayoutManager(activity));
                 }
+
+                // Init gender
+                view.getGenderView().setText(character.getGender());
 
                 loadMainImage(urlStd, urlHD);
 
@@ -234,7 +237,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 view.getAliasesView(),
                 view.getPublisherTitleView(),
                 view.getPublisherView(),
-                view.getCreatorsTitleView()
+                view.getCreatorsTitleView(),
+                view.getGenderTitleView(),
+                view.getGenderView()
         });
 
         // Title colors

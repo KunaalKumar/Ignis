@@ -71,6 +71,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView publisherTitle;
     @BindView(R.id.character_gi_creators_title)
     TextView creatorsTitle;
+    @BindView(R.id.character_gi_gender_title)
+    TextView genderTitle;
 
     /**
      * Information (to be populated)
@@ -89,6 +91,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     MaterialButton publisher;
     @BindView(R.id.character_gi_creators)
     RecyclerView creators;
+    @BindView(R.id.character_gi_gender)
+    TextView gender;
 
 
     private CharacterPresenter presenter;
@@ -256,5 +260,15 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public MaterialCardView getComicInfoParentLayout() {
         return comicInfoParentLayout;
+    }
+
+    @Override
+    public TextView getGenderTitleView() {
+        return genderTitle;
+    }
+
+    @Override
+    public TextView getGenderView() {
+        return gender;
     }
 }

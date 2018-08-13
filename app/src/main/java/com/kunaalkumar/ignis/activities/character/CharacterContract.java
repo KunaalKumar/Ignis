@@ -89,6 +89,13 @@ public interface CharacterContract {
 
         RecyclerView getCreatorsRecyclerView();
 
+        /**
+         * Gender
+         */
+        TextView getGenderTitleView();
+
+        TextView getGenderView();
+
 
     }
 

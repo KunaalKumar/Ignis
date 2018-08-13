@@ -37,4 +37,5 @@
     <string name="publisher">publisher</string>
     <string name="Publisher">Publisher</string>
     <string name="Comic_Information">Comic Information</string>
+    <string name="gender">Gender</string>
 </resources>

@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     ViewPager viewPager;
 
     @BindView(R.id.search_parent_layout)
-    CoordinatorLayout coordinatorLayout;
+    RelativeLayout coordinatorLayout;
 
     @BindView(R.id.search_history_view)
     RecyclerView searchHistory;

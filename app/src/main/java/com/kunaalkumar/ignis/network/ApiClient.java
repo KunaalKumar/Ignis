@@ -68,64 +68,65 @@ public interface ApiClient {
     Call<ApiResponse<CharacterBrief[]>> searchCharacters(@Query("filter") String filter,
                                                          @Query("api_key") String apiKey,
                                                          @Query("format") String format,
-                                                         @Query("page") Integer page,
-                                                         @Query("field_list") String field_list);
+                                                         @Query("offset") Integer page,
+                                                         @Query("field_list") String field_list,
+                                                         @Query("limit") Integer limit);
 
     // General origin search
     @GET("origins/")
     Call<ApiResponse<OriginBrief>> searchOrigins(@Query("filter") String filter,
                                                  @Query("api_key") String apiKey,
                                                  @Query("format") String format,
-                                                 @Query("page") Integer page);
+                                                 @Query("offset") Integer page);
 
     // General object search
     @GET("objects/")
     Call<ApiResponse<ObjectBrief>> searchObjects(@Query("filter") String filter,
                                                  @Query("api_key") String apiKey,
                                                  @Query("format") String format,
-                                                 @Query("page") Integer page);
+                                                 @Query("offset") Integer page);
 
     // General location search
     @GET("locations/")
     Call<ApiResponse<LocationBrief>> searchLocations(@Query("filter") String filter,
                                                      @Query("api_key") String apiKey,
                                                      @Query("format") String format,
-                                                     @Query("page") Integer page);
+                                                     @Query("offset") Integer page);
 
     // General issue search
     @GET("issues/")
     Call<ApiResponse<IssueBrief>> searchIssues(@Query("filter") String filter,
                                                @Query("api_key") String apiKey,
                                                @Query("format") String format,
-                                               @Query("page") Integer page);
+                                               @Query("offset") Integer page);
 
     // General story arc search
     @GET("story_arcs/")
     Call<ApiResponse<StoryArcBrief>> searchStoryArcs(@Query("filter") String filter,
                                                      @Query("api_key") String apiKey,
                                                      @Query("format") String format,
-                                                     @Query("page") Integer page);
+                                                     @Query("offset") Integer page);
 
     // General volume search
     @GET("volume/")
     Call<ApiResponse<VolumeBrief>> searchVolumes(@Query("filter") String filter,
                                                  @Query("api_key") String apiKey,
                                                  @Query("format") String format,
-                                                 @Query("page") Integer page);
+                                                 @Query("offset") Integer page);
 
     // General publisher search
     @GET("publisher/")
     Call<ApiResponse<PublisherBrief>> searchPublishers(@Query("filter") String filter,
                                                        @Query("api_key") String apiKey,
                                                        @Query("format") String format,
-                                                       @Query("page") Integer page);
+                                                       @Query("offset") Integer page);
 
     // General people search
     @GET("people/")
     Call<ApiResponse<PeopleBrief>> searchPeople(@Query("filter") String filter,
                                                 @Query("api_key") String apiKey,
                                                 @Query("format") String format,
-                                                @Query("page") Integer page);
+                                                @Query("offset") Integer page);
 
 
       /*

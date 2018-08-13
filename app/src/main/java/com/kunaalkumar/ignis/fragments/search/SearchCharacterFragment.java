@@ -49,6 +49,7 @@ public class SearchCharacterFragment extends Fragment {
     ProgressBar progressBar;
 
     private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
     private SearchCharacterAdapter adapter;
 
     private Integer pageNumber;
@@ -69,6 +70,7 @@ public class SearchCharacterFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         recyclerView = view.findViewById(R.id.search_character_recycler_view);
+        layoutManager = new LinearLayoutManager(getActivity());
 
         showLoadingState(false);
 
@@ -128,10 +130,10 @@ public class SearchCharacterFragment extends Fragment {
      */
     public void searchCall(final Activity activity, final String query, final boolean isNewCall) {
         if (isNewCall) {
-            pageNumber = 1;
+            pageNumber = 0;
             showLoadingState(true);
         } else {
-            pageNumber++;
+            pageNumber += 10;
         }
 
         if (recyclerView != null) {
@@ -147,7 +149,8 @@ public class SearchCharacterFragment extends Fragment {
                 API_KEY,
                 FORMAT,
                 pageNumber,
-                field_list);
+                field_list,
+                10);
 
         call.enqueue(new Callback<ApiResponse<CharacterBrief[]>>() {
             @Override
@@ -159,7 +162,7 @@ public class SearchCharacterFragment extends Fragment {
                 }
 
                 if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
-                    if (pageNumber == 1) {
+                    if (isNewCall) {
                         adapter = new SearchCharacterAdapter((SearchActivity) getActivity(), peekAndPop, query);
                         recyclerView.setAdapter(adapter);
 
@@ -168,14 +171,20 @@ public class SearchCharacterFragment extends Fragment {
                         recyclerView.setItemViewCacheSize(20);
                         recyclerView.setDrawingCacheEnabled(true);
                         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
                         adapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
-                        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                        recyclerView.setLayoutManager(layoutManager);
 
                     } else {
                         adapter.searchResults.addAll(Arrays.asList(response.body().getResults()));
                         adapter.notifyDataSetChanged();
                     }
+
+                    System.out.print("");
+                    // Attach scroll listener if more to load
+                    attachOnScrollListener(query,
+                            response.body().getNumberOfPageResults() + pageNumber,
+                            response.body().getNumberOfTotalResults());
+
                 } else {
                     if (adapter == null) {
                         textView.setVisibility(View.VISIBLE);
@@ -195,17 +204,28 @@ public class SearchCharacterFragment extends Fragment {
         });
     }
 
-    private void attachOnScrollListener(final String query) {
+    private void attachOnScrollListener(final String query, final int numResults, final int numTotal) {
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (!recyclerView.canScrollVertically(1)) {
-                    Toast.makeText(getActivity(), "Last item", Toast.LENGTH_LONG).show();
-                    searchCall(getActivity(), query, false);
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+                if (pastVisibleItems + visibleItemCount >= totalItemCount) {
+                    //End of list
+                    if (numResults ==
+                            numTotal) {
+                        Toast.makeText(getActivity(), "No more to load", Toast.LENGTH_LONG).show();
+                        recyclerView.removeOnScrollListener(this);
+                    } else {
+                        Toast.makeText(getActivity(), "Loading more", Toast.LENGTH_LONG).show();
+                        searchCall(getActivity(), query, false);
+                        recyclerView.removeOnScrollListener(this);
+                    }
                 }
             }
         });
+
     }
 }

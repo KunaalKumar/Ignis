@@ -47,12 +47,22 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     LinearLayout infoParent;
     @BindView(R.id.character_general_info_parent)
     MaterialCardView generalInformationParentLayout;
+    @BindView(R.id.character_comic_info_parent)
+    MaterialCardView comicInfoParentLayout;
+
+    /**
+     * Card titles
+     */
+    @BindView(R.id.character_deck_title)
+    TextView deckTitle;
+    @BindView(R.id.character_gi_title)
+    TextView generalInfoTitle;
+    @BindView(R.id.character_comic_title)
+    TextView comicInfoTitle;
 
     /**
      * Titles
      */
-    @BindView(R.id.character_deck_title)
-    TextView deckTitle;
     @BindView(R.id.character_gi_real_name_title)
     TextView realNameTitle;
     @BindView(R.id.character_gi_aliases_title)
@@ -231,5 +241,20 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public RecyclerView getCreatorsRecyclerView() {
         return creators;
+    }
+
+    @Override
+    public TextView getGeneralInfoTitleView() {
+        return generalInfoTitle;
+    }
+
+    @Override
+    public TextView getComicInfoTitleView() {
+        return comicInfoTitle;
+    }
+
+    @Override
+    public MaterialCardView getComicInfoParentLayout() {
+        return comicInfoParentLayout;
     }
 }

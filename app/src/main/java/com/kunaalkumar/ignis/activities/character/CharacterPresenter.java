@@ -88,7 +88,6 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
         final String urlStd = intent.getStringExtra(EXTRA_URL_STD);
         final String urlHD = intent.getStringExtra(EXTRA_URL_HD);
-        loadMainImage(urlStd, urlHD);
 
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
@@ -135,6 +134,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                     creatorRecylerView.setAdapter(creatorAdapter);
                     creatorRecylerView.setLayoutManager(new LinearLayoutManager(activity));
                 }
+
+                loadMainImage(urlStd, urlHD);
 
             }
 
@@ -204,7 +205,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         // Card backgrounds
         applyColorToLayoutBackgrounds(p.getDarkMutedColor(Color.BLACK), new View[]{
                 view.getCharacterGeneralInformationParentLayout(),
-                view.getCharacterDeckParentLayout()});
+                view.getCharacterDeckParentLayout(),
+                view.getComicInfoParentLayout()});
 
         // Parent backgrounds
         applyColorToLayoutBackgrounds(p.getMutedColor(Color.BLACK), new View[]{
@@ -223,6 +225,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         // Text colors
         applyTextColorToTextViews(p.getLightMutedColor(Color.GRAY), new TextView[]{
                 view.getDeckTitleView(),
+                view.getGeneralInfoTitleView(),
+                view.getComicInfoTitleView(),
                 view.getCharacterDeckView(),
                 view.getRealNameTitleView(),
                 view.getRealNameView(),
@@ -249,7 +253,6 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         });
 
         // Apply colors to relations
-
         applyColorToRelations(p.getLightVibrantColor(Color.WHITE), p.getDarkMutedColor(Color.GRAY),
                 creatorAdapter.buttons);
 

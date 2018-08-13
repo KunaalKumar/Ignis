@@ -41,10 +41,21 @@ public interface CharacterContract {
 
         MaterialCardView getCharacterGeneralInformationParentLayout();
 
+        MaterialCardView getComicInfoParentLayout();
+
+        /**
+         * Titles
+         */
+
+        TextView getDeckTitleView();
+
+        TextView getGeneralInfoTitleView();
+
+        TextView getComicInfoTitleView();
+
         /**
          * Deck
          */
-        TextView getDeckTitleView();
 
         TextView getCharacterDeckView();
 
@@ -75,6 +86,7 @@ public interface CharacterContract {
          * Creators
          */
         TextView getCreatorsTitleView();
+
         RecyclerView getCreatorsRecyclerView();
 
 

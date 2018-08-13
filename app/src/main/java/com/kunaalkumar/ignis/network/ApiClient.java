@@ -69,8 +69,7 @@ public interface ApiClient {
                                                          @Query("api_key") String apiKey,
                                                          @Query("format") String format,
                                                          @Query("page") Integer page,
-                                                         @Query("field_list") String field_list,
-                                                         @Query("limit") Integer limit);
+                                                         @Query("field_list") String field_list);
 
     // General origin search
     @GET("origins/")

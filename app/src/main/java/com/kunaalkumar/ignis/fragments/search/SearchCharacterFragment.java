@@ -129,11 +129,10 @@ public class SearchCharacterFragment extends Fragment {
     public void searchCall(final Activity activity, final String query, final boolean isNewCall) {
         if (isNewCall) {
             pageNumber = 1;
+            showLoadingState(true);
         } else {
             pageNumber++;
         }
-
-        showLoadingState(true);
 
         if (recyclerView != null) {
             recyclerView.requestFocus();
@@ -148,8 +147,7 @@ public class SearchCharacterFragment extends Fragment {
                 API_KEY,
                 FORMAT,
                 pageNumber,
-                field_list,
-                10);
+                field_list);
 
         call.enqueue(new Callback<ApiResponse<CharacterBrief[]>>() {
             @Override

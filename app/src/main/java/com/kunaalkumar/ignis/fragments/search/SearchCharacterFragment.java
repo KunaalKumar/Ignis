@@ -57,7 +57,7 @@ public class SearchCharacterFragment extends Fragment {
     View view;
 
     public SearchCharacterFragment() {
-
+        // Required empty constructor
     }
 
     @Nullable
@@ -70,13 +70,12 @@ public class SearchCharacterFragment extends Fragment {
         recyclerView = view.findViewById(R.id.search_character_recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
 
-        showLoadingState(false);
+        showLoadingState(true);
 
         initPeekAndPop();
 
         return view;
     }
-
 
     private void initPeekAndPop() {
         // Basic init for peekAndPop
@@ -95,9 +94,10 @@ public class SearchCharacterFragment extends Fragment {
                 recyclerView.setVisibility(View.GONE);
             }
         } else {
-            if (textView != null && progressBar != null) {
+            if (textView != null && progressBar != null && recyclerView != null) {
                 textView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -153,10 +153,7 @@ public class SearchCharacterFragment extends Fragment {
             @Override
             public void onResponse(Call<ApiResponse<CharacterBrief[]>> call, Response<ApiResponse<CharacterBrief[]>> response) {
 
-                if (progressBar != null && recyclerView != null) {
-                    progressBar.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
+                showLoadingState(false);
 
                 if (response.body().getError().equals("OK") && response.body().getNumberOfPageResults() != 0) {
                     if (isNewCall) {

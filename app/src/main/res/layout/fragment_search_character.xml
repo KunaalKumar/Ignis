@@ -18,11 +18,11 @@
         android:id="@+id/search_character_empty_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="?attr/headingTextColor"
         android:gravity="center_horizontal"
         android:padding="16dp"
         android:text="@string/Search_for_something"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="?attr/headingTextColor"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView

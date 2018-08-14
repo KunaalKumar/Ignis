@@ -1,6 +1,5 @@
 package com.kunaalkumar.ignis.fragments.search;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,10 +16,7 @@ import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
-import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
-
-import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.util.Arrays;
 
@@ -135,13 +131,16 @@ public class SearchCharacterFragment extends Fragment {
         if (isNewCall) {
             pageNumber = 0;
             showLoadingState(true);
+            if (adapter != null) {
+                recyclerView.clearOnScrollListeners();
+            }
         } else {
             pageNumber += 10;
         }
 
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
-        String filter = "name:" + query.toString();
+        String filter = "name:" + query;
         String field_list = "name,real_name,publisher,image,id";
         Call<ApiResponse<CharacterBrief[]>> call = client.searchCharacters(filter,
                 API_KEY,
@@ -214,10 +213,10 @@ public class SearchCharacterFragment extends Fragment {
                     //End of list
                     if (numResults ==
                             numTotal) {
-                        Toast.makeText(getActivity(), "No more to load", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "No more to load", Toast.LENGTH_SHORT).show();
                         recyclerView.removeOnScrollListener(this);
                     } else {
-                        Toast.makeText(getActivity(), "Loading more", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Loading more", Toast.LENGTH_SHORT).show();
                         searchCall(query, false);
                         recyclerView.removeOnScrollListener(this);
                     }

@@ -98,6 +98,8 @@ public class SearchPresenter implements SearchContract.Presenter {
                     case KeyEvent.KEYCODE_ENTER:
                         searchCall(view.getSearchBox().getText().toString().trim());
                         break;
+                    case KeyEvent.KEYCODE_BACK:
+                        activity.onBackPressed();
                 }
                 return true;
             }

@@ -16,7 +16,6 @@ import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -105,6 +104,11 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     public void onSearchBackPressed(View view) {
         UIUtil.hideKeyboard(this);
         onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @OnClick(R.id.search_clear)

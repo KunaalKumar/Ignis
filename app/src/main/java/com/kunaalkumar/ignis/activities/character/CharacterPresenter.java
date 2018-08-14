@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import androidx.core.graphics.ColorUtils;
 import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -221,33 +223,71 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void setViewColors(Palette p) {
 
+        int headerBg;
+        // Used for character title and back as well
+        int buttonBg;
+        int cardBg;
+        int parentBg;
+        int textColor;
+        int headerElementsColor;
+
+        headerBg = p.getLightVibrantColor(R.attr.backgroundColor);
+        buttonBg = p.getVibrantColor(Color.BLACK);
+        cardBg = p.getLightVibrantColor(Color.WHITE);
+        parentBg = p.getMutedColor(Color.BLACK);
+        textColor = p.getDarkMutedColor(Color.BLACK);
+        headerElementsColor = p.getVibrantColor(Color.BLACK);
+
+        // Buttonbg (!) headbg
+
+        /**
+         * Potential clashes
+         *
+         * headerElementsColor and headerBg
+         */
+
+        if ((doColorsClash(headerElementsColor, headerBg))) {
+            if (isColorDark(headerBg)) {
+                headerElementsColor = p.getLightVibrantColor(Color.WHITE);
+            } else {
+                headerElementsColor = p.getMutedColor(Color.BLACK);
+            }
+        }
+
         // Collapsed header and status bar color
-        activity.getWindow().setStatusBarColor(p.getLightVibrantColor(R.attr.backgroundColor));
-        activity.getWindow().setNavigationBarColor(p.getLightVibrantColor(R.attr.backgroundColor));
-        view.getCollapsingToolbarLayout().setContentScrimColor(p.getLightVibrantColor(Color.WHITE));
+        activity.getWindow().setStatusBarColor(headerBg);
+        activity.getWindow().setNavigationBarColor(headerBg);
+        view.getCollapsingToolbarLayout().setContentScrimColor(headerBg);
 
         // Card backgrounds
-        applyColorToLayoutBackgrounds(p.getDarkMutedColor(Color.BLACK), new View[]{
+        applyColorToLayoutBackgrounds(cardBg, new View[]{
                 view.getCharacterGeneralInformationParentLayout(),
                 view.getCharacterDeckParentLayout(),
                 view.getComicInfoParentLayout()});
 
         // Parent backgrounds
-        applyColorToLayoutBackgrounds(p.getMutedColor(Color.BLACK), new View[]{
+        applyColorToLayoutBackgrounds(parentBg, new View[]{
                 view.getCharacterParentLayout(),
                 view.getCharacterInfoParentLayout()
         });
 
         // Drawables color filter
-        applyColorFilterToDrawables(p.getDarkMutedColor(activity.getResources()
-                .getColor(R.color.white)), new Drawable[]{
-                backDrawable,
-                shareDrawable,
-                infoDrawable
+        applyColorFilterToDrawables(textColor, new Drawable[]{
+                infoDrawable,
+                shareDrawable
         });
 
+        applyColorFilterToDrawables(headerElementsColor, new Drawable[]{
+                backDrawable
+        });
+
+        // Character Title colors
+        view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(
+                headerElementsColor);
+
+
         // Text colors
-        applyTextColorToTextViews(p.getLightMutedColor(Color.GRAY), new TextView[]{
+        applyTextColorToTextViews(textColor, new TextView[]{
                 view.getDeckTitleView(),
                 view.getGeneralInfoTitleView(),
                 view.getComicInfoTitleView(),
@@ -266,26 +306,37 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 view.getBirthdayView()
         });
 
-        // Title colors
-        view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(
-                p.getDarkMutedColor(activity.getResources()
-                        .getColor(R.color.colorAccent)));
-
         // Button backgrounds
-        applyBackgroundColorToButtons(p.getLightVibrantColor(Color.WHITE), new View[]{
+        applyBackgroundColorToButtons(buttonBg, new View[]{
                 view.getFab(),
                 view.getPublisherView(),
                 view.getOriginView()});
 
         // Button text color
-        applyTextColorToButtons(p.getDarkMutedColor(Color.GRAY), new Button[]{
+        applyTextColorToButtons(textColor, new Button[]{
                 view.getPublisherView(),
                 view.getOriginView()
         });
 
         // Apply colors to relations
-        applyColorToRelations(p.getLightVibrantColor(Color.WHITE), p.getDarkMutedColor(Color.GRAY),
+        applyColorToRelations(buttonBg, textColor,
                 creatorAdapter.buttons);
+    }
+
+    /**
+     * Check if two given colors clash
+     * Contrast must be less than 1.30 for them to clash
+     */
+    private boolean doColorsClash(int color1, int color2) {
+        double contrast = ColorUtils.calculateContrast(color1, color2);
+        return contrast - 1 <= 0.30;
+    }
+
+    /**
+     * Check if given color is dark
+     */
+    private boolean isColorDark(int color) {
+        return ColorUtils.calculateLuminance(color) < 0.5;
     }
 
     /**

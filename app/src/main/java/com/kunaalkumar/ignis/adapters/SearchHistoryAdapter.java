@@ -9,7 +9,11 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.kunaalkumar.ignis.R;
+import com.kunaalkumar.ignis.activities.search.SearchPresenter;
+import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
+
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.util.ArrayList;
 
@@ -23,11 +27,11 @@ import static net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyb
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryViewHolder> {
 
     public ArrayList<String> searchHistory;
-    public Activity activity;
+    public SearchPresenter presenter;
 
-    public SearchHistoryAdapter(ArrayList<String> searchHistory, Activity activity) {
+    public SearchHistoryAdapter(ArrayList<String> searchHistory, SearchPresenter presenter) {
         this.searchHistory = searchHistory;
-        this.activity = activity;
+        this.presenter = presenter;
     }
 
     @NonNull
@@ -38,12 +42,12 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchHistoryViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final SearchHistoryViewHolder holder, final int position) {
         holder.searchText.setText(searchHistory.get(position));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hideKeyboard(activity);
+                presenter.searchCall(searchHistory.get(position));
             }
         });
 

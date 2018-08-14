@@ -43,9 +43,9 @@ public class SearchPresenter implements SearchContract.Presenter {
         this.view = view;
         this.activity = (Activity) view;
 
-        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), activity);
-        view.getSearchHistoryView().setAdapter(historyAdapter);
-        view.getSearchHistoryView().setLayoutManager(new LinearLayoutManager(activity));
+        characterFragment = new SearchCharacterFragment();
+        issueFragment = new SearchIssueFragment();
+        objectFragment = new SearchObjectFragment();
 
         showHistory(true);
     }
@@ -54,13 +54,13 @@ public class SearchPresenter implements SearchContract.Presenter {
 
         viewPageAdapter = new ViewPageAdapter(fragmentManager);
 
-        characterFragment = new SearchCharacterFragment();
-        issueFragment = new SearchIssueFragment();
-        objectFragment = new SearchObjectFragment();
-
         viewPageAdapter.addFragment(characterFragment, SearchCharacterFragment.TITLE);
         viewPageAdapter.addFragment(issueFragment, SearchIssueFragment.TITLE);
         viewPageAdapter.addFragment(objectFragment, SearchObjectFragment.TITLE);
+
+        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), this);
+        view.getSearchHistoryView().setAdapter(historyAdapter);
+        view.getSearchHistoryView().setLayoutManager(new LinearLayoutManager(activity));
 
         // Keeps all fragments in memory
         view.getViewPager().setOffscreenPageLimit(viewPageAdapter.getCount());
@@ -96,12 +96,7 @@ public class SearchPresenter implements SearchContract.Presenter {
                     return true;
                 switch (i) {
                     case KeyEvent.KEYCODE_ENTER:
-                        UIUtil.hideKeyboard(activity, view.getSearchBox());
-                        characterFragment.searchCall(activity,
-                                view.getSearchBox().getText().toString().trim(),
-                                true);
-                        view.getSearchBox().clearFocus();
-                        view.getViewPager().requestFocus();
+                        searchCall(view.getSearchBox().getText().toString().trim());
                         break;
                 }
                 return true;
@@ -130,16 +125,28 @@ public class SearchPresenter implements SearchContract.Presenter {
         });
     }
 
+    public void searchCall(String query) {
+
+        SharedPrefs.addToSearchHistory(query);
+        historyAdapter.searchHistory = SharedPrefs.getSearchHistory();
+        historyAdapter.notifyDataSetChanged();
+
+        view.getSearchBox().setText(query.trim());
+        UIUtil.hideKeyboard(activity, view.getSearchBox());
+        characterFragment.searchCall(query,
+                true);
+        view.getSearchBox().clearFocus();
+        view.getViewPager().requestFocus();
+    }
+
     // Handle app link
     @Override
     public void handleIntent(Intent intent) {
         Uri appLinkData = intent.getData();
 
         if (appLinkData != null) {
-            view.getSearchBox().setText(appLinkData.getLastPathSegment().trim());
-            characterFragment.searchCall(activity,
-                    appLinkData.getLastPathSegment().trim(),
-                    true);
+            searchCall(
+                    appLinkData.getLastPathSegment().trim());
         }
     }
 

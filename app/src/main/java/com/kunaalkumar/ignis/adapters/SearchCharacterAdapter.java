@@ -41,11 +41,9 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public static final String EXTRA_NAME = "com.kunaalkumar.ignis.NAME";
 
     private static final int VIEW_TYPE_BANNER = 0;
-    private static final int VIEW_TYPE_COVER = 1;
 
     public ArrayList<CharacterBrief> searchResults;
     public String currentQuery;
-    private static String[] bannerViewTypes = new String[]{"character", "team", "person"};
     private SearchActivity activity;
     private PeekAndPop peekAndPop;
     private ImageView peekImageView;
@@ -200,9 +198,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         final CharacterBrief searchResult = searchResults.get(position);
 
-        switch (holder.getItemViewType())
-
-        {
+        switch (holder.getItemViewType()) {
             // Case: is Banner View
             case VIEW_TYPE_BANNER:
                 initBanner((BannerViewHolder) holder, position, searchResult);

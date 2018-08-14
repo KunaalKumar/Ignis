@@ -20,6 +20,8 @@ import com.kunaalkumar.ignis.network.ClientInstance;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
+
 import java.util.Arrays;
 
 import androidx.annotation.NonNull;
@@ -128,7 +130,8 @@ public class SearchCharacterFragment extends Fragment {
      * Retrofit call to search for word in superheroSearch
      * Make sure to init query variable before calling this
      */
-    public void searchCall(final Activity activity, final String query, final boolean isNewCall) {
+    public void searchCall(final String query, final boolean isNewCall) {
+
         if (isNewCall) {
             pageNumber = 0;
             showLoadingState(true);
@@ -136,11 +139,6 @@ public class SearchCharacterFragment extends Fragment {
             pageNumber += 10;
         }
 
-        if (recyclerView != null) {
-            recyclerView.requestFocus();
-        }
-
-        SharedPrefs.addToSearchHistory(query);
         Retrofit retrofit = ClientInstance.getClient();
         ApiClient client = retrofit.create(ApiClient.class);
         String filter = "name:" + query.toString();
@@ -220,7 +218,7 @@ public class SearchCharacterFragment extends Fragment {
                         recyclerView.removeOnScrollListener(this);
                     } else {
                         Toast.makeText(getActivity(), "Loading more", Toast.LENGTH_LONG).show();
-                        searchCall(getActivity(), query, false);
+                        searchCall(query, false);
                         recyclerView.removeOnScrollListener(this);
                     }
                 }

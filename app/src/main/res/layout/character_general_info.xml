@@ -32,7 +32,7 @@
             android:layout_alignParentStart="true"
             android:layout_margin="8dp"
             android:fontFamily="@font/open_sans"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="@string/Real_Name"
             android:textAlignment="center"
             android:textStyle="bold" />
@@ -47,7 +47,7 @@
             android:layout_margin="8dp"
             android:layout_toEndOf="@+id/character_gi_real_name_title"
             android:fontFamily="@font/open_sans"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="@string/Real_name_not_found"
             android:textAlignment="center" />
 
@@ -60,16 +60,18 @@
             android:layout_alignEnd="@+id/character_gi_real_name_title"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/open_sans"
-            android:padding="16dp"
             android:text="@string/Aliases"
             android:textAlignment="center"
+            android:padding="8dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/character_gi_aliases"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:layout_below="@+id/character_gi_real_name"
+            android:layout_alignBaseline="@id/character_gi_aliases_title"
             android:layout_alignTop="@id/character_gi_aliases_title"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
@@ -78,7 +80,6 @@
             android:layout_toEndOf="@+id/character_gi_real_name_title"
             android:fontFamily="@font/open_sans"
             android:gravity="bottom"
-            android:padding="16dp"
             android:text="No aliases"
             android:textAlignment="center" />
 
@@ -91,7 +92,7 @@
             android:layout_alignEnd="@id/character_gi_aliases_title"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/open_sans"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="@string/gender"
             android:textAlignment="center"
             android:textStyle="bold" />
@@ -110,7 +111,7 @@
             android:layout_toEndOf="@+id/character_gi_gender_title"
             android:fontFamily="@font/open_sans"
             android:gravity="bottom"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Gender not found"
             android:textAlignment="center" />
 
@@ -123,7 +124,7 @@
             android:layout_alignEnd="@id/character_gi_gender_title"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/open_sans"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="@string/Origin"
             android:textAlignment="center"
             android:textStyle="bold" />
@@ -156,7 +157,7 @@
             android:layout_alignEnd="@id/character_gi_origin_title"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/open_sans"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="@string/Birthday"
             android:textAlignment="center"
             android:textStyle="bold" />
@@ -175,7 +176,7 @@
             android:layout_toEndOf="@+id/character_gi_birth_title"
             android:fontFamily="@font/open_sans"
             android:gravity="bottom"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="@string/not_found"
             android:textAlignment="center" />
 

@@ -35,7 +35,7 @@
             android:layout_margin="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/open_sans"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="@string/Publisher"
             android:textAlignment="center"
             android:textStyle="bold" />
@@ -64,7 +64,7 @@
             android:layout_alignEnd="@id/character_gi_publisher_title"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/open_sans"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Creators"
             android:textAlignment="center"
             android:textStyle="bold" />

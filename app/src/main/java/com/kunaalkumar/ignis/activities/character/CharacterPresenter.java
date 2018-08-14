@@ -89,7 +89,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         showTitleOnCollapse();
 
         activity.getWindow().getDecorView().
-                setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
+                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
     }
 
     // Retrofit call to search character for given id
@@ -232,13 +233,11 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         int headerElementsColor;
 
         headerBg = p.getLightVibrantColor(R.attr.backgroundColor);
-        buttonBg = p.getVibrantColor(Color.BLACK);
-        cardBg = p.getLightVibrantColor(Color.WHITE);
+        buttonBg = p.getLightVibrantColor(Color.WHITE);
+        cardBg = p.getDarkMutedColor(Color.BLACK);
         parentBg = p.getMutedColor(Color.BLACK);
-        textColor = p.getDarkMutedColor(Color.BLACK);
+        textColor = p.getLightMutedColor(Color.WHITE);
         headerElementsColor = p.getVibrantColor(Color.BLACK);
-
-        // Buttonbg (!) headbg
 
         /**
          * Potential clashes
@@ -274,6 +273,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         // Drawables color filter
         applyColorFilterToDrawables(textColor, new Drawable[]{
                 infoDrawable,
+        });
+
+        applyColorFilterToDrawables(headerBg, new Drawable[]{
                 shareDrawable
         });
 
@@ -285,6 +287,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(
                 headerElementsColor);
 
+        applyBackgroundColorToButtons(headerElementsColor, new View[]{
+                view.getFab(),
+        });
 
         // Text colors
         applyTextColorToTextViews(textColor, new TextView[]{
@@ -308,18 +313,17 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
         // Button backgrounds
         applyBackgroundColorToButtons(buttonBg, new View[]{
-                view.getFab(),
                 view.getPublisherView(),
                 view.getOriginView()});
 
         // Button text color
-        applyTextColorToButtons(textColor, new Button[]{
+        applyTextColorToButtons(cardBg, new Button[]{
                 view.getPublisherView(),
                 view.getOriginView()
         });
 
         // Apply colors to relations
-        applyColorToRelations(buttonBg, textColor,
+        applyColorToRelations(buttonBg, cardBg,
                 creatorAdapter.buttons);
     }
 

@@ -53,7 +53,16 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     Drawable backDrawable;
 
     // Information t0 be fetched from API
-    private String field_list = "name,site_detail_url,image,deck,real_name,aliases,publisher,creators,gender";
+    private String field_list = "name," +
+            "site_detail_url," +
+            "image," +
+            "deck," +
+            "real_name," +
+            "aliases," +
+            "publisher," +
+            "creators," +
+            "gender," +
+            "origin";
 
     private Character character;
 
@@ -133,6 +142,11 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                     creatorRecylerView = view.getCreatorsRecyclerView();
                     creatorRecylerView.setAdapter(creatorAdapter);
                     creatorRecylerView.setLayoutManager(new LinearLayoutManager(activity));
+                }
+
+                // Init origin
+                if (character.getOriginBrief() != null) {
+                    view.getOriginView().setText(character.getOriginBrief().getName());
                 }
 
                 // Init gender
@@ -239,10 +253,11 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 view.getAliasesTitleView(),
                 view.getAliasesView(),
                 view.getPublisherTitleView(),
-                view.getPublisherView(),
                 view.getCreatorsTitleView(),
                 view.getGenderTitleView(),
-                view.getGenderView()
+                view.getGenderView(),
+                view.getOriginTitleView(),
+                view.getOriginView()
         });
 
         // Title colors
@@ -253,11 +268,13 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         // Button backgrounds
         applyBackgroundColorToButtons(p.getLightVibrantColor(Color.WHITE), new View[]{
                 view.getFab(),
-                view.getPublisherView()});
+                view.getPublisherView(),
+                view.getOriginView()});
 
         // Button text color
         applyTextColorToButtons(p.getDarkMutedColor(Color.GRAY), new Button[]{
-                view.getPublisherView()
+                view.getPublisherView(),
+                view.getOriginView()
         });
 
         // Apply colors to relations

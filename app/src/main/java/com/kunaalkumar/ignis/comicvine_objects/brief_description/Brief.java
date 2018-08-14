@@ -48,11 +48,9 @@ public class Brief {
         return deck;
     }
 
-
     public String getDateLastUpdated() {
         return dateLastUpdated;
     }
-
 
     public Image getImage() {
         return image;

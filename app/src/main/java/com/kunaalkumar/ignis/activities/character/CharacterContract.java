@@ -99,6 +99,12 @@ public interface CharacterContract {
 
         TextView getGenderView();
 
+        /**
+         * Origin
+         */
+        TextView getOriginTitleView();
+
+        MaterialButton getOriginView();
 
     }
 

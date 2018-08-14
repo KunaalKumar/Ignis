@@ -77,6 +77,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView creatorsTitle;
     @BindView(R.id.character_gi_gender_title)
     TextView genderTitle;
+    @BindView(R.id.character_gi_origin_title)
+    TextView originTitle;
 
     /**
      * Information (to be populated)
@@ -97,6 +99,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     RecyclerView creators;
     @BindView(R.id.character_gi_gender)
     TextView gender;
+    @BindView(R.id.character_gi_origin)
+    MaterialButton origin;
 
 
     private CharacterPresenter presenter;
@@ -279,5 +283,15 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public NestedScrollView getNestedScrollView() {
         return nestedScrollView;
+    }
+
+    @Override
+    public TextView getOriginTitleView() {
+        return originTitle;
+    }
+
+    @Override
+    public MaterialButton getOriginView() {
+        return origin;
     }
 }

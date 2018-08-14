@@ -38,4 +38,7 @@
     <string name="Publisher">Publisher</string>
     <string name="Comic_Information">Comic Information</string>
     <string name="gender">Gender</string>
+    <string name="Character_Type">Character Type</string>
+    <string name="not_found">Not found</string>
+    <string name="Origin">Origin</string>
 </resources>

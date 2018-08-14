@@ -22,7 +22,7 @@ public class CharacterBrief extends Brief {
     @SerializedName("gender")
     private Integer gender;
 
-    @SerializedName("originBrief")
+    @SerializedName("origin")
     private OriginBrief originBrief;
 
     @SerializedName("publisher")

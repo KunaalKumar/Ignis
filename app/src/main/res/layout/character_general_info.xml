@@ -114,6 +114,39 @@
             android:text="Gender not found"
             android:textAlignment="center" />
 
+        <TextView
+            android:id="@+id/character_gi_origin_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/character_gi_gender"
+            android:layout_alignStart="@id/character_gi_gender_title"
+            android:layout_alignEnd="@id/character_gi_gender_title"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/open_sans"
+            android:padding="16dp"
+            android:text="@string/Origin"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/character_gi_origin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/character_gi_gender"
+            android:layout_alignBaseline="@id/character_gi_origin_title"
+            android:layout_alignTop="@id/character_gi_origin_title"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@+id/character_gi_origin_title"
+            android:clickable="true"
+            android:fontFamily="@font/open_sans"
+            android:padding="8dp"
+            android:text="@string/not_found"
+            android:textAlignment="center"
+            app:cornerRadius="15dp" />
+
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

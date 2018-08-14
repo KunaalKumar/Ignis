@@ -79,6 +79,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView genderTitle;
     @BindView(R.id.character_gi_origin_title)
     TextView originTitle;
+    @BindView(R.id.character_gi_birth_title)
+    TextView birthdayTitle;
 
     /**
      * Information (to be populated)
@@ -101,6 +103,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView gender;
     @BindView(R.id.character_gi_origin)
     MaterialButton origin;
+    @BindView(R.id.character_gi_birth)
+    TextView birthday;
 
 
     private CharacterPresenter presenter;
@@ -148,6 +152,11 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @OnClick(R.id.character_gi_publisher)
     public void onClickPublisher(View view) {
         Toast.makeText(this, "Publisher info coming later", Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.character_gi_origin)
+    public void onClickOrigin(View view) {
+        Toast.makeText(this, "Origin info coming later", Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.character_fab)
@@ -293,5 +302,15 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public MaterialButton getOriginView() {
         return origin;
+    }
+
+    @Override
+    public TextView getBirthdayTitleView() {
+        return birthdayTitle;
+    }
+
+    @Override
+    public TextView getBirthdayView() {
+        return birthday;
     }
 }

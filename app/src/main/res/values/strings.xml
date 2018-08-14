@@ -41,4 +41,5 @@
     <string name="Character_Type">Character Type</string>
     <string name="not_found">Not found</string>
     <string name="Origin">Origin</string>
+    <string name="Birthday">Birthday</string>
 </resources>

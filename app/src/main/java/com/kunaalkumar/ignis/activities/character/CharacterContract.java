@@ -106,6 +106,13 @@ public interface CharacterContract {
 
         MaterialButton getOriginView();
 
+        /**
+         * Birthday
+         */
+        TextView getBirthdayTitleView();
+
+        TextView getBirthdayView();
+
     }
 
     interface Presenter {

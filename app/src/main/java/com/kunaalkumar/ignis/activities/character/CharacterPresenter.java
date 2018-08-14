@@ -62,7 +62,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
             "publisher," +
             "creators," +
             "gender," +
-            "origin";
+            "origin," +
+            "birth";
 
     private Character character;
 
@@ -149,6 +150,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                     view.getOriginView().setText(character.getOriginBrief().getName());
                 }
 
+                if (character.getBirth() != null) {
+                    view.getBirthdayView().setText(character.getBirth());
+                }
                 // Init gender
                 view.getGenderView().setText(character.getGender());
 
@@ -257,7 +261,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 view.getGenderTitleView(),
                 view.getGenderView(),
                 view.getOriginTitleView(),
-                view.getOriginView()
+                view.getOriginView(),
+                view.getBirthdayTitleView(),
+                view.getBirthdayView()
         });
 
         // Title colors
@@ -280,7 +286,6 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         // Apply colors to relations
         applyColorToRelations(p.getLightVibrantColor(Color.WHITE), p.getDarkMutedColor(Color.GRAY),
                 creatorAdapter.buttons);
-
     }
 
     /**

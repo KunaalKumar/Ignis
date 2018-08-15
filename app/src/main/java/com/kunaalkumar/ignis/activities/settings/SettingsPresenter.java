@@ -94,7 +94,10 @@ public class SettingsPresenter implements SettingsContract.Presenter {
         CHANGED = true;
         ((Activity) view).setResult(RESULT_OK, null);
         ((Activity) view).finish();
-        ((Activity) view).startActivity(new Intent((Activity) view, SettingsActivity.class));
+
+        Intent intent = new Intent((Activity) view, SettingsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        ((Activity) view).startActivity(intent);
     }
 
     @Override

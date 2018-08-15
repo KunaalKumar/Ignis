@@ -67,9 +67,7 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.settings.SettingsActivity"
-            android:launchMode="singleTask" />
+        <activity android:name=".activities.settings.SettingsActivity" />
         <activity android:name=".activities.LicenseActivity" />
 
         <provider

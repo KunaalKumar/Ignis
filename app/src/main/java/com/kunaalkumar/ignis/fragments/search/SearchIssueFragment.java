@@ -9,15 +9,15 @@ import com.kunaalkumar.ignis.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-public class SearchIssueFragment extends Fragment {
+public class SearchIssueFragment extends SearchFragment {
 
     public static final String TITLE = "Issue";
 
     View view;
 
     public SearchIssueFragment() {
+        // Required empty constructor
     }
 
     @Nullable

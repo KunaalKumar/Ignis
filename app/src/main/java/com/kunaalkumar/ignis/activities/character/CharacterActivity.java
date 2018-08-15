@@ -127,6 +127,21 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        darkenSystemUIIcons();
+
+    }
+
+    // Set navbar and status bar icons to black
+    private void darkenSystemUIIcons() {
+        getWindow().getDecorView().
+                setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
+                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        darkenSystemUIIcons();
     }
 
     @Override

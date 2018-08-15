@@ -22,7 +22,6 @@ import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -36,7 +35,7 @@ import static com.kunaalkumar.ignis.activities.main.MainPresenter.API_KEY;
 import static com.kunaalkumar.ignis.activities.main.MainPresenter.FORMAT;
 
 
-public class SearchCharacterFragment extends Fragment {
+public class SearchCharacterFragment extends SearchFragment {
 
     public static final String TITLE = "Character";
 

@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -87,10 +86,6 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         backDrawable = activity.getResources().getDrawable(R.drawable.ic_arrow_back_24dp);
 
         showTitleOnCollapse();
-
-        activity.getWindow().getDecorView().
-                setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
-                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
     }
 
     // Retrofit call to search character for given id

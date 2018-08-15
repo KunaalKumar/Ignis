@@ -9,9 +9,8 @@ import com.kunaalkumar.ignis.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-public class SearchObjectFragment extends Fragment {
+public class SearchObjectFragment extends SearchFragment {
 
     public static final String TITLE = "Object";
 

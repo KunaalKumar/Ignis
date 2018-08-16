@@ -227,12 +227,25 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         int textColor;
         int headerElementsColor;
 
-        headerBg = p.getLightVibrantColor(R.attr.backgroundColor);
+        Palette.Swatch vibrantSwatch = p.getVibrantSwatch();
+        Palette.Swatch lightVibrantSwatch = p.getLightVibrantSwatch();
+
+        if (lightVibrantSwatch == null) {
+            headerBg = Color.WHITE;
+
+        } else {
+            headerBg = lightVibrantSwatch.getRgb();
+        }
+
+        if (vibrantSwatch == null) {
+            headerElementsColor = Color.BLACK;
+        } else {
+            headerElementsColor = vibrantSwatch.getRgb();
+        }
         buttonBg = p.getLightVibrantColor(Color.WHITE);
         cardBg = p.getDarkMutedColor(Color.BLACK);
         parentBg = p.getMutedColor(Color.BLACK);
         textColor = p.getLightMutedColor(Color.WHITE);
-        headerElementsColor = p.getVibrantColor(Color.BLACK);
 
         /**
          * Potential clashes
@@ -327,6 +340,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      * Contrast must be less than 1.30 for them to clash
      */
     private boolean doColorsClash(int color1, int color2) {
+
         double contrast = ColorUtils.calculateContrast(color1, color2);
         return contrast - 1 <= 0.30;
     }

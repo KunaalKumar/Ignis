@@ -21,6 +21,7 @@ import com.kunaalkumar.ignis.comicvine_objects.long_description.ApiResponse;
 import com.kunaalkumar.ignis.comicvine_objects.long_description.Character;
 import com.kunaalkumar.ignis.network.ApiClient;
 import com.kunaalkumar.ignis.network.ClientInstance;
+import com.kunaalkumar.ignis.utils.SharedPrefs;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -81,6 +82,17 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         view.getCollapsingToolbarLayout().setTitleEnabled(true);
         view.getCollapsingToolbarLayout().setExpandedTitleColor(Color.WHITE);
 
+
+        if (SharedPrefs.getDarkThemeState()) {
+            view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(Color.WHITE);
+        } else {
+            view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(Color.BLACK);
+//            activity.getResources().getDrawable(R.drawable.ic_share_24dp).
+//                    setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+//            view.getFab().setBackgroundTintList(ColorStateList.valueOf(
+//                    activity.getResources().getColor(R.color.colorAccent)));
+        }
+
         shareDrawable = activity.getResources().getDrawable(R.drawable.ic_share_24dp);
         infoDrawable = activity.getResources().getDrawable(R.drawable.ic_info_24dp);
         backDrawable = activity.getResources().getDrawable(R.drawable.ic_arrow_back_24dp);
@@ -106,6 +118,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
             @Override
             public void onResponse(Call<ApiResponse<Character>> call,
                                    Response<ApiResponse<Character>> response) {
+
+                view.getContentProgressBar().setVisibility(View.GONE);
+
                 character = response.body().getResults();
 
                 // Init deck
@@ -200,15 +215,17 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                     public void onSuccess() {
                         Bitmap bitmap = ((BitmapDrawable) view.getCharacterImageView().getDrawable()).getBitmap();
 
-                        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                            public void onGenerated(Palette p) {
-                                setViewColors(p);
+                        if (SharedPrefs.getDynamicCardColorState()) {
+                            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                                public void onGenerated(Palette p) {
+                                    setViewColors(p);
 
-                                // Set drawables
-                                view.getFab().setImageDrawable(shareDrawable);
-                                view.getCharacterDeckInfoView().setImageDrawable(infoDrawable);
-                            }
-                        });
+                                    // Set drawables
+                                    view.getFab().setImageDrawable(shareDrawable);
+                                    view.getCharacterDeckInfoView().setImageDrawable(infoDrawable);
+                                }
+                            });
+                        }
                         super.onSuccess();
                     }
                 });
@@ -218,6 +235,10 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      * Add colors to entire UI
      */
     private void setViewColors(Palette p) {
+
+        activity.getWindow().getDecorView().
+                setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
+                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
 
         int headerBg;
         // Used for character title and back as well

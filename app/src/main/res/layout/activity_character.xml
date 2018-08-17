@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:backgroundTint="@color/colorAccent"
+            app:contentScrim="?attr/backgroundColor"
             app:expandedTitleTextAppearance="@style/Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -56,13 +57,16 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:elevation="8dp"
+        android:backgroundTint="?attr/backgroundColor"
+        android:elevation="6dp"
         android:src="@drawable/ic_share_24dp"
-        app:backgroundTint="@color/white"
+        android:tintMode="multiply"
+        app:borderWidth="0dp"
         app:layout_anchor="@id/character_collapsing_toolbar"
         app:layout_anchorGravity="bottom|end|right" />
 
     <ProgressBar
+        android:id="@+id/character_content_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

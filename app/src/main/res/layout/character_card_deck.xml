@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    app:cardBackgroundColor="?attr/cardBackgroundColor"
     app:cardCornerRadius="4dp"
     app:cardElevation="8dp">
 
@@ -20,6 +21,7 @@
             android:fontFamily="@font/open_sans"
             android:text="@string/Deck"
             android:textAlignment="center"
+            android:textColor="?attr/headingTextColor"
             android:textSize="21sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/character_deck_text"
@@ -49,6 +51,7 @@
             android:padding="8dp"
             android:text="Summary not found"
             android:textAlignment="center"
+            android:textColor="?attr/textColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

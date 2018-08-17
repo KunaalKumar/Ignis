@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,9 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
 
     @BindView(R.id.character_nestedScrollView)
     NestedScrollView nestedScrollView;
+
+    @BindView(R.id.character_content_progress_bar)
+    ProgressBar contentProgressBar;
 
     /**
      * Layouts
@@ -126,22 +130,11 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        darkenSystemUIIcons();
-
-    }
-
-    // Set navbar and status bar icons to black
-    private void darkenSystemUIIcons() {
-        getWindow().getDecorView().
-                setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
-                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        darkenSystemUIIcons();
     }
 
     @Override
@@ -326,5 +319,10 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public TextView getBirthdayView() {
         return birthday;
+    }
+
+    @Override
+    public ProgressBar getContentProgressBar() {
+        return contentProgressBar;
     }
 }

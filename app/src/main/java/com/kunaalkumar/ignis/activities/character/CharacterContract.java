@@ -3,13 +3,13 @@ package com.kunaalkumar.ignis.activities.character;
 import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.widget.Toolbar;
@@ -30,6 +30,8 @@ public interface CharacterContract {
         ImageView getCharacterImageView();
 
         NestedScrollView getNestedScrollView();
+
+        ProgressBar getContentProgressBar();
 
         /**
          * Layouts

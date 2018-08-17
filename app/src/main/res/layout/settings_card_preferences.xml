@@ -98,6 +98,16 @@
             android:textColor="?attr/headingTextColor"
             android:textSize="16sp" />
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/dynamic_card_color_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="16dp"
+            android:text="Dynamic Card Colors"
+            android:textColor="?attr/headingTextColor"
+            android:textSize="16sp" />
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

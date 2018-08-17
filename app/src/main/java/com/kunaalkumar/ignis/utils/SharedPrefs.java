@@ -4,8 +4,6 @@ package com.kunaalkumar.ignis.utils;
 import android.app.Activity;
 
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.activities.character.CharacterActivity;
-import com.kunaalkumar.ignis.activities.settings.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +15,7 @@ public class SharedPrefs {
     public static final String KEY_DARK_THEME = "DarkTheme";
     public static final String KEY_SEARCH_HISTORY_SIZE = "SearchHistorySize";
     public static final String KEY_PEEK_HIGH_RES_IMAGE = "PeekHighResImage";
+    public static final String KEY_DYNAMIC_CARD_COLOR = "DynamicCardColor";
     public static final Integer ABSOLUTE_MAX_SEARCH_HISTORY = 50;
 
     private static ArrayList<String> searchHistory;
@@ -121,7 +120,7 @@ public class SharedPrefs {
     }
 
     public static void removeFavoriteCharacter(Integer id) {
-        favoriteCharacters.remove(favoriteCharacters.indexOf(id));
+        favoriteCharacters.remove(id);
         tinyDB.putListInt(KEY_FAVORITE_CHARACTERS, favoriteCharacters);
     }
 
@@ -144,4 +143,13 @@ public class SharedPrefs {
     public static void setPeekHighResImageState(Boolean state) {
         tinyDB.putBoolean(KEY_PEEK_HIGH_RES_IMAGE, state);
     }
+
+    public static Boolean getDynamicCardColorState() {
+        return tinyDB.getBoolean(KEY_DYNAMIC_CARD_COLOR);
+    }
+
+    public static void setDynamicCardColorState(Boolean state) {
+        tinyDB.putBoolean(KEY_DYNAMIC_CARD_COLOR, state);
+    }
+
 }

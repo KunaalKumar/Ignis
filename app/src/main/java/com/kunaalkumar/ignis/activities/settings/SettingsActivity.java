@@ -30,6 +30,9 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
     @BindView(R.id.peek_image_quality_switch)
     SwitchCompat previewImageQuality;
 
+    @BindView(R.id.dynamic_card_color_switch)
+    SwitchCompat dynamicCardColor;
+
     @BindView(R.id.settings_collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
@@ -114,6 +117,13 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 presenter.setDarkThemeState(isChecked);
+            }
+        });
+
+        dynamicCardColor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                presenter.setDynamicCardColorState(isChecked);
             }
         });
 
@@ -208,5 +218,10 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
     @Override
     public TextView getVersionNumberView() {
         return versionNumber;
+    }
+
+    @Override
+    public SwitchCompat getDynamicCardColorSwitch() {
+        return dynamicCardColor;
     }
 }

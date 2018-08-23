@@ -7,14 +7,14 @@ android {
         applicationId "com.kunaalkumar.ignis"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 9
-        versionName "0.7.0-alpha"
+        versionCode 10
+        versionName "0.7.2-alpha"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "ComicVineApiKey", IGNIS_COMIC_VINE_API_KEY
         }
         debug {

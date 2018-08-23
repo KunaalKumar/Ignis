@@ -30,6 +30,10 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
     @BindView(R.id.peek_image_quality_switch)
     SwitchCompat previewImageQuality;
 
+
+    @BindView(R.id.image_width_switch)
+    SwitchCompat imageWidth;
+
     @BindView(R.id.dynamic_card_color_switch)
     SwitchCompat dynamicCardColor;
 
@@ -135,6 +139,13 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
             }
         });
 
+        imageWidth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                presenter.setImageWidth(isChecked);
+            }
+        });
+
         // Seekbar change listener
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -223,5 +234,10 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
     @Override
     public SwitchCompat getDynamicCardColorSwitch() {
         return dynamicCardColor;
+    }
+
+    @Override
+    public SwitchCompat getImageWidthSwitch() {
+        return imageWidth;
     }
 }

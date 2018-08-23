@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -437,6 +438,15 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             super(itemView);
             ButterKnife.bind(this, itemView);
             favoriteState = false;
+
+            if (SharedPrefs.getImageWidthState()) {
+                FrameLayout.LayoutParams params =
+                        new FrameLayout.LayoutParams(image.getLayoutParams());
+
+                params.setMarginStart(0);
+                params.setMarginEnd(0);
+                image.setLayoutParams(params);
+            }
         }
 
         public void setFavoriteState(boolean state) {

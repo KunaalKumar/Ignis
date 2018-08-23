@@ -107,6 +107,16 @@
             android:textColor="?attr/headingTextColor"
             android:textSize="16sp" />
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/image_width_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="16dp"
+            android:text="@string/full_image_width"
+            android:textColor="?attr/headingTextColor"
+            android:textSize="16sp" />
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

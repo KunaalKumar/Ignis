@@ -47,6 +47,7 @@ public class SettingsPresenter implements SettingsContract.Presenter {
         view.getNightModeSwitch().setChecked(SharedPrefs.getDarkThemeState());
         view.getDynamicCardColorSwitch().setChecked(SharedPrefs.getDynamicCardColorState());
         view.getPreviewImageQualitySwitch().setChecked(SharedPrefs.getPeekHighResImageState());
+        view.getImageWidthSwitch().setChecked(SharedPrefs.getImageWidthState());
     }
 
     @Override
@@ -187,5 +188,10 @@ public class SettingsPresenter implements SettingsContract.Presenter {
     @Override
     public void setDynamicCardColorState(boolean state) {
         SharedPrefs.setDynamicCardColorState(state);
+    }
+
+    @Override
+    public void setImageWidth(boolean state) {
+        SharedPrefs.setKeyImageWidth(state);
     }
 }

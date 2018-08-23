@@ -31,6 +31,8 @@ public interface SettingsContract {
         TextView getVersionNumberView();
 
         SwitchCompat getDynamicCardColorSwitch();
+
+        SwitchCompat getImageWidthSwitch();
     }
 
     interface Presenter {
@@ -42,6 +44,8 @@ public interface SettingsContract {
         void setDynamicCardColorState(boolean state);
 
         void setPeekHighResImageState(boolean state);
+
+        void setImageWidth(boolean state);
 
         void initSeekbar();
 

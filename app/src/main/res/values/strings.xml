@@ -42,4 +42,5 @@
     <string name="not_found">Not found</string>
     <string name="Origin">Origin</string>
     <string name="Birthday">Birthday</string>
+    <string name="full_image_width">Full Image Width</string>
 </resources>

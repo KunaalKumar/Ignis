@@ -16,6 +16,8 @@ public class SharedPrefs {
     public static final String KEY_SEARCH_HISTORY_SIZE = "SearchHistorySize";
     public static final String KEY_PEEK_HIGH_RES_IMAGE = "PeekHighResImage";
     public static final String KEY_DYNAMIC_CARD_COLOR = "DynamicCardColor";
+    public static final String KEY_IMAGE_WIDTH = "ImageWidth";
+
     public static final Integer ABSOLUTE_MAX_SEARCH_HISTORY = 50;
 
     private static ArrayList<String> searchHistory;
@@ -150,6 +152,14 @@ public class SharedPrefs {
 
     public static void setDynamicCardColorState(Boolean state) {
         tinyDB.putBoolean(KEY_DYNAMIC_CARD_COLOR, state);
+    }
+
+    public static boolean getImageWidthState() {
+        return tinyDB.getBoolean(KEY_IMAGE_WIDTH);
+    }
+
+    public static void setKeyImageWidth(boolean state) {
+        tinyDB.putBoolean(KEY_IMAGE_WIDTH, state);
     }
 
 }

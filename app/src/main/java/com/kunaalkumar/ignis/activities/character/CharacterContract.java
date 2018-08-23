@@ -115,6 +115,13 @@ public interface CharacterContract {
 
         TextView getBirthdayView();
 
+        /**
+         * Issues died
+         */
+        TextView getIssuesDiedTitleView();
+
+        RecyclerView getIssuesDiedRecyclerView();
+
     }
 
     interface Presenter {

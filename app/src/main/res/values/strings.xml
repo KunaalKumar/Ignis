@@ -43,4 +43,7 @@
     <string name="Origin">Origin</string>
     <string name="Birthday">Birthday</string>
     <string name="full_image_width">Full Image Width</string>
+    <string name="image_of_character">Image of character</string>
+    <string name="creators">Creators</string>
+    <string name="issues_died_in">Issues Died In</string>
 </resources>

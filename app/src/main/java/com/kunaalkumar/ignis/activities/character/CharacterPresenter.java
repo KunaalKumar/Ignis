@@ -65,12 +65,16 @@ public class CharacterPresenter implements CharacterContract.Presenter {
             "creators," +
             "gender," +
             "origin," +
-            "birth";
+            "birth," +
+            "issues_died_in";
 
     private Character character;
 
-    private RecyclerView creatorRecylerView;
+    private RecyclerView creatorRecyclerView;
     private RelationAdapter creatorAdapter;
+
+    private RecyclerView issuesDiedRecyclerView;
+    private RelationAdapter issuesDiedAdapter;
 
 
     public CharacterPresenter(CharacterContract.MvpView view, Intent intent) {
@@ -87,10 +91,6 @@ public class CharacterPresenter implements CharacterContract.Presenter {
             view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(Color.WHITE);
         } else {
             view.getCollapsingToolbarLayout().setCollapsedTitleTextColor(Color.BLACK);
-//            activity.getResources().getDrawable(R.drawable.ic_share_24dp).
-//                    setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
-//            view.getFab().setBackgroundTintList(ColorStateList.valueOf(
-//                    activity.getResources().getColor(R.color.colorAccent)));
         }
 
         shareDrawable = activity.getResources().getDrawable(R.drawable.ic_share_24dp);
@@ -153,9 +153,9 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 // Init creator
                 if (character.getCreators() != null) {
                     creatorAdapter = new RelationAdapter(character.getCreators());
-                    creatorRecylerView = view.getCreatorsRecyclerView();
-                    creatorRecylerView.setAdapter(creatorAdapter);
-                    creatorRecylerView.setLayoutManager(new LinearLayoutManager(activity));
+                    creatorRecyclerView = view.getCreatorsRecyclerView();
+                    creatorRecyclerView.setAdapter(creatorAdapter);
+                    creatorRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
                 }
 
                 // Init origin
@@ -163,11 +163,21 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                     view.getOriginView().setText(character.getOriginBrief().getName());
                 }
 
+                // Init birth
                 if (character.getBirth() != null) {
                     view.getBirthdayView().setText(character.getBirth());
                 }
                 // Init gender
                 view.getGenderView().setText(character.getGender());
+
+
+                // Init Issues Died
+                if (character.getIssuesDiedIn() != null) {
+                    issuesDiedAdapter = new RelationAdapter(character.getIssuesDiedIn());
+                    issuesDiedRecyclerView = view.getIssuesDiedRecyclerView();
+                    issuesDiedRecyclerView.setAdapter(issuesDiedAdapter);
+                    issuesDiedRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                }
 
                 // Show character information now that it's loaded
                 view.getNestedScrollView().setVisibility(View.VISIBLE);
@@ -332,6 +342,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 view.getAliasesView(),
                 view.getPublisherTitleView(),
                 view.getCreatorsTitleView(),
+                view.getIssuesDiedTitleView(),
                 view.getGenderTitleView(),
                 view.getGenderView(),
                 view.getOriginTitleView(),
@@ -354,6 +365,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         // Apply colors to relations
         applyColorToRelations(buttonBg, cardBg,
                 creatorAdapter.buttons);
+        applyColorToRelations(buttonBg, cardBg,
+                issuesDiedAdapter.buttons);
     }
 
     /**
@@ -361,7 +374,6 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      * Contrast must be less than 1.30 for them to clash
      */
     private boolean doColorsClash(int color1, int color2) {
-
         double contrast = ColorUtils.calculateContrast(color1, color2);
         return contrast - 1 <= 0.30;
     }

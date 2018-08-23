@@ -36,7 +36,7 @@ public class RelationAdapter extends
     @NonNull
     @Override
     public RelationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_character_creators, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_character_relation, parent, false);
         return new RelationViewHolder(view);
     }
 

@@ -84,6 +84,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView originTitle;
     @BindView(R.id.character_gi_birth_title)
     TextView birthdayTitle;
+    @BindView(R.id.character_gi_issues_died_title)
+    TextView issuesDiedTitle;
 
     /**
      * Information (to be populated)
@@ -108,6 +110,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     MaterialButton origin;
     @BindView(R.id.character_gi_birth)
     TextView birthday;
+    @BindView(R.id.character_gi_issues_died)
+    RecyclerView issuesDied;
 
 
     private CharacterPresenter presenter;
@@ -324,5 +328,15 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public ProgressBar getContentProgressBar() {
         return contentProgressBar;
+    }
+
+    @Override
+    public TextView getIssuesDiedTitleView() {
+        return issuesDiedTitle;
+    }
+
+    @Override
+    public RecyclerView getIssuesDiedRecyclerView() {
+        return issuesDied;
     }
 }

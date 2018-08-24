@@ -134,13 +134,19 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        if (!SharedPrefs.getDarkThemeState()) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        }
     }
 
     @Override
     protected void onResume() {
-        getWindow().getDecorView().
-                setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
-                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        if (!SharedPrefs.getDarkThemeState()) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        }
         super.onResume();
     }
 

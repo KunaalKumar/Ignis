@@ -45,6 +45,7 @@
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/image_of_character"
                 android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

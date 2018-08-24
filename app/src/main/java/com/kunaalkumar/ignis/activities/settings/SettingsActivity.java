@@ -1,6 +1,7 @@
 package com.kunaalkumar.ignis.activities.settings;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -112,6 +113,11 @@ public class SettingsActivity extends AppCompatActivity implements SettingsContr
         presenter.initSeekbar();
         presenter.setVersionNumber();
         setListeners();
+
+        if (!SharedPrefs.getDarkThemeState()) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        }
 
     }
 

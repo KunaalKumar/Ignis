@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.MvpV
 
         mainPresenter.initBottomNavigationBar(bottomNavigationView);
 
+        if (!SharedPrefs.getDarkThemeState()) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
+            View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        }
+
         mainPresenter.handleIntent(getIntent());
     }
 

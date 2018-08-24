@@ -2,7 +2,7 @@
 
     <style name="LaunchTheme" parent="LightTheme">
         <item name="android:windowBackground">@drawable/launch_background</item>
-        <item name="android:statusBarColor">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/white</item>
         <item name="android:navigationBarColor">@color/black</item>
     </style>
 
@@ -21,7 +21,7 @@
         <item name="backgroundColor">@color/white</item>
         <item name="toolbarColor">@color/white</item>
         <item name="cardBackgroundColor">@color/white</item>
-        <item name="android:statusBarColor">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/white</item>
         <item name="disabledColor">#616161</item>
         <item name="colorControlNormal">@color/colorAccent</item>
         <item name="colorControlHighlight">#75ff6e40</item>
@@ -39,7 +39,7 @@
         <item name="textColor">#bdbdbd</item>
         <item name="headingTextColor">@color/white</item>
         <item name="textHintColor">#9e9e9e</item>
-        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:statusBarColor">@color/gray</item>
         <item name="android:navigationBarColor">@color/black</item>
         <item name="backgroundColor">@color/gray</item>
         <item name="toolbarColor">#000000</item>

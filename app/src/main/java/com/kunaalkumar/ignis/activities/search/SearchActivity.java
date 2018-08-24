@@ -74,6 +74,11 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
 
         presenter.handleIntent(getIntent());
 
+        if (!SharedPrefs.getDarkThemeState()) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             searchBox.setOnFocusChangeListener(new EditText.OnFocusChangeListener() {
                 @Override
@@ -82,7 +87,6 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
                 }
             });
         }
-
     }
 
     @Override

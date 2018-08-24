@@ -9,6 +9,7 @@ package com.kunaalkumar.ignis.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.kunaalkumar.ignis.activities.main.MainActivity;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
@@ -24,6 +25,10 @@ public class LaunchActivity extends AppCompatActivity {
         SharedPrefs.applyTheme(this);
 
         super.onCreate(savedInstanceState);
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
+                View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

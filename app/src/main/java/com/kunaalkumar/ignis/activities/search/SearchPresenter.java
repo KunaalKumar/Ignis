@@ -58,16 +58,16 @@ public class SearchPresenter implements SearchContract.Presenter {
         viewPageAdapter.addFragment(issueFragment, SearchIssueFragment.TITLE);
         viewPageAdapter.addFragment(objectFragment, SearchObjectFragment.TITLE);
 
-        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), this);
-        view.getSearchHistoryView().setAdapter(historyAdapter);
-        view.getSearchHistoryView().setLayoutManager(new LinearLayoutManager(activity));
-
         // Keeps all fragments in memory
         view.getViewPager().setOffscreenPageLimit(viewPageAdapter.getCount());
 
         view.getViewPager().setAdapter(viewPageAdapter);
 
         view.getTabLayout().setupWithViewPager(view.getViewPager());
+
+        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), this);
+        view.getSearchHistoryView().setAdapter(historyAdapter);
+        view.getSearchHistoryView().setLayoutManager(new LinearLayoutManager(activity));
     }
 
     @Override
@@ -92,16 +92,15 @@ public class SearchPresenter implements SearchContract.Presenter {
         view.getSearchBox().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View _view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() != KeyEvent.ACTION_DOWN)
-                    return true;
-                switch (i) {
-                    case KeyEvent.KEYCODE_ENTER:
-                        searchCall(view.getSearchBox().getText().toString().trim());
-                        break;
-                    case KeyEvent.KEYCODE_BACK:
-                        activity.onBackPressed();
-                }
-                return true;
+                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN)
+                    switch (i) {
+                        case KeyEvent.KEYCODE_ENTER:
+                            searchCall(view.getSearchBox().getText().toString().trim());
+                            break;
+                        case KeyEvent.KEYCODE_BACK:
+                            activity.onBackPressed();
+                    }
+                return false;
             }
         });
 
@@ -133,12 +132,13 @@ public class SearchPresenter implements SearchContract.Presenter {
         historyAdapter.searchHistory = SharedPrefs.getSearchHistory();
         historyAdapter.notifyDataSetChanged();
 
+        showHistory(false);
         view.getSearchBox().setText(query.trim());
         UIUtil.hideKeyboard(activity, view.getSearchBox());
-        characterFragment.searchCall(query,
-                true);
         view.getSearchBox().clearFocus();
         view.getViewPager().requestFocus();
+        characterFragment.searchCall(query,
+                true);
     }
 
     // Handle app link
@@ -153,20 +153,12 @@ public class SearchPresenter implements SearchContract.Presenter {
     }
 
     @Override
-    public void handleSearchBoxFocus(View v, boolean hasFocus) {
-        if (hasFocus) {
-            showHistory(true);
-        } else {
-            showHistory(false);
-        }
-    }
-
-    private void showHistory(boolean show) {
+    public void showHistory(boolean show) {
         if (show) {
             view.getSearchHistoryView().setVisibility(View.VISIBLE);
-            view.getSearchResultsView().setVisibility(View.GONE);
+            view.getSearchResultsView().setVisibility(View.INVISIBLE);
         } else {
-            view.getSearchHistoryView().setVisibility(View.GONE);
+            view.getSearchHistoryView().setVisibility(View.INVISIBLE);
             view.getSearchResultsView().setVisibility(View.VISIBLE);
         }
     }

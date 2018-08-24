@@ -41,6 +41,6 @@ public interface SearchContract {
 
         void handleIntent(Intent intent);
 
-        void handleSearchBoxFocus(View v, boolean hasFocus);
+        void showHistory(boolean show);
     }
 }

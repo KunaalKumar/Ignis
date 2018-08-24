@@ -1,12 +1,14 @@
 package com.kunaalkumar.ignis.activities.search;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.kunaalkumar.ignis.R;
@@ -72,12 +74,15 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
 
         presenter.handleIntent(getIntent());
 
-        searchBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                presenter.handleSearchBoxFocus(v, hasFocus);
-            }
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            searchBox.setOnFocusChangeListener(new EditText.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    presenter.showHistory(hasFocus);
+                }
+            });
+        }
+
     }
 
     @Override

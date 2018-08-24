@@ -1,6 +1,5 @@
 package com.kunaalkumar.ignis.adapters;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,7 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.activities.search.SearchPresenter;
-import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
-
-import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.util.ArrayList;
 
@@ -21,8 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard;
 
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryViewHolder> {
 

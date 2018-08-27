@@ -155,7 +155,7 @@ public class SharedPrefs {
     }
 
     public static boolean getImageWidthState() {
-        return tinyDB.getBoolean(KEY_IMAGE_WIDTH);
+        return tinyDB.getBoolean(KEY_IMAGE_WIDTH, true);
     }
 
     public static void setKeyImageWidth(boolean state) {

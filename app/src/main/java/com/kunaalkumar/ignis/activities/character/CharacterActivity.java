@@ -56,6 +56,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     MaterialCardView generalInformationParentLayout;
     @BindView(R.id.character_comic_info_parent)
     MaterialCardView comicInfoParentLayout;
+    @BindView(R.id.character_power_info_parent)
+    MaterialCardView powersInfoParentLayout;
 
     /**
      * Card titles
@@ -86,6 +88,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView birthdayTitle;
     @BindView(R.id.character_gi_issues_died_title)
     TextView issuesDiedTitle;
+    @BindView(R.id.character_power_title)
+    TextView powerTitle;
 
     /**
      * Information (to be populated)
@@ -112,6 +116,8 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     TextView birthday;
     @BindView(R.id.character_gi_issues_died)
     RecyclerView issuesDied;
+    @BindView(R.id.character_powers)
+    RecyclerView powers;
 
 
     private CharacterPresenter presenter;
@@ -347,5 +353,20 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
     @Override
     public RecyclerView getIssuesDiedRecyclerView() {
         return issuesDied;
+    }
+
+    @Override
+    public TextView getPowerTitleView() {
+        return powerTitle;
+    }
+
+    @Override
+    public RecyclerView getPowerRecyclerView() {
+        return powers;
+    }
+
+    @Override
+    public MaterialCardView getPowersInfoParentLayout() {
+        return powersInfoParentLayout;
     }
 }

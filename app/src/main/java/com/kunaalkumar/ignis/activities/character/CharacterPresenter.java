@@ -66,15 +66,22 @@ public class CharacterPresenter implements CharacterContract.Presenter {
             "gender," +
             "origin," +
             "birth," +
-            "issues_died_in";
+            "issues_died_in," +
+            "powers";
 
     private Character character;
 
+    // Creator
     private RecyclerView creatorRecyclerView;
     private RelationAdapter creatorAdapter;
 
+    // Issues Died
     private RecyclerView issuesDiedRecyclerView;
     private RelationAdapter issuesDiedAdapter;
+
+    // Powers
+    private RecyclerView powersRecyclerView;
+    private RelationAdapter powersAdapter;
 
 
     public CharacterPresenter(CharacterContract.MvpView view, Intent intent) {
@@ -140,7 +147,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
 
                     view.getAliasesView().setText(null);
                     for (String alias : aliases
-                    ) {
+                            ) {
                         view.getAliasesView().append(alias + "\n");
                     }
                 }
@@ -177,6 +184,14 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                     issuesDiedRecyclerView = view.getIssuesDiedRecyclerView();
                     issuesDiedRecyclerView.setAdapter(issuesDiedAdapter);
                     issuesDiedRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                }
+
+                // Init Powers
+                if (character.getPowers() != null) {
+                    powersAdapter = new RelationAdapter(character.getPowers());
+                    powersRecyclerView = view.getPowerRecyclerView();
+                    powersRecyclerView.setAdapter(powersAdapter);
+                    powersRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
                 }
 
                 // Show character information now that it's loaded
@@ -301,7 +316,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
         applyColorToLayoutBackgrounds(cardBg, new View[]{
                 view.getCharacterGeneralInformationParentLayout(),
                 view.getCharacterDeckParentLayout(),
-                view.getComicInfoParentLayout()});
+                view.getComicInfoParentLayout(),
+                view.getPowersInfoParentLayout()});
 
         // Parent backgrounds
         applyColorToLayoutBackgrounds(parentBg, new View[]{
@@ -348,7 +364,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 view.getOriginTitleView(),
                 view.getOriginView(),
                 view.getBirthdayTitleView(),
-                view.getBirthdayView()
+                view.getBirthdayView(),
+                view.getPowerTitleView()
         });
 
         // Button backgrounds
@@ -367,6 +384,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 creatorAdapter.buttons);
         applyColorToRelations(buttonBg, cardBg,
                 issuesDiedAdapter.buttons);
+        applyColorToRelations(buttonBg, cardBg,
+                powersAdapter.buttons);
     }
 
     /**
@@ -390,7 +409,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void applyColorToLayoutBackgrounds(int color, View[] layouts) {
         for (View layout : layouts
-        ) {
+                ) {
             layout.setBackgroundColor(color);
         }
     }
@@ -400,7 +419,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void applyColorFilterToDrawables(int color, Drawable[] drawables) {
         for (Drawable drawable : drawables
-        ) {
+                ) {
             drawable.setColorFilter(
                     color, PorterDuff.Mode.SRC_ATOP);
 
@@ -412,7 +431,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void applyTextColorToTextViews(int color, TextView[] textViews) {
         for (TextView textView : textViews
-        ) {
+                ) {
             textView.setTextColor(color);
         }
     }
@@ -422,7 +441,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void applyBackgroundColorToButtons(int color, Object[] views) {
         for (Object view : views
-        ) {
+                ) {
             ((View) view).setBackgroundTintList(
                     ColorStateList.valueOf(color));
         }
@@ -433,7 +452,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void applyTextColorToButtons(int color, Button[] buttons) {
         for (Button button : buttons
-        ) {
+                ) {
             button.setTextColor(
                     ColorStateList.valueOf(color));
         }
@@ -444,7 +463,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
      */
     private void applyColorToRelations(int bgColor, int textColor, ArrayList<Button> buttons) {
         for (Button button : buttons
-        ) {
+                ) {
             button.setBackgroundTintList(
                     ColorStateList.valueOf(bgColor));
             button.setTextColor(textColor);

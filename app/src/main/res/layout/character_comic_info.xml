@@ -101,6 +101,7 @@
             android:id="@+id/character_gi_issues_died"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:layout_below="@+id/character_gi_creators"
             android:layout_alignStart="@id/character_gi_creators"
             android:layout_alignEnd="@id/character_gi_creators"

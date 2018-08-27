@@ -48,6 +48,8 @@ public interface CharacterContract {
 
         MaterialCardView getComicInfoParentLayout();
 
+        MaterialCardView getPowersInfoParentLayout();
+
         /**
          * Titles
          */
@@ -121,6 +123,13 @@ public interface CharacterContract {
         TextView getIssuesDiedTitleView();
 
         RecyclerView getIssuesDiedRecyclerView();
+
+        /**
+         * Powers
+         */
+        TextView getPowerTitleView();
+
+        RecyclerView getPowerRecyclerView();
 
     }
 

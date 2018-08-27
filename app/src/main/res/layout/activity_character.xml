@@ -91,6 +91,8 @@
 
             <include layout="@layout/character_comic_info" />
 
+            <include layout="@layout/character_powers_info" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

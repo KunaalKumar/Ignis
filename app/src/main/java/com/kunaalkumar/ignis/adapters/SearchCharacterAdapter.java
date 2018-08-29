@@ -160,6 +160,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         break;
                     case R.id.peek_view_copy:
                         Toast.makeText(activity, "Copy to clipboard", Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.peek_view_open:
                         Toast.makeText(activity, "Open " + searchResults.get(i).getName() + "'s page", Toast.LENGTH_SHORT).show();
                         break;

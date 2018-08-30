@@ -27,15 +27,16 @@
             android:textSize="21sp"
             android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/character_powers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/character_power_title"
-                android:layout_margin="8dp"
-                tools:listitem="@layout/view_character_relation" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/character_powers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/character_power_title"
+            android:layout_margin="8dp"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/view_character_relation" />
 
     </RelativeLayout>
 

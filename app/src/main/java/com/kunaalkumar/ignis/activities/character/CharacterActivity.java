@@ -145,6 +145,7 @@ public class CharacterActivity extends AppCompatActivity implements CharacterCon
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR |
                     View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
+
     }
 
     @Override

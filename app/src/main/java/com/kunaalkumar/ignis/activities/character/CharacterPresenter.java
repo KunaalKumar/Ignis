@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import androidx.core.graphics.ColorUtils;
 import androidx.palette.graphics.Palette;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
@@ -191,7 +192,7 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                     powersAdapter = new RelationAdapter(character.getPowers());
                     powersRecyclerView = view.getPowerRecyclerView();
                     powersRecyclerView.setAdapter(powersAdapter);
-                    powersRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+                    powersRecyclerView.setLayoutManager(new GridLayoutManager(activity, 2));
                 }
 
                 // Show character information now that it's loaded

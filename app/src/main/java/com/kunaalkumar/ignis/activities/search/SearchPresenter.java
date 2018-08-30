@@ -3,6 +3,7 @@ package com.kunaalkumar.ignis.activities.search;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 import com.kunaalkumar.ignis.adapters.SearchHistoryAdapter;
 import com.kunaalkumar.ignis.adapters.ViewPageAdapter;
@@ -129,14 +131,13 @@ public class SearchPresenter implements SearchContract.Presenter {
     public void searchCall(String query) {
 
         SharedPrefs.addToSearchHistory(query);
+        UIUtil.hideKeyboard(activity);
         historyAdapter.searchHistory = SharedPrefs.getSearchHistory();
         historyAdapter.notifyDataSetChanged();
-
         showHistory(false);
         view.getSearchBox().setText(query.trim());
-        UIUtil.hideKeyboard(activity, view.getSearchBox());
-        view.getSearchBox().clearFocus();
-        view.getViewPager().requestFocus();
+        view.getTabLayout().setFocusableInTouchMode(true);
+        view.getTabLayout().requestFocus();
         characterFragment.searchCall(query,
                 true);
     }

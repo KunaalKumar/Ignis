@@ -50,6 +50,8 @@ public interface CharacterContract {
 
         MaterialCardView getPowersInfoParentLayout();
 
+        MaterialCardView getTeamsInfoParentLayout();
+
         /**
          * Titles
          */
@@ -130,6 +132,13 @@ public interface CharacterContract {
         TextView getPowerTitleView();
 
         RecyclerView getPowerRecyclerView();
+
+        /**
+         * Teams
+         */
+        TextView getTeamsTitleView();
+
+        RecyclerView getTeamsRecyclerView();
 
     }
 

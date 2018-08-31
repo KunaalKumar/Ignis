@@ -68,7 +68,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
             "origin," +
             "birth," +
             "issues_died_in," +
-            "powers";
+            "powers," +
+            "teams";
 
     private Character character;
 
@@ -83,6 +84,10 @@ public class CharacterPresenter implements CharacterContract.Presenter {
     // Powers
     private RecyclerView powersRecyclerView;
     private RelationAdapter powersAdapter;
+
+    // Teams
+    private RecyclerView teamsRecylerView;
+    private RelationAdapter teamsAdapter;
 
 
     public CharacterPresenter(CharacterContract.MvpView view, Intent intent) {
@@ -193,6 +198,14 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                     powersRecyclerView = view.getPowerRecyclerView();
                     powersRecyclerView.setAdapter(powersAdapter);
                     powersRecyclerView.setLayoutManager(new GridLayoutManager(activity, 2));
+                }
+
+                // Init Teams
+                if (character.getTeams() != null) {
+                    teamsAdapter = new RelationAdapter(character.getTeams());
+                    teamsRecylerView = view.getTeamsRecyclerView();
+                    teamsRecylerView.setAdapter(teamsAdapter);
+                    teamsRecylerView.setLayoutManager(new GridLayoutManager(activity, 2));
                 }
 
                 // Show character information now that it's loaded
@@ -318,7 +331,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 view.getCharacterGeneralInformationParentLayout(),
                 view.getCharacterDeckParentLayout(),
                 view.getComicInfoParentLayout(),
-                view.getPowersInfoParentLayout()});
+                view.getPowersInfoParentLayout(),
+                view.getTeamsInfoParentLayout()});
 
         // Parent backgrounds
         applyColorToLayoutBackgrounds(parentBg, new View[]{
@@ -366,7 +380,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 view.getOriginView(),
                 view.getBirthdayTitleView(),
                 view.getBirthdayView(),
-                view.getPowerTitleView()
+                view.getPowerTitleView(),
+                view.getTeamsTitleView()
         });
 
         // Button backgrounds
@@ -387,6 +402,8 @@ public class CharacterPresenter implements CharacterContract.Presenter {
                 issuesDiedAdapter.buttons);
         applyColorToRelations(buttonBg, cardBg,
                 powersAdapter.buttons);
+        applyColorToRelations(buttonBg, cardBg,
+                teamsAdapter.buttons);
     }
 
     /**

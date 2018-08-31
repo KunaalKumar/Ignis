@@ -82,8 +82,8 @@
         <LinearLayout
             android:id="@+id/character_info_parent"
             android:layout_width="match_parent"
-            android:focusableInTouchMode="true"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <include layout="@layout/character_card_deck" />
@@ -93,6 +93,8 @@
             <include layout="@layout/character_comic_info" />
 
             <include layout="@layout/character_powers_info" />
+
+            <include layout="@layout/character_teams_info" />
 
         </LinearLayout>
 

@@ -42,17 +42,15 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int VIEW_TYPE_BANNER = 0;
 
     public ArrayList<SearchResult> searchResults;
-    public String currentQuery;
     private SearchActivity activity;
     private PeekAndPop peekAndPop;
     private ImageView peekImageView;
 
 
     public SearchResultAdapter(SearchActivity activity, final PeekAndPop peekAndPop,
-                               String currentQuery, ArrayList<SearchResult> searchResults) {
+                               ArrayList<SearchResult> searchResults) {
         this.activity = activity;
         this.peekAndPop = peekAndPop;
-        this.currentQuery = currentQuery;
 
         this.searchResults = searchResults;
     }
@@ -189,26 +187,13 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         final SearchResult searchResult = searchResults.get(position);
 
-        switch (holder.getItemViewType()) {
-            // Case: is Banner View
-            case VIEW_TYPE_BANNER:
-                initBanner((BannerViewHolder) holder, position, searchResult);
-                break;
+        initBanner((BannerViewHolder) holder, position, searchResult);
 
-            default:
-                Snackbar.make(holder.itemView, "Something is terribly wrong.", Snackbar.LENGTH_INDEFINITE).show();
-                break;
-        }
     }
 
     @Override
     public int getItemCount() {
         return searchResults.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return 0;
     }
 
     /*

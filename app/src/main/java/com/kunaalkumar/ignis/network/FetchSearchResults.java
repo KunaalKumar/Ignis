@@ -67,6 +67,6 @@ public class FetchSearchResults extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         progressBar.setVisibility(View.GONE);
-        searchPresenter.populateSearchResults(resultObjs, query);
+        searchPresenter.populateSearchResults(resultObjs);
     }
 }

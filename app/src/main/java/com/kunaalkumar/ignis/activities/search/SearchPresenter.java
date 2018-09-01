@@ -132,16 +132,13 @@ public class SearchPresenter implements SearchContract.Presenter {
         new FetchSearchResults(this, query, view.getProgressBar()).execute();
     }
 
-    public void populateSearchResults(ArrayList<SearchResult> list, String query) {
+    public void populateSearchResults(ArrayList<SearchResult> list) {
         results.addAll(list);
         view.getSearchRecyclerView().requestFocus();
         view.getSearchRecyclerView().setAdapter(adapter);
-        adapter = new SearchResultAdapter((SearchActivity) activity, peekAndPop, query, results);
+        adapter = new SearchResultAdapter((SearchActivity) activity, peekAndPop, results);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(20);
-        recyclerView.setDrawingCacheEnabled(true);
-        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
     }
 

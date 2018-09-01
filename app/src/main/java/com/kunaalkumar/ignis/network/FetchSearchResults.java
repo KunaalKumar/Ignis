@@ -1,7 +1,6 @@
 package com.kunaalkumar.ignis.network;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -24,12 +23,17 @@ public class FetchSearchResults extends AsyncTask<Void, Void, Void> {
     String query;
     SearchPresenter searchPresenter;
     ProgressBar progressBar;
+    int pageNumber;
+
     private ArrayList<SearchResult> resultObjs = new ArrayList<>();
 
-    public FetchSearchResults(SearchPresenter searchPresenter, String query, ProgressBar progressBar) {
+    public FetchSearchResults(SearchPresenter searchPresenter, String query,
+                              ProgressBar progressBar,
+                              int pageNumber) {
         this.searchPresenter = searchPresenter;
         this.query = query;
         this.progressBar = progressBar;
+        this.pageNumber = pageNumber;
     }
 
     @Override
@@ -42,20 +46,11 @@ public class FetchSearchResults extends AsyncTask<Void, Void, Void> {
         synchronized (this) {
             try {
                 Document doc = Jsoup.connect("https://comicvine.gamespot.com/search/?i=&q=" +
-                        query + "&page=" + 1).get();
+                        query + "&page=" + pageNumber).get();
                 Elements searchResults = doc.select("#js-sort-filter-results > li");
                 // Add search results to arraylist
                 for (Element result : searchResults) {
                     resultObjs.add(new SearchResult(result));
-                }
-
-                // Print out info for debugging
-                for (SearchResult result : resultObjs
-                        ) {
-                    Log.d("IGNIS", result.getName());
-                    Log.d("IGNIS", result.getImageUrl());
-                    Log.d("IGNIS", result.getType() + " --> " + result.getChipInfo());
-                    Log.d("IGNIS", "");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

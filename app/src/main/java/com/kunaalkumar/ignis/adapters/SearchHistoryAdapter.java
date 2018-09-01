@@ -41,7 +41,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.searchCall(searchHistory.get(position));
+                presenter.searchCall(searchHistory.get(position), true);
             }
         });
 

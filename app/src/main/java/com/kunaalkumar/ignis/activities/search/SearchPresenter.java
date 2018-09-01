@@ -29,14 +29,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SearchPresenter implements SearchContract.Presenter {
 
-    ArrayList<SearchResult> results = new ArrayList<>();
-
     SearchContract.MvpView view;
     Activity activity;
 
     private SearchHistoryAdapter historyAdapter;
     private RecyclerView recyclerView;
     private SearchResultAdapter adapter;
+    private int pageNumber;
 
     public static PeekAndPop peekAndPop;
 
@@ -87,7 +86,7 @@ public class SearchPresenter implements SearchContract.Presenter {
                 if (keyEvent.getAction() == KeyEvent.ACTION_DOWN)
                     switch (i) {
                         case KeyEvent.KEYCODE_ENTER:
-                            searchCall(view.getSearchBox().getText().toString().trim());
+                            searchCall(view.getSearchBox().getText().toString().trim(), true);
                             break;
                         case KeyEvent.KEYCODE_BACK:
                             activity.onBackPressed();
@@ -118,7 +117,7 @@ public class SearchPresenter implements SearchContract.Presenter {
         });
     }
 
-    public void searchCall(String query) {
+    public void searchCall(String query, boolean isNewCall) {
 
         SharedPrefs.addToSearchHistory(query);
         UIUtil.hideKeyboard(activity);
@@ -128,17 +127,30 @@ public class SearchPresenter implements SearchContract.Presenter {
         view.getSearchBox().setText(query.trim());
 
         // Search call
-        new FetchSearchResults(this, query, view.getProgressBar()).execute();
+        if (isNewCall) {
+            pageNumber = 1;
+        } else {
+            pageNumber++;
+        }
+        new FetchSearchResults(this, query, view.getProgressBar(), pageNumber)
+                .execute();
+
     }
 
     public void populateSearchResults(ArrayList<SearchResult> list) {
-        results.addAll(list);
-        view.getSearchRecyclerView().requestFocus();
-        view.getSearchRecyclerView().setAdapter(adapter);
-        adapter = new SearchResultAdapter((SearchActivity) activity, peekAndPop, results);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        // Is a new call
+        if (pageNumber == 1) {
+            view.getSearchRecyclerView().requestFocus();
+            view.getSearchRecyclerView().setAdapter(adapter);
+            adapter = new SearchResultAdapter((SearchActivity) activity, peekAndPop, list);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        } else {
+            // Isn't a new call
+            adapter.searchResults.addAll(list);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     // Handle app link
@@ -148,7 +160,7 @@ public class SearchPresenter implements SearchContract.Presenter {
 
         if (appLinkData != null) {
             searchCall(
-                    appLinkData.getLastPathSegment().trim());
+                    appLinkData.getLastPathSegment().trim(), true);
         }
     }
 

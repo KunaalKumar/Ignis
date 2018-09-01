@@ -8,9 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.google.android.material.tabs.TabLayout;
 import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
@@ -19,7 +17,6 @@ import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,20 +35,14 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     @BindView(R.id.search_clear)
     ImageView clearButton;
 
-    @BindView(R.id.search_tab_layout)
-    TabLayout tabLayout;
-
-    @BindView(R.id.search_view_pager)
-    ViewPager viewPager;
-
     @BindView(R.id.search_parent_layout)
     RelativeLayout coordinatorLayout;
 
     @BindView(R.id.search_history_view)
     RecyclerView searchHistory;
 
-    @BindView(R.id.search_results_view)
-    RelativeLayout searchResults;
+    @BindView(R.id.search_recycler_view)
+    RecyclerView searchRecyclerView;
 
     private SearchPresenter presenter;
 
@@ -66,8 +57,6 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
         ButterKnife.bind(this);
 
         presenter = new SearchPresenter(this);
-
-        presenter.setUpViewPageAdapter(getSupportFragmentManager());
 
         searchBox = findViewById(R.id.search_searchBox);
         presenter.initSearchBox();
@@ -129,16 +118,6 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     }
 
     @Override
-    public ViewPager getViewPager() {
-        return viewPager;
-    }
-
-    @Override
-    public TabLayout getTabLayout() {
-        return tabLayout;
-    }
-
-    @Override
     public ImageView getClearButton() {
         return clearButton;
     }
@@ -154,7 +133,7 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     }
 
     @Override
-    public RelativeLayout getSearchResultsView() {
-        return searchResults;
+    public RecyclerView getSearchRecyclerView() {
+        return searchRecyclerView;
     }
 }

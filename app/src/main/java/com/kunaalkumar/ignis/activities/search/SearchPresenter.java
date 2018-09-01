@@ -3,7 +3,6 @@ package com.kunaalkumar.ignis.activities.search;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -11,13 +10,8 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 
 import com.kunaalkumar.ignis.adapters.SearchHistoryAdapter;
-import com.kunaalkumar.ignis.adapters.ViewPageAdapter;
-import com.kunaalkumar.ignis.fragments.search.SearchCharacterFragment;
-import com.kunaalkumar.ignis.fragments.search.SearchIssueFragment;
-import com.kunaalkumar.ignis.fragments.search.SearchObjectFragment;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
@@ -32,56 +26,29 @@ public class SearchPresenter implements SearchContract.Presenter {
     SearchContract.MvpView view;
     Activity activity;
 
-    // Fragments for ViewPager
-    private SearchCharacterFragment characterFragment;
-    private SearchIssueFragment issueFragment;
-    private SearchObjectFragment objectFragment;
-
     private SearchHistoryAdapter historyAdapter;
-
-    ViewPageAdapter viewPageAdapter;
 
     public SearchPresenter(SearchContract.MvpView view) {
         this.view = view;
         this.activity = (Activity) view;
 
-        characterFragment = new SearchCharacterFragment();
-        issueFragment = new SearchIssueFragment();
-        objectFragment = new SearchObjectFragment();
+        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), this);
+        view.getSearchHistoryView().setAdapter(historyAdapter);
+        view.getSearchHistoryView().setLayoutManager(new LinearLayoutManager(activity));
 
         showHistory(true);
     }
 
-    public void setUpViewPageAdapter(FragmentManager fragmentManager) {
-
-        viewPageAdapter = new ViewPageAdapter(fragmentManager);
-
-        viewPageAdapter.addFragment(characterFragment, SearchCharacterFragment.TITLE);
-        viewPageAdapter.addFragment(issueFragment, SearchIssueFragment.TITLE);
-        viewPageAdapter.addFragment(objectFragment, SearchObjectFragment.TITLE);
-
-        // Keeps all fragments in memory
-        view.getViewPager().setOffscreenPageLimit(viewPageAdapter.getCount());
-
-        view.getViewPager().setAdapter(viewPageAdapter);
-
-        view.getTabLayout().setupWithViewPager(view.getViewPager());
-
-        historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), this);
-        view.getSearchHistoryView().setAdapter(historyAdapter);
-        view.getSearchHistoryView().setLayoutManager(new LinearLayoutManager(activity));
-    }
-
     @Override
     public void saveState(FragmentManager fragmentManager, Bundle bundle) {
-        fragmentManager.putFragment(bundle, CHARACTER_STATE_KEY, characterFragment);
+//        fragmentManager.putFragment(bundle, CHARACTER_STATE_KEY, characterFragment);
     }
 
     @Override
     public void restoreState(FragmentManager fragmentManager, Bundle bundle) {
         // Restore character fragment instance
-        characterFragment = (SearchCharacterFragment) fragmentManager.
-                getFragment(bundle, CHARACTER_STATE_KEY);
+//        characterFragment = (SearchCharacterFragment) fragmentManager.
+//                getFragment(bundle, CHARACTER_STATE_KEY);
     }
 
     @Override
@@ -136,10 +103,6 @@ public class SearchPresenter implements SearchContract.Presenter {
         historyAdapter.notifyDataSetChanged();
         showHistory(false);
         view.getSearchBox().setText(query.trim());
-        view.getTabLayout().setFocusableInTouchMode(true);
-        view.getTabLayout().requestFocus();
-        characterFragment.searchCall(query,
-                true);
     }
 
     // Handle app link
@@ -157,10 +120,8 @@ public class SearchPresenter implements SearchContract.Presenter {
     public void showHistory(boolean show) {
         if (show) {
             view.getSearchHistoryView().setVisibility(View.VISIBLE);
-            view.getSearchResultsView().setVisibility(View.INVISIBLE);
         } else {
             view.getSearchHistoryView().setVisibility(View.INVISIBLE);
-            view.getSearchResultsView().setVisibility(View.VISIBLE);
         }
     }
 }

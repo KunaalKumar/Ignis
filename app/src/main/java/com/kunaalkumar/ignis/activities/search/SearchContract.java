@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,8 @@ public interface SearchContract {
         RecyclerView getSearchHistoryView();
 
         RecyclerView getSearchRecyclerView();
+
+        ProgressBar getProgressBar();
 
     }
 

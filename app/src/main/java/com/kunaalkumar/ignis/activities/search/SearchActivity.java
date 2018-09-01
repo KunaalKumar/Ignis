@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.kunaalkumar.ignis.R;
@@ -43,6 +44,9 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
 
     @BindView(R.id.search_recycler_view)
     RecyclerView searchRecyclerView;
+
+    @BindView(R.id.search_progress)
+    ProgressBar progressBar;
 
     private SearchPresenter presenter;
 
@@ -135,5 +139,10 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
     @Override
     public RecyclerView getSearchRecyclerView() {
         return searchRecyclerView;
+    }
+
+    @Override
+    public ProgressBar getProgressBar() {
+        return progressBar;
     }
 }

@@ -11,32 +11,56 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.kunaalkumar.ignis.R;
 import com.kunaalkumar.ignis.adapters.SearchHistoryAdapter;
+import com.kunaalkumar.ignis.adapters.SearchResultAdapter;
+import com.kunaalkumar.ignis.network.FetchSearchResults;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
+import com.kunaalkumar.ignis.web_scraper.SearchResult;
+import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
+import java.util.ArrayList;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SearchPresenter implements SearchContract.Presenter {
 
     public static String CHARACTER_STATE_KEY = "CHARACTER_STATE_KEY";
+    ArrayList<SearchResult> results = new ArrayList<>();
 
     SearchContract.MvpView view;
     Activity activity;
 
     private SearchHistoryAdapter historyAdapter;
+    private RecyclerView recyclerView;
+    private SearchResultAdapter adapter;
+
+    public static PeekAndPop peekAndPop;
+
 
     public SearchPresenter(SearchContract.MvpView view) {
         this.view = view;
         this.activity = (Activity) view;
+        recyclerView = view.getSearchRecyclerView();
 
         historyAdapter = new SearchHistoryAdapter(SharedPrefs.getSearchHistory(), this);
         view.getSearchHistoryView().setAdapter(historyAdapter);
         view.getSearchHistoryView().setLayoutManager(new LinearLayoutManager(activity));
 
+        initPeekAndPop();
         showHistory(true);
+    }
+
+    private void initPeekAndPop() {
+        // Basic init for peekAndPop
+        peekAndPop = new PeekAndPop.Builder(activity)
+                .peekLayout(R.layout.peek_preview)
+                .parentViewGroupToDisallowTouchEvents(view.getSearchRecyclerView())
+                .build();
     }
 
     @Override
@@ -103,6 +127,22 @@ public class SearchPresenter implements SearchContract.Presenter {
         historyAdapter.notifyDataSetChanged();
         showHistory(false);
         view.getSearchBox().setText(query.trim());
+
+        // Search call
+        new FetchSearchResults(this, query, view.getProgressBar()).execute();
+    }
+
+    public void populateSearchResults(ArrayList<SearchResult> list, String query) {
+        results.addAll(list);
+        view.getSearchRecyclerView().requestFocus();
+        view.getSearchRecyclerView().setAdapter(adapter);
+        adapter = new SearchResultAdapter((SearchActivity) activity, peekAndPop, query, results);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
     }
 
     // Handle app link
@@ -120,8 +160,10 @@ public class SearchPresenter implements SearchContract.Presenter {
     public void showHistory(boolean show) {
         if (show) {
             view.getSearchHistoryView().setVisibility(View.VISIBLE);
+            view.getSearchRecyclerView().setVisibility(View.INVISIBLE);
         } else {
             view.getSearchHistoryView().setVisibility(View.INVISIBLE);
+            view.getSearchRecyclerView().setVisibility(View.VISIBLE);
         }
     }
 }

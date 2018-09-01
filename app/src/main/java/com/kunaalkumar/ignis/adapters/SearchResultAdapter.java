@@ -5,7 +5,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +18,9 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.kunaalkumar.ignis.R;
-import com.kunaalkumar.ignis.activities.character.CharacterActivity;
 import com.kunaalkumar.ignis.activities.search.SearchActivity;
-import com.kunaalkumar.ignis.comicvine_objects.brief_description.CharacterBrief;
 import com.kunaalkumar.ignis.utils.SharedPrefs;
+import com.kunaalkumar.ignis.web_scraper.SearchResult;
 import com.peekandpop.shalskar.peekandpop.PeekAndPop;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -34,7 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final String EXTRA_URL_HD = "com.kunaalkumar.ignis.URL.HD";
     public static final String EXTRA_URL_STD = "com.kunaalkumar.ignis.URL.Std";
@@ -43,39 +41,30 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private static final int VIEW_TYPE_BANNER = 0;
 
-    public ArrayList<CharacterBrief> searchResults;
+    public ArrayList<SearchResult> searchResults;
     public String currentQuery;
     private SearchActivity activity;
     private PeekAndPop peekAndPop;
     private ImageView peekImageView;
 
 
-    public SearchCharacterAdapter(SearchActivity activity, final PeekAndPop peekAndPop, String currentQuery) {
+    public SearchResultAdapter(SearchActivity activity, final PeekAndPop peekAndPop,
+                               String currentQuery, ArrayList<SearchResult> searchResults) {
         this.activity = activity;
         this.peekAndPop = peekAndPop;
         this.currentQuery = currentQuery;
 
-        searchResults = new ArrayList<>();
+        this.searchResults = searchResults;
     }
 
     /*
-
-
-
-
     .___              .__
     |   | ____   ____ |__| ______
     |   |/ ___\ /    \|  |/  ___/
     |   / /_/  >   |  \  |\___ \
     |___\___  /|___|  /__/____  >
        /_____/      \/        \/
-
-
                 Init Peek and Pop
-
-
-
-
      */
 
     private void initPeekPreview(PeekAndPop peekAndPop) {
@@ -86,7 +75,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         peekAndPop.setOnGeneralActionListener(new PeekAndPop.OnGeneralActionListener() {
             @Override
             public void onPeek(View view, int position) {
-                if (searchResults.get(position).getImage() == null) {
+                if (searchResults.get(position).getImageUrl() == null) {
 
                     loadImageFromRes(R.drawable.image_not_available, peekImageView);
 
@@ -94,9 +83,9 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
                     if (SharedPrefs.getPeekHighResImageState()) {
-                        loadImageFromURL(searchResults.get(position).getImage().getOriginalUrl(), peekImageView);
+                        loadImageFromURL(searchResults.get(position).getImageUrl(), peekImageView);
                     } else {
-                        loadImageFromURL(searchResults.get(position).getImage().getMediumUrl(), peekImageView);
+                        loadImageFromURL(searchResults.get(position).getImageUrl(), peekImageView);
                     }
                 }
             }
@@ -123,12 +112,12 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 switch (view.getId()) {
                     case R.id.peek_view_share:
-                        shareUrlIntent(activity, searchResults.get(i).getName(), searchResults.get(i).getSiteDetailUrl());
+                        shareUrlIntent(activity, searchResults.get(i).getName(), searchResults.get(i).getResultUri());
                         break;
                     case R.id.peek_view_copy:
                         ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
                         ClipData clip = ClipData.newPlainText(searchResults.get(i).getName(),
-                                searchResults.get(i).getSiteDetailUrl());
+                                searchResults.get(i).getResultUri());
 
                         clipboard.setPrimaryClip(clip);
                         Snackbar.make(activity.findViewById(android.R.id.content), "Copied to clipboard",
@@ -136,7 +125,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         break;
 
                     case R.id.peek_view_open:
-                        bannerOnClick(searchResults.get(i));
+                        bannerOnClick();
                         break;
                 }
             }
@@ -198,7 +187,7 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
 
-        final CharacterBrief searchResult = searchResults.get(position);
+        final SearchResult searchResult = searchResults.get(position);
 
         switch (holder.getItemViewType()) {
             // Case: is Banner View
@@ -223,51 +212,43 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     /*
-
-
-
-
     .___              .__
     |   | ____   ____ |__| ______
     |   |/ ___\ /    \|  |/  ___/
     |   / /_/  >   |  \  |\___ \
     |___\___  /|___|  /__/____  >
        /_____/      \/        \/
-
-
                 Populate view holders
-
-
-
-
      */
 
     // Populate for banner view holder
     private void initBanner(final BannerViewHolder viewHolder,
                             final int position,
-                            final CharacterBrief searchResult) {
+                            final SearchResult searchResult) {
 
         peekAndPop.addLongClickView(viewHolder.parentLayout, position);
 
-        Log.d("Ignis", "onBindViewHolder called: " + searchResult.getId());
+        Log.d("IGNIS", "onBindViewHolder called: " + searchResult.getName());
 
         // Set favorite state
-        if (SharedPrefs.getFavoriteCharacters().contains(searchResult.getId())) {
-            viewHolder.setFavoriteState(true);
-        } else {
-            viewHolder.setFavoriteState(false);
-        }
+        //TODO: Implement favorite
+//        if (SharedPrefs.getFavoriteCharacters().contains(searchResult.getId())) {
+//            viewHolder.setFavoriteState(true);
+//        } else {
+//            viewHolder.setFavoriteState(false);
+//        }
 
         // Populate image
-        if (searchResult.getImage() == null) {
+        if (searchResult.getImageUrl() == null) {
             loadImageFromRes(R.drawable.image_not_available, viewHolder.image);
         } else {
+            //TODO: implement highres and medium res
             if (SharedPrefs.getPeekHighResImageState()) {
-                loadImageFromUrlFetch(searchResult.getImage().getScreenLargeUrl(),
+                loadImageFromUrlFetch(searchResult.getImageUrl(),
                         viewHolder.image,
-                        searchResult.getImage().getOriginalUrl());
+                        searchResult.getImageUrl());
             }
-            loadImageFromURL(searchResult.getImage().getScreenLargeUrl(),
+            loadImageFromURL(searchResult.getImageUrl(),
                     viewHolder.image);
         }
 
@@ -278,26 +259,13 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             viewHolder.name.setText(R.string.error_name_nf);
         }
 
-        // Populate publisher
-        if (searchResult.getPublisher() != null) {
-            viewHolder.additionInformation.setText(searchResult.getPublisher().getName());
-        } else {
-            viewHolder.additionInformation.setText(R.string.publisher_not_found);
-        }
-
-        // Populate real name
-        if (searchResult.getRealName() != null) {
-            viewHolder.realName.setText(searchResult.getRealName());
-        } else {
-            viewHolder.realName.setTextColor(Color.RED);
-            viewHolder.realName.setText(R.string.Real_name_not_found);
-        }
+        //TODO: Implement chip into banner.
 
         // Parent OnClick
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bannerOnClick(searchResult);
+                bannerOnClick();
             }
         });
 
@@ -305,12 +273,13 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         viewHolder.favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO: implement favorite
                 if (viewHolder.favoriteState) {
                     // Remove from favorites
-                    SharedPrefs.removeFavoriteCharacter(searchResult.getId());
+//                    SharedPrefs.removeFavoriteCharacter(searchResult.getId());
                 } else {
                     // Add to favorites
-                    SharedPrefs.addFavoriteCharacter(searchResult.getId());
+//                    SharedPrefs.addFavoriteCharacter(searchResult.getId());
                 }
                 viewHolder.setFavoriteState(!viewHolder.favoriteState);
                 System.console();
@@ -319,37 +288,18 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     }
 
-    private void bannerOnClick(CharacterBrief searchResult) {
-        Intent intent = new Intent(activity, CharacterActivity.class);
-        if (searchResult.getImage() != null) {
-            intent.putExtra(EXTRA_URL_STD, searchResult.getImage().getMediumUrl());
-            intent.putExtra(EXTRA_URL_HD, searchResult.getImage().getOriginalUrl());
-        }
-
-        intent.putExtra(EXTRA_ID, searchResult.getId());
-        intent.putExtra(EXTRA_NAME, searchResult.getName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        activity.startActivity(intent);
+    private void bannerOnClick() {
+        Toast.makeText(activity, "Need to implement", Toast.LENGTH_LONG).show();
     }
 
     /*
-
-
-
-
     .___              .__
     |   | ____   ____ |__| ______
     |   |/ ___\ /    \|  |/  ___/
     |   / /_/  >   |  \  |\___ \
     |___\___  /|___|  /__/____  >
        /_____/      \/        \/
-
-
                 Picasso get and populate images
-
-
-
-
      */
 
     //    Loads given url image into given iamgeview
@@ -391,23 +341,13 @@ public class SearchCharacterAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
     /*
-
-
-
-
     .___              .__
     |   | ____   ____ |__| ______
     |   |/ ___\ /    \|  |/  ___/
     |   / /_/  >   |  \  |\___ \
     |___\___  /|___|  /__/____  >
        /_____/      \/        \/
-
-
                 View holders
-
-
-
-
      */
 
     public static class BannerViewHolder extends RecyclerView.ViewHolder {

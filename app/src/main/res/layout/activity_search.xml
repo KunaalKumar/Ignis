@@ -82,6 +82,14 @@
         android:windowSoftInputMode="adjustResize"
         tools:listitem="@layout/view_search_history" />
 
+    <ProgressBar
+        android:id="@+id/search_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_toolbar"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler_view"
         android:layout_width="match_parent"

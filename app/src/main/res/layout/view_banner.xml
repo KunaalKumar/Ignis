@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="?attr/backgroundColor">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/banner_constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,10 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:backgroundTint="?attr/backgroundColor"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:cardElevation="0dp">
 
             <ProgressBar
                 android:id="@+id/banner_progress"
@@ -32,11 +29,7 @@
                 android:layout_marginTop="8dp"
                 android:scaleX="0.5"
                 android:scaleY="0.5"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="@+id/banner_card_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/banner_image"
@@ -46,16 +39,16 @@
                 android:layout_marginStart="8dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/image_of_character"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:scaleType="centerCrop" />
+
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/banner_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/banner_card_image"
+            android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:autoSizeMaxTextSize="24sp"
             android:autoSizeMinTextSize="12sp"
@@ -63,67 +56,37 @@
             android:autoSizeTextType="uniform"
             android:ellipsize="end"
             android:fontFamily="@font/roboto_medium"
-            android:padding="8dp"
             android:scrollHorizontally="false"
             android:singleLine="true"
             android:text="Name"
             android:textColor="?attr/headingTextColor"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.027"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/banner_card_image"
-            app:layout_constraintVertical_bias="0.146" />
+            android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/banner_real_name"
+            android:id="@+id/banner_chip"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="24dp"
-            android:autoSizeTextType="uniform"
-            android:ellipsize="end"
-            android:fontFamily="@font/roboto_light"
-            android:gravity="center"
-            android:padding="8dp"
-            android:singleLine="true"
-            android:text="Real Name"
-            android:textColor="?attr/textColor"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/banner_card_image" />
-
-        <TextView
-            android:id="@+id/banner_additional_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_light"
-            android:padding="8dp"
-            android:text="Addition information"
-            android:textColor="?attr/textColor"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.987"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/banner_real_name"
-            app:layout_constraintVertical_bias="0.0" />
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/banner_name"
+            android:layout_margin="8dp"
+            android:background="@color/colorAccentLight"
+            android:padding="4dp"
+            android:text="Chip"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
 
         <ImageView
             android:id="@+id/banner_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/banner_name"
+            android:layout_margin="8dp"
             android:clickable="true"
             android:padding="16dp"
-            android:tooltipText="@string/favorite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/banner_additional_info"
-            app:layout_constraintHorizontal_bias="0.043"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/banner_name"
-            app:layout_constraintVertical_bias="1.0" />
+            android:tooltipText="@string/favorite" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

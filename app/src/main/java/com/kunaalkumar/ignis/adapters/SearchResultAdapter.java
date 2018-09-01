@@ -176,7 +176,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         initPeekPreview(peekAndPop);
         if (viewType == 0) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_banner, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_banner,
+                    parent, false);
             return new BannerViewHolder(view);
         }
         return null;
@@ -244,7 +245,12 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             viewHolder.name.setText(R.string.error_name_nf);
         }
 
-        //TODO: Implement chip into banner.
+        // Populate chip
+        if (searchResult.getChipInfo() != null) {
+            viewHolder.chip.setText(searchResult.getChipInfo());
+        } else {
+            viewHolder.chip.setText("Unknown");
+        }
 
         // Parent OnClick
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
@@ -343,12 +349,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @BindView(R.id.banner_name)
         TextView name;
 
-        @BindView(R.id.banner_additional_info)
-        TextView additionInformation;
-
-        @BindView(R.id.banner_real_name)
-        TextView realName;
-
         @BindView(R.id.banner_parent_layout)
         RelativeLayout parentLayout;
 
@@ -357,6 +357,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @BindView(R.id.banner_favorite)
         ImageView favorite;
+
+        @BindView(R.id.banner_chip)
+        TextView chip;
 
         boolean favoriteState;
 

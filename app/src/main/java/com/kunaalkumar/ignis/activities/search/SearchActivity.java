@@ -76,9 +76,7 @@ public class SearchActivity extends AppCompatActivity implements SearchContract.
             searchBox.setOnFocusChangeListener(new EditText.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-
                     presenter.showHistory(hasFocus);
-
                 }
             });
         }

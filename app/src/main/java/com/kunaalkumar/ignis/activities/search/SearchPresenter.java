@@ -29,7 +29,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SearchPresenter implements SearchContract.Presenter {
 
-    public static String CHARACTER_STATE_KEY = "CHARACTER_STATE_KEY";
     ArrayList<SearchResult> results = new ArrayList<>();
 
     SearchContract.MvpView view;

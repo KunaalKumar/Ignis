@@ -7,12 +7,9 @@ import android.widget.ProgressBar;
 import com.kunaalkumar.ignis.activities.search.SearchPresenter;
 import com.kunaalkumar.ignis.web_scraper.SearchResult;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -44,16 +41,11 @@ public class FetchSearchResults extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         synchronized (this) {
-            try {
-                Document doc = Jsoup.connect("https://comicvine.gamespot.com/search/?i=&q=" +
-                        query + "&page=" + pageNumber).get();
-                Elements searchResults = doc.select("#js-sort-filter-results > li");
-                // Add search results to arraylist
-                for (Element result : searchResults) {
+            Elements elements = ComicVineClient.getElements(query, pageNumber);
+            if (elements != null) {
+                for (Element result : elements) {
                     resultObjs.add(new SearchResult(result));
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
         return null;

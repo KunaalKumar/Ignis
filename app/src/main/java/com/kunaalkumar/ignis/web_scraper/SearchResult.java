@@ -9,6 +9,8 @@ public class SearchResult {
     String name;
     String imageUrl;
     String type;
+    int typeCode;
+    int objectCode;
     String chipInfo;
     String resultUri;
 
@@ -17,6 +19,9 @@ public class SearchResult {
         setImageUri(result.childNode(3).childNode(1).childNode(1).attr("src"));
         setType(result.childNode(3).childNode(5).childNode(1).childNode(0).toString().trim());
         resultUri = BASE_URI + result.children().attr("href");
+        String codes = resultUri.replaceAll("\\D", "");
+        typeCode = Integer.parseInt(codes.substring(0, 4));
+        objectCode = Integer.parseInt(codes.substring(4, codes.length()));
     }
 
     private void setType(String type) {
@@ -38,7 +43,6 @@ public class SearchResult {
         return imageUrl;
     }
 
-    // Character (14530 issues) (DC Comics)
     public String getType() {
         return type;
     }
@@ -49,5 +53,13 @@ public class SearchResult {
 
     public String getChipInfo() {
         return chipInfo;
+    }
+
+    public int getTypeCode() {
+        return typeCode;
+    }
+
+    public int getObjectCode() {
+        return objectCode;
     }
 }

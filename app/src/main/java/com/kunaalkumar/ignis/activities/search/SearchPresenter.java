@@ -138,6 +138,7 @@ public class SearchPresenter implements SearchContract.Presenter {
     }
 
     public void populateSearchResults(ArrayList<SearchResult> list) {
+        // TODO: attach on scroll listener to detect end of list
         // Is a new call
         if (pageNumber == 1) {
             view.getSearchRecyclerView().requestFocus();

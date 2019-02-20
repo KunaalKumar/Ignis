@@ -84,3 +84,4 @@ limitations under the License.
 
 [![Goole Play Store](https://i.loli.net/2018/07/19/5b4f6aabc3461.png)](https://play.google.com/store/apps/details?id=com.kunaalkumar.ignis)
 
+## [Privacy Policy](https://sites.google.com/ashiana.com/ignis/home?authuser=1)

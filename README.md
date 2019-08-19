@@ -78,10 +78,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-
-## Online Presence
-[![Goole Plus Community](https://www.shareicon.net/data/256x256/2016/07/10/119595_plus_512x512.png)](https://plus.google.com/u/0/communities/117230352217222987710)
-
-[![Goole Play Store](https://i.loli.net/2018/07/19/5b4f6aabc3461.png)](https://play.google.com/store/apps/details?id=com.kunaalkumar.ignis)
-
 ## [Privacy Policy](https://sites.google.com/ashiana.com/ignis/home?authuser=1)
